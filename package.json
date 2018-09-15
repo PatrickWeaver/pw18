@@ -1,0 +1,19 @@
+{
+  "name": "pw18",
+  "version": "0.0.1",
+  "description": "A personal website for Patrick Weaver in 2018",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "engines": {
+    "node": "10.x"
+  },
+  "repository": {
+    "url": ""
+  },
+  "license": "MIT"
+}
