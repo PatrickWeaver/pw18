@@ -4,10 +4,14 @@
   "description": "A personal website for Patrick Weaver in 2018",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "npm run build && node server.js",
+    "build": "webpack"
   },
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "webpack": "^4.19.0",
+    "webpack-cli": "^3.1.0",
+    "vue": "^2.5.17"
   },
   "engines": {
     "node": "10.x"
