@@ -12,8 +12,23 @@
   </head>
   <body>
     
-    <div id="vm">
-      <app></app>
+    <div id="upload">
+      <h1>
+        Upload
+      </h1>
+      
+      <form id="login-form">
+        <label>Username:</label>
+        <input type="text" name="username" id="username-field" />
+        <label>Password:</label>
+        <input type="password" name="password" id="password-field" />
+        <button type="submit">
+          Submit
+        </button>
+      </form>
+
+      {{ message }}      
+      
     </div>
     
   </body>

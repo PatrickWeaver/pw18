@@ -6,5 +6,11 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'public/dist')
   },
-  mode: 'development'
+  mode: 'development',
+  node: {
+    dns: 'mock',
+    net: 'mock',
+    fs: 'empty',
+    tls: 'empty'
+  },
 };

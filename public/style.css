@@ -7,3 +7,25 @@ body {
   margin: 2em;
   background-color: #85fff8;
 }
+
+
+
+
+
+
+
+
+
+/* - - - - - - - - - - */
+/* - - - Uploads - - - */
+/* - - - - - - - - - - */
+
+#login-form {
+  margin: .5em 0;
+  display: block;
+}
+
+#login-form label, #login-form input {
+  display: block;
+  margin: .5em 0;
+}
