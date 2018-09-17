@@ -15,7 +15,9 @@
     "vue-router": "^3.0.1",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
-    "connect-history-api-fallback": "^1.5.0"
+    "connect-history-api-fallback": "^1.5.0",
+    "vue-loader": "^15.4.2",
+    "vue-template-compiler": "^2.5.17"
   },
   "engines": {
     "node": "10.x"

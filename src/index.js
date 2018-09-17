@@ -3,6 +3,8 @@ import Vue from 'vue/dist/vue.js';
 import VueRouter from 'vue-router';
 import * as rp from 'request-promise-native';
 
+import ItemList from './components/ItemList.vue'
+
 Vue.use(VueRouter)
 
 async function getData(path) {
@@ -36,25 +38,8 @@ Vue.component('top-menu', {
   `
 })
 
-Vue.component('item-list', {
-  props: [
-    'list'
-  ],
-  template: `
-    <div>
-      <ul>
-        <li v-for="(item, index) in list">
-          <h3>{{ item.name }}</h3>
-          <p>{{ item.description }}</p>
-          <ul>
-            <li>{{ item.start_date }} - {{ item.end_date}}</li>
-            <li>{{ item.status_id }}</li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  `
-})
+
+
 const Upload = {
   template: '<h2>Upload</h2>'
 }
@@ -69,7 +54,7 @@ const Portfolio = {
   template: `
     <div>
       <h2>Portfolio</h2>
-      <item-list v-bind:list="list"></item-list>
+      <ItemList v-bind:list="list"></ItemList>
     </div>
   `,
   created() {
@@ -87,6 +72,9 @@ const Portfolio = {
       this.list = list.projects_list
       
     }
+  },
+  components: {
+    ItemList
   }
 }
 
@@ -94,9 +82,12 @@ const Blog = {
   template: `
     <div>
       <h2>Blog</h2>
-      <item-list></item-list>
+      <ItemList></ItemList>
     </div>
-  `
+  `,
+  components: {
+    ItemList
+  }
 }
 
 const routes = [
