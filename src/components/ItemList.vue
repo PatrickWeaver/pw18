@@ -5,7 +5,13 @@
         <h3>{{ item.name }}</h3>
         <p>{{ item.description }}</p>
         <ul>
-          <li>{{ item.start_date }} - {{ item.end_date}}</li>
+          <li>
+            <YearDateRange
+                v-bind:startString=item.start_date
+                v-bind:endString=item.end_date
+            >
+            </YearDateRange>
+          </li>
           <li>{{ item.status_id }}</li>
         </ul>
       </li>
@@ -15,10 +21,15 @@
 
 <script>
   
+  import YearDateRange from './YearDateRange.vue'
+  
   export default {
     props: [
       'list'
-    ]
+    ],
+    components: {
+      YearDateRange
+    }
   }
   /*
   export default {
@@ -30,5 +41,6 @@
     }
   }
   */
+  
 
 </script>
