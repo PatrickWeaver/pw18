@@ -45,4 +45,4 @@ typings/
 
 # Settings for Webpack in different environments:
 settings.js
-#/public/dist/
+/public/dist/
