@@ -3,10 +3,41 @@
 }
 
 body {
-  font-family: arial, sans-serif;
-  margin: 2em;
+  margin: 5px;
   background-color: #85fff8;
+  font-family: 'Yantramanav', sans-serif;
+  font-size: 150%;
 }
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+p {
+  line-height: 125%;
+}
+
+
+/* - - - - - - - - - - */
+/* - - - Portfolio - - - */
+/* - - - - - - - - - - */
+
+.portfolio-project {
+  background-color: #f8f8f8;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.tag-list li {
+  display: inline-block;
+  margin: 5px;
+}
+  
+  
+
+
 
 
 

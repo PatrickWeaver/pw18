@@ -1,17 +1,30 @@
 <template>
   <div>
     <ul>
-      <li v-for="(item, index) in list">
-        <h3><a :href=item.slug >{{ item.name }}</a></h3>
+      <li v-for="(item, index) in list" class="portfolio-project">
+        
+        <h3><a :href="'/portfolio/' + item.slug" >{{ item.name }}</a></h3>
+        
+        <h4>
+          <PortfolioTag v-bind:tag=item.status ></PortfolioTag>
+        </h4>
+        
         <h4>
           <YearDateRange
             v-bind:startString=item.start_date
             v-bind:endString=item.end_date
           ></YearDateRange>
         </h4>
-        <p>{{ item.description }}</p>
+        
+        <ul class="tag-list">
+          <li v-for="(tag, index) in item.tags">
+            <PortfolioTag v-bind:tag=tag ></PortfolioTag>
+          </li>
+        </ul>
+        
+        <p><span v-html="$options.filters.fromMarkdown(item.description)"></span></p>
+        
         <ul>
-          <li>{{ item.status_id }}</li>
           <li>
             <UrlWithLabel
               label="Project"
@@ -25,6 +38,7 @@
             ></UrlWithLabel>
           </li>
         </ul>
+        
       </li>
     </ul>
   </div>
@@ -32,6 +46,7 @@
 
 <script>
   
+  import PortfolioTag from './PortfolioTag.vue'
   import UrlWithLabel from './UrlWithLabel.vue'
   import YearDateRange from './YearDateRange.vue'
   
@@ -40,6 +55,7 @@
       'list'
     ],
     components: {
+      PortfolioTag,
       UrlWithLabel,
       YearDateRange
     }
