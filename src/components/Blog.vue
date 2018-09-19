@@ -9,11 +9,11 @@
 
 <script>
   
-  import ItemList from './ItemList.vue'
+  import BlogPage from './BlogPage.vue'
   
   export default {
     components: {
-      ItemList
+      BlogPage
     }
   }
 

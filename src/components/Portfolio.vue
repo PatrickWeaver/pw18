@@ -2,7 +2,7 @@
   
   <div>
     <h2>Portfolio</h2>
-    <ItemList v-bind:list="list"></ItemList>
+    <PortfolioItemList v-bind:list="list"></PortfolioItemList>
   </div>
 
 </template>
@@ -10,7 +10,7 @@
 <script>
   
   /* Components */
-  import ItemList from './ItemList.vue'
+  import PortfolioItemList from './PortfolioItemList.vue'
   
   /* Helpers */
   import api from '../helpers/api'
@@ -38,7 +38,7 @@
       }
     },
     components: {
-      ItemList
+      PortfolioItemList
     }
   }
 
