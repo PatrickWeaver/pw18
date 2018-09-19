@@ -21,7 +21,7 @@
             <PortfolioTag v-bind:tag=tag ></PortfolioTag>
           </li>
         </ul>
-        <p v-html="item.html_description"></p>
+        <p v-html="item.description.html"></p>
         
         <ul>
           <li>
