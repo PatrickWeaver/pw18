@@ -21,8 +21,7 @@
             <PortfolioTag v-bind:tag=tag ></PortfolioTag>
           </li>
         </ul>
-        
-        <p><span v-html="$options.filters.fromMarkdown(item.description)"></span></p>
+        <p v-html="item.html_description"></p>
         
         <ul>
           <li>
