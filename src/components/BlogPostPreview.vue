@@ -1,6 +1,6 @@
 <template>
   <li>
-    <h3>{{ post.title }}</h3>
+    <h3><a :href="'/blog/' + post.slug" @click.prevent="activatePost" >{{ post.title }}</a></h3>
     <h5>{{ post.post_date }}</h5>
     <p>{{ postPreview }} <a v-if="!post.full_post_in_preview" :href="'/blog/' + post.slug" >Read More</a></p>
   </li>
@@ -23,6 +23,11 @@
       
     },
     components: {
+    },
+    methods: {
+      activatePost(event) {
+        this.$emit('activate-post', this.post.slug)
+      }
     }
   }  
 

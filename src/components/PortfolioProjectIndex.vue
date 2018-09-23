@@ -34,8 +34,8 @@
       YearDateRange
     },
     methods: {
-      activateProject(project) {
-        this.$emit('activate-project', project)
+      activateProject(slug) {
+        this.$emit('activate-project', slug)
       }
     }
   }

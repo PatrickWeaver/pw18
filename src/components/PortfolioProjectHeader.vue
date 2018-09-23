@@ -52,7 +52,7 @@
     },
     methods: {
       activateProject (event) {
-        this.$emit('activate-project', this.project)
+        this.$emit('activate-project', this.project.slug)
       }
     }
   }  

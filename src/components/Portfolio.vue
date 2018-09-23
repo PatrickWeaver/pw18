@@ -28,8 +28,7 @@
   export default {
     data: () => {
       return {
-        list: [],
-        activeProjectSlug: null
+        list: []
       }
     },
     computed: {
@@ -52,8 +51,8 @@
         var list = await(api.getData('/v1/portfolio/projects/'))
         this.list = list.projects_list
       },
-      activateProject(project) {
-        this.$router.push({ path: `/portfolio/${project.slug}` })
+      activateProject(slug) {
+        this.$router.push({ path: `/portfolio/${slug}` })
       } 
         
     },

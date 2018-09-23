@@ -1,12 +1,11 @@
 <template>
-  <div>
-    <h2>Blog</h2>
-    <div id="blog-post">
-      <h3>{{ post.title }}</h3>
-      <h5>{{ post.post_date }}</h5>
-      <p v-if="post.body" v-html="post.body.html" class="blog-post-body"></p>
-    </div>
+
+  <div id="blog-post">
+    <h3>{{ post.title }}</h3>
+    <h5>{{ post.post_date }}</h5>
+    <p v-if="post.body" v-html="post.body.html" class="blog-post-body"></p>
   </div>
+
 </template>
 
 <script>
@@ -35,6 +34,9 @@
     methods: {
       async getBlogPost() {
         this.post = await(api.getData('/v1/blog/posts/' + this.slug ))
+      },
+      activatePost (event) {
+        this.$emit('activate-post', this.post.slug)
       }
     },
     computed: {
