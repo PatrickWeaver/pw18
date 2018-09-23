@@ -49,8 +49,8 @@
     methods: {
       async getPortfolioIndex() {
         if (!this.activeProjectSlug && this.list.length === 0) {
-          var list = await(api.getData('/v1/portfolio/projects/'))
-          this.list = list.projects_list
+          var api_data = await(api.getData('/v1/portfolio/projects/'))
+          this.list = api_data.projects_list
         }
       },
       activateProject(slug) {

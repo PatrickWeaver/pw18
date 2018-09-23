@@ -23,6 +23,10 @@ img, iframe {
   height: auto;
 }
 
+label, input {
+  display: block;
+}
+
 .url-with-label, code, pre {
   overflow-wrap: break-word; 
 }

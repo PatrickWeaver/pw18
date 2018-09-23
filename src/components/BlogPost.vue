@@ -33,7 +33,8 @@
     },
     methods: {
       async getBlogPost() {
-        this.post = await(api.getData('/v1/blog/posts/' + this.slug ))
+        var api_data = await(api.getData('/v1/blog/posts/' + this.slug ))
+        this.post = api_data.post
       },
       activatePost (event) {
         this.$emit('activate-post', this.post.slug)
