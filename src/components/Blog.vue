@@ -7,7 +7,7 @@
     </div>
     <div v-else>
       <ul>
-        <BlogPostPreview v-for="(post, index) in list" :post="post" @activate-post="activatePost"></BlogPostPreview>
+        <BlogPostPreview v-for="(post, index) in list" :key="post.slug" :post="post" @activate-post="activatePost"></BlogPostPreview>
       </ul>
     </div>
   </div>
@@ -43,8 +43,10 @@
     },
     methods: {
       async getBlogPosts() {
-        var list = await(api.getData('/v1/blog/posts/'))
-        this.list = list.posts_list
+        if (!this.activePostSlug && this.list.length === 0) {
+          var list = await(api.getData('/v1/blog/posts/'))
+          this.list = list.posts_list
+        }
       },
       activatePost(slug) {
         this.$router.push({ path: `/blog/${slug}` })

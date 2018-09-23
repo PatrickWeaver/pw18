@@ -1,7 +1,6 @@
 <template>
   <li class="portfolio-project">   
-    <ProjectHeader :project="project" :cover="cover" @activate-project="activateProject"></ProjectHeader>
-    
+    <ProjectHeader :project="project" :cover="cover" @activate-project="activateProject"></ProjectHeader>    
   </li>
 </template>
 

@@ -7,7 +7,7 @@
     </div>
     <div v-else>
       <ul>
-        <PortfolioProjectIndex v-for="(project, index) in list" :project="project" @activate-project="activateProject"></PortfolioProjectIndex>
+        <PortfolioProjectIndex v-for="(project, index) in list" :key="project.slug" :project="project" @activate-project="activateProject"></PortfolioProjectIndex>
       </ul>
     </div>
     
@@ -37,19 +37,21 @@
     created() {
       // fetch the data when the view is created and the data is
       // already being observed
-      this.getPortfolio()
+      this.getPortfolioIndex()
     },
     props: [
       'activeProjectSlug'
     ],
     watch: {
       // call again the method if the route changes
-      '$route': 'getPortfolio'
+      '$route': 'getPortfolioIndex'
     },
     methods: {
-      async getPortfolio() {
-        var list = await(api.getData('/v1/portfolio/projects/'))
-        this.list = list.projects_list
+      async getPortfolioIndex() {
+        if (!this.activeProjectSlug && this.list.length === 0) {
+          var list = await(api.getData('/v1/portfolio/projects/'))
+          this.list = list.projects_list
+        }
       },
       activateProject(slug) {
         this.$router.push({ path: `/portfolio/${slug}` })
