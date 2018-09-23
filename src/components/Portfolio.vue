@@ -2,9 +2,16 @@
   
   <div>
     <h2>Portfolio</h2>
-    <ul>
-      <PortfolioProjectIndex v-for="(project, index) in list" :project="project"></PortfolioProjectIndex>
-    </ul>
+    <div v-if="activeProjectSlug">
+      <PortfolioProject id="active-project" :slug=activeProjectSlug ></PortfolioProject>
+    </div>
+    <div v-else>
+      <ul>
+        <PortfolioProjectIndex v-for="(project, index) in list" :project="project" @activate-project="activateProject"></PortfolioProjectIndex>
+      </ul>
+    </div>
+    
+    
   </div>
 
 </template>
@@ -13,6 +20,7 @@
   
   /* Components */
   import PortfolioProjectIndex from './PortfolioProjectIndex.vue'
+  import PortfolioProject from './PortfolioProject.vue'
   
   /* Helpers */
   import api from '../helpers/api'
@@ -20,14 +28,21 @@
   export default {
     data: () => {
       return {
-        list: []
+        list: [],
+        activeProjectSlug: null
       }
+    },
+    computed: {
+
     },
     created() {
       // fetch the data when the view is created and the data is
       // already being observed
       this.getPortfolio()
     },
+    props: [
+      'activeProjectSlug'
+    ],
     watch: {
       // call again the method if the route changes
       '$route': 'getPortfolio'
@@ -36,11 +51,15 @@
       async getPortfolio() {
         var list = await(api.getData('/v1/portfolio/projects/'))
         this.list = list.projects_list
-
-      }
+      },
+      activateProject(project) {
+        this.$router.push({ path: `/portfolio/${project.slug}` })
+      } 
+        
     },
     components: {
-      PortfolioProjectIndex
+      PortfolioProjectIndex,
+      PortfolioProject
     }
   }
 

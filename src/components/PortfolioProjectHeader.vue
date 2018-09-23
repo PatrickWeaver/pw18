@@ -1,6 +1,6 @@
 <template>
   <div v-if="project">
-    <h3><a :href="'/portfolio/' + project.slug" >{{ project.name }}</a></h3>
+    <h3><a @click.prevent="activateProject" :href="'/portfolio/' + project.slug" >{{ project.name }}</a></h3>
 
     <PortfolioImage v-if="cover" v-bind:image=cover ></PortfolioImage>
     
@@ -49,6 +49,11 @@
       PortfolioTag,
       UrlWithLabel,
       YearDateRange
+    },
+    methods: {
+      activateProject (event) {
+        this.$emit('activate-project', this.project)
+      }
     }
   }  
 

@@ -9,9 +9,9 @@ import Upload from './components/Upload.vue'
 
 const routes = [
   { path: '/blog', component: Blog },
-  { path: '/blog/:slug', component: BlogPost, props: true },
+  { path: '/blog/:slug', component: Blog, props: true },
   { path: '/portfolio', component: Portfolio },
-  { path: '/portfolio/:slug', component: PortfolioProject, props: true },
+  { path: '/portfolio/:activeProjectSlug', component: Portfolio, props: true },
   { path: '/upload', component: Upload }
 
 ]

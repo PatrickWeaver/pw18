@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img :style="'max-width: 300px'" :src="image.url" >
+    <img :src="image.url" >
   </div>
   
 

@@ -1,21 +1,6 @@
 <template>
   <li class="portfolio-project">   
-    <ProjectHeader :project="project" :cover="cover" ></ProjectHeader>
-
-    <ul>
-      <li>
-        <UrlWithLabel
-          label="Project"
-          v-bind:url=project.project_url
-        ></UrlWithLabel>
-      </li>
-      <li>
-        <UrlWithLabel
-          label="Source"
-          v-bind:url=project.source_url
-        ></UrlWithLabel>
-      </li>
-    </ul>
+    <ProjectHeader :project="project" :cover="cover" @activate-project="activateProject"></ProjectHeader>
     
   </li>
 </template>
@@ -47,6 +32,11 @@
       ProjectHeader,
       UrlWithLabel,
       YearDateRange
+    },
+    methods: {
+      activateProject(project) {
+        this.$emit('activate-project', project)
+      }
     }
   }
   /*

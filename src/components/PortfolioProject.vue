@@ -1,7 +1,6 @@
 <template>
   <div v-if="project" class="portfolio-project">
-    <h2>Portfolio</h2>
-        
+    
     <ProjectHeader :project="project" :cover="cover" ></ProjectHeader>
     
     <p v-if="project.description" v-html="project.description.html"></p>
