@@ -1,14 +1,19 @@
 import VueRouter from 'vue-router'
 
 /* Pages */
-import Upload from './components/Upload.vue'
 import Blog from './components/Blog.vue'
+import BlogPost from './components/BlogPost.vue'
 import Portfolio from './components/Portfolio.vue'
+import PortfolioProject from './components/PortfolioProject.vue'
+import Upload from './components/Upload.vue'
 
 const routes = [
-  { path: '/upload', component: Upload },
+  { path: '/blog', component: Blog },
+  { path: '/blog/:slug', component: BlogPost, props: true },
   { path: '/portfolio', component: Portfolio },
-  { path: '/blog', component: Blog }
+  { path: '/portfolio/:slug', component: PortfolioProject, props: true },
+  { path: '/upload', component: Upload }
+
 ]
 
 export default new VueRouter({

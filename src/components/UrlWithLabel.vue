@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span class="url-with-label">
     
     <strong>{{ label }}: </strong>
     <a :href="url" target="_blank">

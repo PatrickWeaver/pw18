@@ -1,18 +1,15 @@
 <template>
-
   <div>
     <h2>Blog</h2>
-    <ul>
-      <BlogPostPreview v-for="(post, index) in list" :post="post" ></BlogPostPreview>
-    </ul>
+    <div id="blog-post">
+      <h3>{{ post.title }}</h3>
+      <h5>{{ post.post_date }}</h5>
+      <p v-if="post.body" v-html="post.body.html" class="blog-post-body"></p>
+    </div>
   </div>
-
 </template>
 
 <script>
-  
-   /* Components */
-  import BlogPostPreview from './BlogPostPreview.vue'
   
   /* Helpers */
   import api from '../helpers/api'
@@ -20,28 +17,30 @@
   export default {
     data() {
       return {
-        list: []
+        post: {}
       }
     },
+    props: [
+      'slug'
+    ],
     created() {
       // fetch the data when the view is created and the data is
       // already being observed
-      this.getBlogPosts()
+      this.getBlogPost()
     },
     watch: {
       // call again the method if the route changes
-      '$route': 'getBlogPosts'
+      '$route': 'getBlogPost'
     },
     methods: {
-      async getBlogPosts() {
-        var list = await(api.getData('/v1/blog/posts/'))
-        this.list = list.posts_list
-
+      async getBlogPost() {
+        this.post = await(api.getData('/v1/blog/posts/' + this.slug ))
       }
     },
+    computed: {
+    },
     components: {
-      BlogPostPreview
     }
-  }
+  }  
 
 </script>

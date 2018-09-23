@@ -18,6 +18,15 @@ p {
   line-height: 125%;
 }
 
+img, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+.url-with-label, code, pre {
+  overflow-wrap: break-word; 
+}
+
 
 /* - - - - - - - - - - */
 /* - - - Portfolio - - - */
@@ -34,7 +43,6 @@ p {
   display: inline-block;
   margin: 5px;
 }
-  
   
 
 

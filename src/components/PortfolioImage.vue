@@ -1,18 +1,20 @@
 <template>
   <div>
-    <ul>
-      <li v-for="(post, index) in list">
-        
-      </li>
-    </ul>
+    <img :style="'max-width: 300px'" :src="image.url" >
   </div>
+  
+
 </template>
 
 <script>
+
   
   export default {
+    data() {
+      return {}
+    },
     props: [
-      'list'
+      'image'
     ],
     components: {
     }

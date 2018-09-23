@@ -2,7 +2,9 @@
   
   <div>
     <h2>Portfolio</h2>
-    <PortfolioItemList v-bind:list="list"></PortfolioItemList>
+    <ul>
+      <PortfolioProjectIndex v-for="(project, index) in list" :project="project"></PortfolioProjectIndex>
+    </ul>
   </div>
 
 </template>
@@ -10,7 +12,7 @@
 <script>
   
   /* Components */
-  import PortfolioItemList from './PortfolioItemList.vue'
+  import PortfolioProjectIndex from './PortfolioProjectIndex.vue'
   
   /* Helpers */
   import api from '../helpers/api'
@@ -38,7 +40,7 @@
       }
     },
     components: {
-      PortfolioItemList
+      PortfolioProjectIndex
     }
   }
 
