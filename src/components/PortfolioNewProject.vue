@@ -8,11 +8,27 @@
       <label>Name:</label>
       <input type="text" v-model="name" @change="updateSlug" />
       <label>Slug:</label>
-      <input type="text" v-model="slug"   @focus="autofillSlug = false" @blur="checkForAutofillSlug"/>
+      <input type="text" v-model="slug" @focus="autofillSlug = false" @blur="checkForAutofillSlug"/>
       <label>Description:</label>
       <textarea v-model="description"></textarea>
+      <label>Start Date:</label>
+      <datepicker :value="startDate"></datepicker>
+      <label>End Date:</label>
+      <datepicker :value="endDate"></datepicker>
+      <label>Status Id:</label>
+      <input type="number" v-model="statusId" />
+      <label>Project URL:</label>
+      <input type="text" v-model="projectUrl" />
+      <label>Source URL:</label>
+      <input type="text" v-model="sourceUrl" />
+      <label>Hide Project:</label>
+      <input type="checkbox" v-model="isHidden" />
+      <button @click.prevent="submitNewProject">Submit</button>
     </form>
     
+    <h3>
+      {{ isHidden }}  
+    </h3>
     <h1>
       {{ name }}  
     </h1>
@@ -22,30 +38,20 @@
     <p>
       {{ description }} 
     </p>
+
   
-
-
-
-  <!--
-    name = models.CharField(max_length=1024)
-    slug = models.CharField(max_length=1024, unique=True, blank=True)
-    description = models.TextField(default='', blank=True)
-    start_date = models.DateTimeField(null=True, blank=True)
-    end_date = models.DateTimeField(null=True, blank=True)
-    sort_date = models.DateTimeField(blank=True)
-    status = models.ForeignKey(Tag, related_name='project_status', on_delete=models.PROTECT)
-    tags = models.ManyToManyField(Tag, related_name='project_tags')
-    project_url = models.CharField(max_length=1024, blank=True, null=True)
-    source_url = models.CharField(max_length=1024, blank=True, null=True)
-    is_hidden = models.BooleanField(default=False, blank=False)
-    created_date = models.DateTimeField(default=timezone.now, blank=True)
-  -->
   </div>
 </template>
 
 <script>
   
+  /* Helpers */
+  import api from '../helpers/api'
+  
+  /* NPM */
   import * as slug from 'slug'
+  import * as snake from 'snakecase-keys'
+  import Datepicker from 'vuejs-datepicker'
 
   export default {
     data() {
@@ -54,7 +60,18 @@
         slug: '',
         autofillSlug: true,
         description: '',
+        startDate: new Date(),
+        endDate: new Date(),
+        // Replace with picker
+        statusId: null,
+        projectUrl: '',
+        sourceUrl: '',
+        isHidden: false,
+        
       }
+    },
+    components: {
+      Datepicker
     },
     computed: {
       autoSlug() {
@@ -71,6 +88,9 @@
         if (this.slug === slug(this.name)) {
           this.autofillSlug = true
         }
+      },
+      submitNewProject: function() {
+        var response = api.sendData(snake(this.$data), '/v1/portfolio/projects/new/')
       }
     },
     watch: {
