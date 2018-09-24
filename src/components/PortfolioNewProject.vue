@@ -89,8 +89,13 @@
           this.autofillSlug = true
         }
       },
-      submitNewProject: function() {
-        var response = api.sendData(snake(this.$data), '/v1/portfolio/projects/new/')
+      submitNewProject: async function() {
+        var response = await(api.sendData(snake(this.$data), '/v1/portfolio/projects/new/'))
+        if (response.success) {
+          this.$router.push({ path: `/portfolio/${response.slug}` })
+        } else {
+          alert("Error: " + response[0].Error)
+        }
       }
     },
     watch: {
