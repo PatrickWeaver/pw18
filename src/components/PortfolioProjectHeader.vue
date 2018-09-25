@@ -3,7 +3,7 @@
     <h3><a @click.prevent="activateProject" :href="'/portfolio/' + project.slug" >{{ project.name }}</a></h3>
 
     <portfolio-image v-if="cover" :image="cover" ></portfolio-image>
-    
+
     <h4>
       <portfolio-tag :tag="project.status" ></portfolio-tag>
     </h4>
@@ -20,21 +20,21 @@
         <portfolio-tag v-bind:tag="tag" ></portfolio-tag>
       </li>
     </ul>
-    
+
   </div>
 </template>
 
 <script>
-  
+
   /* Helpers */
   import api from '../helpers/api'
-  
+
   /* Components */
   import PortfolioImage from './PortfolioImage.vue'
   import PortfolioTag from './PortfolioTag.vue'
   import UrlWithLabel from './UrlWithLabel.vue'
   import YearDateRange from './YearDateRange.vue'
-  
+
   export default {
     data() {
       return {
@@ -55,6 +55,6 @@
         this.$emit('activate-project', this.project.slug)
       }
     }
-  }  
+  }
 
 </script>

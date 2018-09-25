@@ -17,6 +17,7 @@
           :key="project.slug"
           :index="index"
           :project="project"
+          :hide="filterProject(index)"
           @activate-project="activateProject"
           @delete-project="deleteProject"
           @edit-project="editProject"
@@ -39,7 +40,8 @@
   export default {
     data: () => {
       return {
-        list: []
+        list: [],
+        filter: null
       }
     },
     computed: {
@@ -81,6 +83,22 @@
       },
       editProject(slug) {
         this.$router.push({ path: '/portfolio/' + slug + '/edit'})
+      },
+      filterProject(index) {
+        // Return false to NOT filter out project
+        // Return true to filter out project
+        var filter = this.$route.query.filter
+        if (filter) {
+          var status = this.list[index].status.slug
+          var tags = this.list[index].tags.map(i => i.slug)
+          if (filter === status || tags.indexOf(filter) > -1) {
+            return false
+          } else {
+            return true
+          }
+        } else {
+          return false
+        }
       }
 
     },

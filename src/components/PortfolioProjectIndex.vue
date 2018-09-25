@@ -1,5 +1,5 @@
 <template>
-  <li class="portfolio-project">   
+  <li v-if="!hide" class="portfolio-project">
     <project-header
       :project="project"
       :cover="cover"
@@ -13,10 +13,10 @@
 </template>
 
 <script>
-  
+
   /* Helpers */
   import findPortfolioProjectCover from '../helpers/findPortfolioProjectCover'
-  
+
   /* Components */
   import PortfolioAdmin from './PortfolioAdmin.vue'
   import PortfolioImage from './PortfolioImage.vue'
@@ -24,7 +24,7 @@
   import ProjectHeader from './PortfolioProjectHeader.vue'
   import UrlWithLabel from './UrlWithLabel.vue'
   import YearDateRange from './YearDateRange.vue'
-  
+
   export default {
     computed: {
       cover: function() {
@@ -33,7 +33,8 @@
     },
     props: [
       'index',
-      'project'
+      'project',
+      'hide'
     ],
     components: {
       PortfolioAdmin,
@@ -43,15 +44,16 @@
       UrlWithLabel,
       YearDateRange
     },
+
     methods: {
       activateProject(slug) {
         this.$emit('activate-project', slug)
       },
       deleteProject() {
-        this.$emit('delete-project', this.project.slug, this.index) 
+        this.$emit('delete-project', this.project.slug, this.index)
       },
       editProject() {
-        this.$emit('edit-project', this.project.slug) 
+        this.$emit('edit-project', this.project.slug)
       }
     }
   }
@@ -65,6 +67,6 @@
     }
   }
   */
-  
+
 
 </script>
