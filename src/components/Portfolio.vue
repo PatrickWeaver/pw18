@@ -3,15 +3,26 @@
   <div>
     <h2>Portfolio</h2>
     <div v-if="activeProjectSlug">
-      <PortfolioProject id="active-project" :slug=activeProjectSlug ></PortfolioProject>
+      <portfolio-project
+        id="active-project"
+        :slug="activeProjectSlug"
+        @delete-project="findAndDeleteProject"
+        @edit-project="editProject"
+      ></portfolio-project>
     </div>
     <div v-else>
       <ul>
-        <PortfolioProjectIndex v-for="(project, index) in list" :key="project.slug" :project="project" @activate-project="activateProject"></PortfolioProjectIndex>
+        <portfolio-project-index
+          v-for="(project, index) in list"
+          :key="project.slug"
+          :index="index"
+          :project="project"
+          @activate-project="activateProject"
+          @delete-project="deleteProject"
+          @edit-project="editProject"
+        ></portfolio-project-index>
       </ul>
     </div>
-    
-    
   </div>
 
 </template>
@@ -55,7 +66,22 @@
       },
       activateProject(slug) {
         this.$router.push({ path: `/portfolio/${slug}` })
-      } 
+      },
+      findAndDeleteProject(project) {
+        this.deleteProject(project.slug, this.list.indexOf(project))
+      },
+      async deleteProject(slug, index) {
+        var response = await(api.sendData({}, '/v1/portfolio/projects/' + slug + '/delete/'))
+        if (response.success) {
+          this.list.splice(index, 1)
+          this.$router.push({ path: '/portfolio' })
+        } else {
+          alert("Error: " + response[0].Error)
+        }
+      },
+      editProject(slug) {
+        this.$router.push({ path: '/portfolio/' + slug + '/edit'})
+      }
         
     },
     components: {

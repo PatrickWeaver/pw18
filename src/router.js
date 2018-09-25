@@ -14,6 +14,7 @@ const routes = [
   { path: '/portfolio', component: Portfolio },
   { path: '/portfolio/new', component: PortfolioNewProject },
   { path: '/portfolio/:activeProjectSlug', component: Portfolio, props: true },
+  { path: '/portfolio/:activeProjectSlug/edit', component: PortfolioNewProject, props: true },
   { path: '/upload', component: Upload }
 
 ]

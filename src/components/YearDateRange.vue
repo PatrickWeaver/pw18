@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span v-if="startString || endString">
     
     {{ YearRangeFromDates(startString, endString) }}
   
@@ -22,6 +22,9 @@
           return startYear
         }
         var endYear = new Date(endString).getFullYear()
+        if (!startString) {
+          return endYear
+        }
         if (startYear === endYear) {
           return startYear
         } else {

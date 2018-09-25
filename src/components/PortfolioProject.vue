@@ -1,30 +1,34 @@
 <template>
   <div v-if="project" class="portfolio-project">
     
-    <ProjectHeader :project="project" :cover="cover" ></ProjectHeader>
+    <project-header :project="project" :cover="cover" ></project-header>
     
     <p v-if="project.description" v-html="project.description.html"></p>
 
     <ul>
       <li>
-        <UrlWithLabel
+        <url-with-label
           label="Project"
-          v-bind:url=project.project_url
-        ></UrlWithLabel>
+          v-bind:url="project.project_url"
+        ></url-with-label>
       </li>
       <li>
-        <UrlWithLabel
+        <url-with-label
           label="Source"
-          v-bind:url=project.source_url
-        ></UrlWithLabel>
+          v-bind:url="project.source_url"
+        ></url-with-label>
       </li>
     </ul>
 
     <ul class="image-list">
       <li v-for="(image, index) in project.images">
-        <PortfolioImage v-bind:image=image ></PortfolioImage>
+        <portfolio-image v-bind:image="image" ></portfolio-image>
       </li>
     </ul>
+    <portfolio-admin
+      @delete-project="deleteProject"
+      @edit-project="editProject"
+    ></portfolio-admin>
   </div>
 </template>
 
@@ -35,6 +39,7 @@
   import findPortfolioProjectCover from '../helpers/findPortfolioProjectCover'
   
   /* Components */
+  import PortfolioAdmin from './PortfolioAdmin.vue'
   import PortfolioImage from './PortfolioImage.vue'
   import PortfolioTag from './PortfolioTag.vue'
   import ProjectHeader from './PortfolioProjectHeader.vue'
@@ -68,9 +73,16 @@
       async getPortfolioProject() {
         var api_data = await(api.getData('/v1/portfolio/projects/' + this.slug ))
         this.project = api_data.project
+      },
+      deleteProject() {
+        this.$emit('delete-project', this.project) 
+      },
+      editProject() {
+        this.$emit('edit-project', this.project.slug) 
       }
     },
     components: {
+      PortfolioAdmin,
       PortfolioImage,
       PortfolioTag,
       ProjectHeader,

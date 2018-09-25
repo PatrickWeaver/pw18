@@ -12,9 +12,11 @@
       <label>Description:</label>
       <textarea v-model="description"></textarea>
       <label>Start Date:</label>
-      <datepicker :value="startDate"></datepicker>
+      <input type="date" :value="startDate && startDate.toISOString().split('T')[0]"
+                     @input="startDate = $event.target.valueAsDate" />
       <label>End Date:</label>
-      <datepicker :value="endDate"></datepicker>
+      <input type="date" :value="endDate && endDate.toISOString().split('T')[0]"
+                     @input="endDate = $event.target.valueAsDate" />
       <label>Status Id:</label>
       <input type="number" v-model="statusId" />
       <label>Project URL:</label>
@@ -25,6 +27,14 @@
       <input type="checkbox" v-model="isHidden" />
       <button @click.prevent="submitNewProject">Submit</button>
     </form>
+    
+    <p>
+      Start Date: {{ startDate }}
+  </p>
+    <p>
+      End Date: {{ endDate }}
+  </p>
+    
     
     <h3>
       {{ isHidden }}  
@@ -51,8 +61,8 @@
   /* NPM */
   import * as slug from 'slug'
   import * as snake from 'snakecase-keys'
-  import Datepicker from 'vuejs-datepicker'
-
+  
+  
   export default {
     data() {
       return {
@@ -71,7 +81,6 @@
       }
     },
     components: {
-      Datepicker
     },
     computed: {
       autoSlug() {
@@ -89,10 +98,10 @@
           this.autofillSlug = true
         }
       },
-      submitNewProject: async function() {
+      submitNewProject: async function() {     
         var response = await(api.sendData(snake(this.$data), '/v1/portfolio/projects/new/'))
         if (response.success) {
-          this.$router.push({ path: `/portfolio/${response.slug}` })
+          this.$router.push({ path: '/portfolio/${response.slug}' })
         } else {
           alert("Error: " + response[0].Error)
         }
