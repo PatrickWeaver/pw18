@@ -3,6 +3,7 @@
     <project-header
       :project="project"
       :cover="cover"
+      @filter-by="filterBy"
       @activate-project="activateProject"
     ></project-header>
     <portfolio-admin
@@ -54,6 +55,9 @@
       },
       editProject() {
         this.$emit('edit-project', this.project.slug)
+      },
+      filterBy(tagSlug) {
+        this.$emit('filter-by', tagSlug)
       }
     }
   }

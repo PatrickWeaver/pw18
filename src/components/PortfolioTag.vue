@@ -1,7 +1,12 @@
 <template>
 
-  <div :style="'border: 1px solid black; padding: 10px 15px; display: inline-block; background-color: ' + color">
-    <a :href="'/portfolio?filter=' + tag.slug" >{{ tag.name }}</a>
+  <div >
+    <a
+      @click.prevent="filterBy"
+      :href="'/portfolio?filter=' + tag.slug"
+      :style="'border: 1px solid black; padding: 10px 15px; display: inline-block; background-color: ' + color" >
+      {{ tag.name }}
+    </a>
   </div>
 
 </template>
@@ -19,6 +24,11 @@
       'tag'
     ],
     components: {
+    },
+    methods: {
+      filterBy() {
+        this.$emit('filter-by', this.tag.slug)
+      }
     }
   }
 

@@ -1,8 +1,12 @@
 <template>
   <div v-if="project" class="portfolio-project">
-    
-    <project-header :project="project" :cover="cover" ></project-header>
-    
+
+    <project-header
+      @filter-by="filterBy"
+      :project="project"
+      :cover="cover"
+    ></project-header>
+
     <p v-if="project.description" v-html="project.description.html"></p>
 
     <ul>
@@ -33,11 +37,11 @@
 </template>
 
 <script>
-  
+
   /* Helpers */
   import api from '../helpers/api'
   import findPortfolioProjectCover from '../helpers/findPortfolioProjectCover'
-  
+
   /* Components */
   import PortfolioAdmin from './PortfolioAdmin.vue'
   import PortfolioImage from './PortfolioImage.vue'
@@ -45,11 +49,11 @@
   import ProjectHeader from './PortfolioProjectHeader.vue'
   import UrlWithLabel from './UrlWithLabel.vue'
   import YearDateRange from './YearDateRange.vue'
-  
+
   export default {
     data() {
       return {
-        project: null 
+        project: null
       }
     },
     computed: {
@@ -75,10 +79,13 @@
         this.project = api_data.project
       },
       deleteProject() {
-        this.$emit('delete-project', this.project) 
+        this.$emit('delete-project', this.project)
       },
       editProject() {
-        this.$emit('edit-project', this.project.slug) 
+        this.$emit('edit-project', this.project.slug)
+      },
+      filterBy(tagSlug) {
+        this.$emit('filter-by', tagSlug)
       }
     },
     components: {
@@ -89,6 +96,6 @@
       UrlWithLabel,
       YearDateRange
     }
-  }  
+  }
 
 </script>

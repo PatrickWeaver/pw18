@@ -5,7 +5,10 @@
     <portfolio-image v-if="cover" :image="cover" ></portfolio-image>
 
     <h4>
-      <portfolio-tag :tag="project.status" ></portfolio-tag>
+      <portfolio-tag
+        @filter-by="filterBy"
+        :tag="project.status"
+      ></portfolio-tag>
     </h4>
 
     <h4>
@@ -17,7 +20,10 @@
 
     <ul class="tag-list">
       <li v-for="(tag, index) in project.tags">
-        <portfolio-tag v-bind:tag="tag" ></portfolio-tag>
+        <portfolio-tag
+          @filter-by="filterBy"
+          :tag="tag"
+        ></portfolio-tag>
       </li>
     </ul>
 
@@ -53,7 +59,11 @@
     methods: {
       activateProject (event) {
         this.$emit('activate-project', this.project.slug)
+      },
+      filterBy (tagSlug) {
+        this.$emit('filter-by', tagSlug)
       }
+
     }
   }
 

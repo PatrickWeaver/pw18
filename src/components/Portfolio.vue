@@ -6,6 +6,7 @@
       <portfolio-project
         id="active-project"
         :slug="activeProjectSlug"
+        @filter-by="filterBy"
         @delete-project="findAndDeleteProject"
         @edit-project="editProject"
       ></portfolio-project>
@@ -18,6 +19,7 @@
           :index="index"
           :project="project"
           :hide="filterProject(index)"
+          @filter-by="filterBy"
           @activate-project="activateProject"
           @delete-project="deleteProject"
           @edit-project="editProject"
@@ -57,7 +59,7 @@
     ],
     watch: {
       // call again the method if the route changes
-      '$route': 'getPortfolioIndex'
+      //'$route': 'getPortfolioIndex'
     },
     methods: {
       async getPortfolioIndex() {
@@ -82,7 +84,10 @@
         }
       },
       editProject(slug) {
-        this.$router.push({ path: '/portfolio/' + slug + '/edit'})
+        this.$router.push({ path: '/portfolio/' + slug + '/edit' })
+      },
+      filterBy(tagSlug) {
+        this.$router.push({ path: '/portfolio?filter=' + tagSlug })
       },
       filterProject(index) {
         // Return false to NOT filter out project
