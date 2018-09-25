@@ -15,14 +15,14 @@
 </template>
 
 <script>
-  
+
    /* Components */
   import BlogPostPreview from './BlogPostPreview.vue'
   import BlogPost from './BlogPost.vue'
-  
+
   /* Helpers */
   import api from '../helpers/api'
-  
+
   export default {
     data() {
       return {
@@ -49,7 +49,7 @@
         }
       },
       activatePost(slug) {
-        this.$router.push({ path: `/blog/${slug}` })
+        this.$router.push({ path: '/blog/' + slug })
       }
     },
     components: {

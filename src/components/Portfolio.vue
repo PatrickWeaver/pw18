@@ -1,5 +1,5 @@
 <template>
-  
+
   <div>
     <h2>Portfolio</h2>
     <div v-if="activeProjectSlug">
@@ -28,14 +28,14 @@
 </template>
 
 <script>
-  
+
   /* Components */
   import PortfolioProjectIndex from './PortfolioProjectIndex.vue'
   import PortfolioProject from './PortfolioProject.vue'
-  
+
   /* Helpers */
   import api from '../helpers/api'
-  
+
   export default {
     data: () => {
       return {
@@ -65,7 +65,7 @@
         }
       },
       activateProject(slug) {
-        this.$router.push({ path: `/portfolio/${slug}` })
+        this.$router.push({ path: '/portfolio/' + slug })
       },
       findAndDeleteProject(project) {
         this.deleteProject(project.slug, this.list.indexOf(project))
@@ -82,7 +82,7 @@
       editProject(slug) {
         this.$router.push({ path: '/portfolio/' + slug + '/edit'})
       }
-        
+
     },
     components: {
       PortfolioProjectIndex,
