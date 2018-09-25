@@ -27,42 +27,42 @@
       <input type="checkbox" v-model="isHidden" />
       <button @click.prevent="submitNewProject">Submit</button>
     </form>
-    
+
     <p>
       Start Date: {{ startDate }}
   </p>
     <p>
       End Date: {{ endDate }}
   </p>
-    
-    
+
+
     <h3>
-      {{ isHidden }}  
+      {{ isHidden }}
     </h3>
     <h1>
-      {{ name }}  
+      {{ name }}
     </h1>
     <h2>
       {{ slug }}
     </h2>
     <p>
-      {{ description }} 
+      {{ description }}
     </p>
 
-  
+
   </div>
 </template>
 
 <script>
-  
+
   /* Helpers */
   import api from '../helpers/api'
-  
+
   /* NPM */
   import * as slug from 'slug'
   import * as snake from 'snakecase-keys'
-  
-  
+
+
   export default {
     data() {
       return {
@@ -77,8 +77,17 @@
         projectUrl: '',
         sourceUrl: '',
         isHidden: false,
-        
+
       }
+    },
+    created() {
+      if (this.activeProjectSlug) {
+        this.getPortfolioProject()
+      }
+    },
+    watch: {
+      // call again the method if the route changes
+      '$route': 'getPortfolioProject'
     },
     components: {
     },
@@ -98,15 +107,35 @@
           this.autofillSlug = true
         }
       },
-      submitNewProject: async function() {     
-        var response = await(api.sendData(snake(this.$data), '/v1/portfolio/projects/new/'))
+      async getPortfolioProject() {
+        var api_data = await(api.getData('/v1/portfolio/projects/' + this.activeProjectSlug ))
+        this.name = api_data.project.name
+        this.slug = api_data.project.slug
+        this.description = api_data.project.description.markdown
+        this.startDate = new Date(api_data.project.start_date)
+        this.endDate = new Date(api_data.project.end_date)
+        this.statusId = api_data.project.status_id
+        this.projectUrl = api_data.project.project_url
+        this.sourceUrl = api_data.project.source_url
+        this.isHidden = api_data.project.is_hidden
+      },
+      submitNewProject: async function() {
+        var path = '/v1/portfolio/projects/new/'
+        if (this.activeProjectSlug) {
+          path = '/v1/portfolio/projects/' + this.activeProjectSlug + '/edit/'
+        }
+        var response = await(api.sendData(snake(this.$data), path))
         if (response.success) {
-          this.$router.push({ path: '/portfolio/${response.slug}' })
+          console.log(response)
+          this.$router.push({ path: '/portfolio/' + response.slug })
         } else {
           alert("Error: " + response[0].Error)
         }
       }
     },
+    props: [
+      'activeProjectSlug'
+    ],
     watch: {
       autoSlug() {
         this.updateSlug()
