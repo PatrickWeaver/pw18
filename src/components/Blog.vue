@@ -3,11 +3,11 @@
   <div>
     <h2>Blog</h2>
     <div v-if="activePostSlug">
-      <BlogPost :slug="activePostSlug"></BlogPost>
+      <blog-post :slug="activePostSlug"></blog-post>
     </div>
     <div v-else>
       <ul>
-        <BlogPostPreview v-for="(post, index) in list" :key="post.slug" :post="post" @activate-post="activatePost"></BlogPostPreview>
+        <blog-post-preview v-for="(post, index) in list" :key="post.slug" :post="post" @activate-post="activatePost"></blog-post-preview>
       </ul>
     </div>
   </div>

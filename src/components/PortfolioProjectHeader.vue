@@ -2,22 +2,22 @@
   <div v-if="project">
     <h3><a @click.prevent="activateProject" :href="'/portfolio/' + project.slug" >{{ project.name }}</a></h3>
 
-    <PortfolioImage v-if="cover" v-bind:image=cover ></PortfolioImage>
+    <portfolio-image v-if="cover" :image="cover" ></portfolio-image>
     
     <h4>
-      <PortfolioTag v-bind:tag=project.status ></PortfolioTag>
+      <portfolio-tag :tag="project.status" ></portfolio-tag>
     </h4>
 
     <h4>
-      <YearDateRange
-        v-bind:startString=project.start_date
-        v-bind:endString=project.end_date
-      ></YearDateRange>
+      <year-date-range
+        :start-string="project.start_date"
+        :end-string="project.end_date"
+      ></year-date-range>
     </h4>
 
     <ul class="tag-list">
       <li v-for="(tag, index) in project.tags">
-        <PortfolioTag v-bind:tag=tag ></PortfolioTag>
+        <portfolio-tag v-bind:tag="tag" ></portfolio-tag>
       </li>
     </ul>
     

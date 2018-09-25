@@ -2,7 +2,7 @@
 
   <div>
     <h1>Patrick Weaver</h1>
-    <TopMenu></TopMenu>
+    <top-menu></top-menu>
     <router-view></router-view>
   </div>
 
