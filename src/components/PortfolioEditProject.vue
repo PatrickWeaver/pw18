@@ -28,27 +28,15 @@
       <button @click.prevent="submitNewProject">Submit</button>
     </form>
 
-    <p>
-      Start Date: {{ startDate }}
-  </p>
-    <p>
-      End Date: {{ endDate }}
-  </p>
+    <ul class="tag-list">
+      <li v-for="(tag, index) in tags">
+        <portfolio-tag
+          :tag="tag"
+        ></portfolio-tag>
+        <button @click="removeTag(tag.slug)">Remove</button>
+      </li>
 
-
-    <h3>
-      {{ isHidden }}
-    </h3>
-    <h1>
-      {{ name }}
-    </h1>
-    <h2>
-      {{ slug }}
-    </h2>
-    <p>
-      {{ description }}
-    </p>
-
+    </ul>
 
   </div>
 </template>
@@ -61,6 +49,9 @@
   /* NPM */
   import * as slug from 'slug'
   import * as snake from 'snakecase-keys'
+
+  /* Components */
+  import PortfolioTag from './PortfolioTag.vue'
 
 
   export default {
@@ -77,6 +68,7 @@
         projectUrl: '',
         sourceUrl: '',
         isHidden: false,
+        tags: []
 
       }
     },
@@ -90,6 +82,7 @@
       '$route': 'getPortfolioProject'
     },
     components: {
+      PortfolioTag
     },
     computed: {
       autoSlug() {
@@ -97,12 +90,12 @@
       }
     },
     methods: {
-      updateSlug: function() {
+      updateSlug() {
         if (this.autofillSlug) {
           this.slug = slug(this.name)
         }
       },
-      checkForAutofillSlug: function() {
+      checkForAutofillSlug() {
         if (this.slug === slug(this.name)) {
           this.autofillSlug = true
         }
@@ -118,8 +111,9 @@
         this.projectUrl = api_data.project.project_url
         this.sourceUrl = api_data.project.source_url
         this.isHidden = api_data.project.is_hidden
+        this.tags = api_data.project.tags
       },
-      submitNewProject: async function() {
+      async submitNewProject() {
         var path = '/v1/portfolio/projects/new/'
         if (this.activeProjectSlug) {
           path = '/v1/portfolio/projects/' + this.activeProjectSlug + '/edit/'
@@ -128,6 +122,16 @@
         if (response.success) {
           console.log(response)
           this.$router.push({ path: '/portfolio/' + response.slug })
+        } else {
+          alert("Error: " + response[0].Error)
+        }
+      },
+      async removeTag(tagSlug) {
+        var path = '/v1/portfolio/projects/' + this.slug + '/remove-tag/'
+        var body = {identifier: 'slug', value: tagSlug}
+        var response = await(api.sendData(body, path))
+        if (response.success) {
+          console.log(response)
         } else {
           alert("Error: " + response[0].Error)
         }
