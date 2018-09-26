@@ -1,24 +1,27 @@
 <template>
-  <div v-if="project">
-    <h3><a @click.prevent="activateProject" :href="'/portfolio/' + project.slug" >{{ project.name }}</a></h3>
+  <div v-if="project" class="portfolio-project-header">
+    <h3 class="portfolio-project-name">
+      <a @click.prevent="activateProject" :href="'/portfolio/' + project.slug" >
+        {{ project.name }}
+      </a>
+    </h3>
 
-    <portfolio-image v-if="cover" :image="cover" ></portfolio-image>
+    <portfolio-image v-if="cover" :image="cover" class="cover"></portfolio-image>
 
-    <h4>
-      <portfolio-tag
-        @filter-by="filterBy"
-        :tag="project.status"
-      ></portfolio-tag>
-    </h4>
+    <portfolio-tag
+      class="portfolio-status-tag"
+      @filter-by="filterBy"
+      :tag="project.status"
+    ></portfolio-tag>
 
-    <h4>
+    <h4 class="portfolio-project-date-range">
       <year-date-range
         :start-string="project.start_date"
         :end-string="project.end_date"
       ></year-date-range>
     </h4>
 
-    <ul class="tag-list">
+    <ul class="portfolio-project-tag-list">
       <li v-for="(tag, index) in project.tags">
         <portfolio-tag
           @filter-by="filterBy"
