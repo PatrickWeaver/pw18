@@ -3,7 +3,66 @@
 }
 
 body {
-  font-family: arial, sans-serif;
-  margin: 2em;
+  margin: 5px;
   background-color: #85fff8;
+  font-family: 'Yantramanav', sans-serif;
+  font-size: 150%;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+p {
+  line-height: 125%;
+}
+
+img, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+label, input {
+  display: block;
+}
+
+.url-with-label, code, pre {
+  overflow-wrap: break-word; 
+}
+
+
+/* - - - - - - - - - - */
+/* - - - Portfolio - - - */
+/* - - - - - - - - - - */
+
+.portfolio-project {
+  background-color: #f8f8f8;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.tag-list li {
+  display: inline-block;
+  margin: 5px;
+}
+  
+
+
+
+
+
+/* - - - - - - - - - - */
+/* - - - Uploads - - - */
+/* - - - - - - - - - - */
+
+#login-form {
+  margin: .5em 0;
+  display: block;
+}
+
+#login-form label, #login-form input {
+  display: block;
+  margin: .5em 0;
 }

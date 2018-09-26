@@ -1,10 +1,17 @@
-import Vue from 'vue';
+import * as settings from '../settings'
+import Vue from 'vue/dist/vue.js'
+import VueRouter from 'vue-router'
 
-console.log("index.js")
+import app from './components/App.vue'
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    message: 'Hello Vue!'
-  }
+import router from './router'
+
+Vue.use(VueRouter)
+
+const vm = new Vue({
+  el: '#vm',
+  router,
+  components: {
+    app
+  },
 })

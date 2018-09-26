@@ -1,0 +1,101 @@
+<template>
+  <div v-if="project" class="portfolio-project">
+
+    <project-header
+      @filter-by="filterBy"
+      :project="project"
+      :cover="cover"
+    ></project-header>
+
+    <p v-if="project.description" v-html="project.description.html"></p>
+
+    <ul>
+      <li>
+        <url-with-label
+          label="Project"
+          v-bind:url="project.project_url"
+        ></url-with-label>
+      </li>
+      <li>
+        <url-with-label
+          label="Source"
+          v-bind:url="project.source_url"
+        ></url-with-label>
+      </li>
+    </ul>
+
+    <ul class="image-list">
+      <li v-for="(image, index) in project.images">
+        <portfolio-image v-bind:image="image" ></portfolio-image>
+      </li>
+    </ul>
+    <portfolio-admin
+      @delete-project="deleteProject"
+      @edit-project="editProject"
+    ></portfolio-admin>
+  </div>
+</template>
+
+<script>
+
+  /* Helpers */
+  import api from '../helpers/api'
+  import findPortfolioProjectCover from '../helpers/findPortfolioProjectCover'
+
+  /* Components */
+  import PortfolioAdmin from './PortfolioAdmin.vue'
+  import PortfolioImage from './PortfolioImage.vue'
+  import PortfolioTag from './PortfolioTag.vue'
+  import ProjectHeader from './PortfolioProjectHeader.vue'
+  import UrlWithLabel from './UrlWithLabel.vue'
+  import YearDateRange from './YearDateRange.vue'
+
+  export default {
+    data() {
+      return {
+        project: null
+      }
+    },
+    computed: {
+      cover: function() {
+        return findPortfolioProjectCover(this.project.images)
+      }
+    },
+    props: [
+      'slug'
+    ],
+    created() {
+      // fetch the data when the view is created and the data is
+      // already being observed
+      this.getPortfolioProject()
+    },
+    watch: {
+      // call again the method if the route changes
+      '$route': 'getPortfolioProject'
+    },
+    methods: {
+      async getPortfolioProject() {
+        var api_data = await(api.getData('/v1/portfolio/projects/' + this.slug ))
+        this.project = api_data.project
+      },
+      deleteProject() {
+        this.$emit('delete-project', this.project)
+      },
+      editProject() {
+        this.$emit('edit-project', this.project.slug)
+      },
+      filterBy(tagSlug) {
+        this.$emit('filter-by', tagSlug)
+      }
+    },
+    components: {
+      PortfolioAdmin,
+      PortfolioImage,
+      PortfolioTag,
+      ProjectHeader,
+      UrlWithLabel,
+      YearDateRange
+    }
+  }
+
+</script>
