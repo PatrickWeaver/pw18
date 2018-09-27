@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>
-      New Project
+      Edit/New Project
     </h2>
 
     <form>
@@ -63,7 +63,6 @@
         description: '',
         startDate: new Date(),
         endDate: new Date(),
-        // Replace with picker
         statusId: null,
         projectUrl: '',
         sourceUrl: '',

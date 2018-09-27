@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 /* Pages */
 import Blog from './components/Blog.vue'
 import BlogPost from './components/BlogPost.vue'
+import BlogEditPost from './components/BlogEditPost.vue'
 import Login from './components/Login.vue'
 import Logout from './components/Logout.vue'
 import Portfolio from './components/Portfolio.vue'
@@ -12,7 +13,9 @@ import Upload from './components/Upload.vue'
 
 const routes = [
   { path: '/blog', component: Blog },
+  { path: '/blog/new', component: BlogEditPost },
   { path: '/blog/:activePostSlug', component: Blog, props: true },
+  { path: '/blog/:activePostSlug/edit', component: BlogEditPost, props: true },
   { path: '/portfolio', component: Portfolio },
   { path: '/portfolio/new', component: PortfolioEditProject },
   { path: '/portfolio/:activeProjectSlug', component: Portfolio, props: true },

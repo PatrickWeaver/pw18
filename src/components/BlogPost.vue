@@ -8,7 +8,8 @@
     >⇦ Back</a>
     <h3>{{ post.title }}</h3>
     <h5>{{ post.post_date }}</h5>
-    <p v-if="post.body" v-html="post.body.html" class="blog-post-body"></p>
+    <div v-if="post.summary" v-html="post.summary.html" class="blog-post-summary"></div>
+    <div v-if="post.body" v-html="post.body.html" class="blog-post-body"></div>
     <object-admin
       v-if="admin"
       @delete="deletePost"
@@ -72,6 +73,18 @@
 
 
 <style>
-
+  .blog-post-summary {
+    background-color: white;
+    margin-bottom: 2em;
+    padding: .5em 1em;
+  }
+  
+  .blog-post-summary p {
+    margin: .5em 0; 
+  }
+  
+  .blog-post-body {
+    font-family: serif; 
+  }
 
 </style>
