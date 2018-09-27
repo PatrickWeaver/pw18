@@ -5,8 +5,9 @@
       Admin
     </h6>
     <h1>Patrick Weaver</h1>
-    <top-menu></top-menu>
+    <top-menu :admin="admin"></top-menu>
     <router-view
+      :admin="admin"
       @login="login"
       @logout="logout"
     ></router-view>

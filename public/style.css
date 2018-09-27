@@ -3,11 +3,12 @@
 }
 
 body {
-  margin: 5px;
+  padding: 5px;
   background-color: #85fff8;
   font-family: 'Yantramanav', sans-serif;
   font-size: 150%;
   max-width: 900px;
+  min-width: 300px;
   margin: 20px auto;
 }
 
@@ -38,104 +39,9 @@ label, input {
 /* - - - Portfolio - - - */
 /* - - - - - - - - - - */
 
-.portfolio-project {
+.portfolio-project, .blog-post, .blog-post-preview {
   background-color: #f8f8f8;
   margin: 10px 0;
   padding: 10px;
   border-radius: 10px;
-}
-
-.portfolio-project-header {
-  display: grid;
-  grid-template-columns: 50% 50%;
-}
-
-.portfolio-project-name {
-  grid-column-start: 1;
-  grid-column-end: span 1;
-  grid-row-start: 1;
-  grid-row-end: 2;
-}
-
-.portfolio-project .cover {
-  grid-column-start: 2;
-  grid-column-end: span 1;
-  grid-row-start: 1;
-  grid-row-end: 5;
-  max-height: 500px;
-  margin: 0 auto;
-}
-
-.portfolio-status-tag {
-  grid-column-start: 1;
-  grid-column-end: span 1;
-  grid-row-start: 2;
-  grid-row-end: 3;
-}
-
-.portfolio-project-date-range {
-  grid-column-start: 1;
-  grid-column-end: span 1;
-  grid-row-start: 3;
-  grid-row-end: 4;
-}
-
-.portfolio-project-tag-list {
-  grid-column-start: 1;
-  grid-column-end: span 1;
-  grid-row-start: 4;
-  grid-row-end: 5;
-}
-
-.portfolio-project-tag-list li {
-  display: inline-block;
-  margin: 5px;
-}
-  
-@media (max-width: 768px) { 
-  
-  .portfolio-project-header {
-    grid-template-columns: 100%;
-  }
-
-  .portfolio-project .cover {
-    grid-column-start: 1;
-    grid-column-end: span 1;
-    grid-row-start: 2;
-    grid-row-end: 3;
-  }
-
-  .portfolio-status-tag {
-    grid-row-start: 3;
-    grid-row-end: 4;
-  }
-
-  .portfolio-project-date-range {
-    grid-row-start: 4;
-    grid-row-end: 5;
-  }
-
-  .portfolio-project-tag-list {
-    grid-row-start: 5;
-    grid-row-end: 6;
-  }
-  
-
-}
-
-
-
-
-/* - - - - - - - - - - */
-/* - - - Uploads - - - */
-/* - - - - - - - - - - */
-
-#login-form {
-  margin: .5em 0;
-  display: block;
-}
-
-#login-form label, #login-form input {
-  display: block;
-  margin: .5em 0;
 }

@@ -3,11 +3,26 @@
   <div>
     <h2>Blog</h2>
     <div v-if="activePostSlug">
-      <blog-post :slug="activePostSlug"></blog-post>
+      <blog-post
+        :index-loaded="list.length === 0 ? false : true"
+        :slug="activePostSlug"
+        :admin="admin"
+        @return-to-index="returnToIndex"
+        @edit="editPost"
+        @delete="findAndDeletePost"
+      ></blog-post>
     </div>
     <div v-else>
       <ul>
-        <blog-post-preview v-for="(post, index) in list" :key="post.slug" :post="post" @activate-post="activatePost"></blog-post-preview>
+        <blog-post-preview
+          v-for="(post, index) in list"
+          :key="post.slug"
+          :post="post"
+          :admin="admin"
+          @activate-post="activatePost"
+          @edit="editPost"
+          @delete="deletePost"
+        ></blog-post-preview>
       </ul>
     </div>
   </div>
@@ -35,7 +50,8 @@
       this.getBlogPosts()
     },
     props: [
-      'activePostSlug'
+      'activePostSlug',
+      'admin'
     ],
     watch: {
       // call again the method if the route changes
@@ -50,6 +66,24 @@
       },
       activatePost(slug) {
         this.$router.push({ path: '/blog/' + slug })
+      },
+      returnToIndex() {
+         this.$router.push({ path: '/blog' })
+      },
+      findAndDeletePost(post) {
+        this.deletePost(post.slug, this.list.indexOf(post))
+      },
+      async deletePost(slug, index) {
+        var response = await(api.sendData({}, '/v1/blog/posts/' + slug + '/delete/'))
+        if (response.success) {
+          this.list.splice(index, 1)
+          this.$router.push({ path: '/blog' })
+        } else {
+          alert("Error: " + response.error)
+        }
+      },
+      editPost(slug) {
+        this.$router.push({ path: '/blog/' + slug + '/edit' })
       }
     },
     components: {

@@ -6,10 +6,11 @@
       @filter-by="filterBy"
       @activate-project="activateProject"
     ></project-header>
-    <portfolio-admin
-      @delete-project="deleteProject"
-      @edit-project="editProject"
-    ></portfolio-admin>
+    <object-admin
+      v-if="admin"
+      @delete="deleteProject"
+      @edit="editProject"
+    ></object-admin>
   </li>
 </template>
 
@@ -19,7 +20,7 @@
   import findPortfolioProjectCover from '../helpers/findPortfolioProjectCover'
 
   /* Components */
-  import PortfolioAdmin from './PortfolioAdmin.vue'
+  import ObjectAdmin from './ObjectAdmin.vue'
   import PortfolioImage from './PortfolioImage.vue'
   import PortfolioTag from './PortfolioTag.vue'
   import ProjectHeader from './PortfolioProjectHeader.vue'
@@ -35,10 +36,11 @@
     props: [
       'index',
       'project',
-      'hide'
+      'hide',
+      'admin'
     ],
     components: {
-      PortfolioAdmin,
+      ObjectAdmin,
       PortfolioImage,
       PortfolioTag,
       ProjectHeader,
@@ -51,10 +53,10 @@
         this.$emit('activate-project', slug)
       },
       deleteProject() {
-        this.$emit('delete-project', this.project.slug, this.index)
+        this.$emit('delete', this.project.slug, this.index)
       },
       editProject() {
-        this.$emit('edit-project', this.project.slug)
+        this.$emit('edit', this.project.slug)
       },
       filterBy(tagSlug) {
         this.$emit('filter-by', tagSlug)

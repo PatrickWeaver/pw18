@@ -4,25 +4,29 @@
     <h2>Portfolio</h2>
     <div v-if="activeProjectSlug">
       <portfolio-project
+        :admin="admin"
         id="active-project"
         :slug="activeProjectSlug"
+        :index-loaded="list.length === 0 ? false : true"
         @filter-by="filterBy"
         @delete-project="findAndDeleteProject"
         @edit-project="editProject"
+        @return-to-index="returnToIndex"
       ></portfolio-project>
     </div>
     <div v-else>
       <ul>
         <portfolio-project-index
           v-for="(project, index) in list"
+          :admin="admin"
           :key="project.slug"
           :index="index"
           :project="project"
           :hide="filterProject(index)"
           @filter-by="filterBy"
           @activate-project="activateProject"
-          @delete-project="deleteProject"
-          @edit-project="editProject"
+          @delete="deleteProject"
+          @edit="editProject"
         ></portfolio-project-index>
       </ul>
     </div>
@@ -55,7 +59,8 @@
       this.getPortfolioIndex()
     },
     props: [
-      'activeProjectSlug'
+      'activeProjectSlug',
+      'admin'
     ],
     watch: {
       // call again the method if the route changes
@@ -66,6 +71,7 @@
         if (!this.activeProjectSlug && this.list.length === 0) {
           var path = '/v1/portfolio/projects/'
           var api_data = await(api.getData(path))
+          console.log(api_data)
           this.list = api_data.projects_list
         }
       },
@@ -81,7 +87,7 @@
           this.list.splice(index, 1)
           this.$router.push({ path: '/portfolio' })
         } else {
-          alert("Error: " + response[0].Error)
+          alert("Error: " + response.error)
         }
       },
       editProject(slug) {
@@ -105,6 +111,9 @@
         } else {
           return false
         }
+      },
+      returnToIndex() {
+         this.$router.push({ path: '/portfolio' })
       }
 
     },

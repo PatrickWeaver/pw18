@@ -1,6 +1,10 @@
 <template>
   <div v-if="project" class="portfolio-project">
-
+    <a
+      v-if="indexLoaded"
+      href="/portfolio"
+      @click.prevent="$emit('return-to-index')"
+    >⇦ Back</a>
     <project-header
       @filter-by="filterBy"
       :project="project"
@@ -29,10 +33,11 @@
         <portfolio-image v-bind:image="image" ></portfolio-image>
       </li>
     </ul>
-    <portfolio-admin
-      @delete-project="deleteProject"
-      @edit-project="editProject"
-    ></portfolio-admin>
+    <object-admin
+      v-if="admin"
+      @delete="deleteProject"
+      @edit="editProject"
+    ></object-admin>
   </div>
 </template>
 
@@ -43,7 +48,7 @@
   import findPortfolioProjectCover from '../helpers/findPortfolioProjectCover'
 
   /* Components */
-  import PortfolioAdmin from './PortfolioAdmin.vue'
+  import ObjectAdmin from './ObjectAdmin.vue'
   import PortfolioImage from './PortfolioImage.vue'
   import PortfolioTag from './PortfolioTag.vue'
   import ProjectHeader from './PortfolioProjectHeader.vue'
@@ -62,7 +67,9 @@
       }
     },
     props: [
-      'slug'
+      'admin',
+      'slug',
+      'indexLoaded'
     ],
     created() {
       // fetch the data when the view is created and the data is
@@ -79,17 +86,20 @@
         this.project = api_data.project
       },
       deleteProject() {
-        this.$emit('delete-project', this.project)
+        this.$emit('delete', this.project)
       },
       editProject() {
-        this.$emit('edit-project', this.project.slug)
+        this.$emit('edit', this.project.slug)
       },
       filterBy(tagSlug) {
         this.$emit('filter-by', tagSlug)
+      },
+      returnToIndex() {
+         
       }
     },
     components: {
-      PortfolioAdmin,
+      ObjectAdmin,
       PortfolioImage,
       PortfolioTag,
       ProjectHeader,

@@ -4,7 +4,9 @@
     <a
       @click.prevent="filterBy"
       :href="'/portfolio?filter=' + tag.slug"
-      :style="'border: 1px solid black; padding: 10px 15px; display: inline-block; background-color: ' + color" >
+      :style="'background-color: ' + color"
+      class="tag"
+    >
       {{ tag.name }}
     </a>
   </div>
@@ -33,3 +35,12 @@
   }
 
 </script>
+
+<style>
+  .tag {
+    border: 1px solid black;
+    padding: 10px 15px;
+    display: inline-block;
+    text-decoration: none;
+  }
+</style>
