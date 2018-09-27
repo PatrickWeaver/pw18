@@ -59,12 +59,13 @@
     ],
     watch: {
       // call again the method if the route changes
-      //'$route': 'getPortfolioIndex'
+      '$route': 'getPortfolioIndex'
     },
     methods: {
       async getPortfolioIndex() {
         if (!this.activeProjectSlug && this.list.length === 0) {
-          var api_data = await(api.getData('/v1/portfolio/projects/'))
+          var path = '/v1/portfolio/projects/'
+          var api_data = await(api.getData(path))
           this.list = api_data.projects_list
         }
       },
