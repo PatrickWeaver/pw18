@@ -11,13 +11,13 @@ import PortfolioEditProject from './components/PortfolioEditProject.vue'
 import Upload from './components/Upload.vue'
 
 const routes = [
-  { path: '/blog', component: Blog, props: true },
+  { path: '/blog', component: Blog },
   { path: '/blog/:activePostSlug', component: Blog, props: true },
-  { path: '/portfolio', component: Portfolio, props: true },
-  { path: '/portfolio/new', component: PortfolioEditProject, props: true },
+  { path: '/portfolio', component: Portfolio },
+  { path: '/portfolio/new', component: PortfolioEditProject },
   { path: '/portfolio/:activeProjectSlug', component: Portfolio, props: true },
   { path: '/portfolio/:activeProjectSlug/edit', component: PortfolioEditProject, props: true },
-  { path: '/upload', component: Upload, props: true },
+  { path: '/upload', component: Upload },
   { path: '/login', component: Login },
   { path: '/logout', component: Logout }
 

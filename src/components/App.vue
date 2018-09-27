@@ -28,6 +28,12 @@
     components: {
       TopMenu
     },
+    created() {
+      var apiKey = localStorage.getItem('pw18-api-key')
+      if (apiKey) {
+        this.admin = true
+      }
+    },
     methods: {
       login(apiKey) {
         this.admin = true
@@ -35,7 +41,7 @@
         this.$router.push({ path: '/' })
       },
       logout() {
-        alert("LOGOUT!")
+        localStorage.removeItem('pw18-api-key')
         this.admin = false
         this.$router.push({ path: '/' })
       }
