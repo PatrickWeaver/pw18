@@ -6,7 +6,16 @@
       </a>
     </h3>
 
-    <portfolio-image v-if="cover" :image="cover" class="cover"></portfolio-image>
+    <a
+      @click.prevent="activateProject"
+      href="'/portfolio/' + project.slug"
+      class="cover"
+    >
+      <portfolio-image
+        v-if="cover"
+        :image="cover"
+      ></portfolio-image>
+    </a>
 
     <portfolio-tag
       class="status-tag"
@@ -21,7 +30,10 @@
       ></year-date-range>
     </h4>
 
-    <ul class="project-tag-list">
+    <ul
+      class="project-tag-list"
+      v-if="project.tags.length > 0"
+    >
       <li v-for="(tag, index) in project.tags">
         <portfolio-tag
           @filter-by="filterBy"
@@ -76,9 +88,11 @@
 <style>
   .project-header {
     display: grid;
-    grid-template-columns: 50% 50%;
-    padding: 20px 10px;
+    grid-template-columns: Calc(50% - 10px) Calc(50% - 10px);
+    padding: 10px 5px;
+    column-gap: 20px;
   }
+
   
   .project-name {
     margin-top: 0;
@@ -86,6 +100,15 @@
     grid-column-end: span 1;
     grid-row-start: 1;
     grid-row-end: 2;
+  }
+  
+  .project-name a {
+    color: #000;
+    text-decoration: none;
+  }
+  
+  .project-name a:hover {
+    text-decoration: underline;
   }
 
   .cover {
@@ -112,6 +135,8 @@
     grid-column-end: span 1;
     grid-row-start: 3;
     grid-row-end: 4;
+    margin: .5em 5px;
+    color: #333;
   }
 
   .project-tag-list {
@@ -123,7 +148,6 @@
 
   .project-tag-list li {
     display: inline-block;
-    margin: 5px;
   }
   
   @media (max-width: 768px) { 
@@ -147,6 +171,8 @@
     .project-date-range {
       grid-row-start: 4;
       grid-row-end: 5;
+      margin: .5em 5px;
+      font-weight: normal;
     }
 
     .project-tag-list {

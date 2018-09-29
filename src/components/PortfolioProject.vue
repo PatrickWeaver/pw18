@@ -10,17 +10,18 @@
       :project="project"
       :cover="cover"
     ></project-header>
-
-    <p v-if="project.description" v-html="project.description.html"></p>
-
-    <ul>
-      <li>
+    
+    <ul
+      class="link-list"
+      v-if="project.project_url || project.source_url"
+    >
+      <li v-if="project.project_url">
         <url-with-label
           label="Project"
           v-bind:url="project.project_url"
         ></url-with-label>
       </li>
-      <li>
+      <li v-if="project.source_url">
         <url-with-label
           label="Source"
           v-bind:url="project.source_url"
@@ -28,8 +29,16 @@
       </li>
     </ul>
 
+    <p
+      class="description"
+      v-if="project.description"
+      v-html="project.description.html"
+    ></p>
+
     <ul class="image-list">
-      <li v-for="(image, index) in project.images">
+      <li
+        v-for="(image, index) in project.images"
+      >
         <portfolio-image v-bind:image="image" ></portfolio-image>
       </li>
     </ul>
@@ -109,3 +118,30 @@
   }
 
 </script>
+
+
+<style>
+  
+  .link-list li {
+    margin: 5px;
+  }
+
+  .description {
+    padding: 0 5px;
+  }
+  
+  .image-list {
+    margin: 5px;
+  }
+  
+  .image-list li {
+    margin: 5px;
+    display: inline-block;
+  }
+  
+  .image-list li img {
+    display: block;
+    max-height: 200px;
+  }
+
+</style>

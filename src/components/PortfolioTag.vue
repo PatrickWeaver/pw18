@@ -1,6 +1,6 @@
 <template>
 
-  <div >
+  <div>
     <a
       @click.prevent="filterBy"
       :href="'/portfolio?filter=' + tag.slug"
@@ -10,6 +10,7 @@
       {{ tag.name }}
     </a>
   </div>
+
 
 </template>
 
@@ -38,9 +39,12 @@
 
 <style>
   .tag {
-    border: 1px solid black;
-    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 0px 5px;
     display: inline-block;
     text-decoration: none;
+    color: #333;
+    margin: 5px;
   }
 </style>
