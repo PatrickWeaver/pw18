@@ -9,7 +9,7 @@ body {
   font-size: 150%;
   max-width: 900px;
   min-width: 300px;
-  margin: 20px auto;
+  margin: 0 auto;
 }
 
 ul {
@@ -43,9 +43,9 @@ label, input, textarea {
 /* - - - Portfolio - - - */
 /* - - - - - - - - - - */
 
-.portfolio-project, .blog-post, .blog-post-preview {
+.portfolio-project, .blog-post, .blog-post-preview, #about-text {
   background-color: #fbfbfb;
   margin: 10px 0;
-  padding: 10px;
+  padding: 10px 15px;
   border-radius: 10px;
 }

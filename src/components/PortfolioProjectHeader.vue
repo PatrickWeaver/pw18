@@ -8,12 +8,13 @@
 
     <a
       @click.prevent="activateProject"
-      href="'/portfolio/' + project.slug"
+      :href="'/portfolio/' + project.slug"
       class="cover"
     >
       <portfolio-image
         v-if="cover"
         :image="cover"
+        :cover="true"
       ></portfolio-image>
     </a>
 
@@ -41,6 +42,12 @@
         ></portfolio-tag>
       </li>
     </ul>
+    <p
+       class="project-short-description"
+       v-if="project.short_description"
+    >
+      {{ project.short_description }}  
+    </p>
 
   </div>
 </template>
@@ -89,7 +96,6 @@
   .project-header {
     display: grid;
     grid-template-columns: Calc(50% - 10px) Calc(50% - 10px);
-    padding: 10px 5px;
     column-gap: 20px;
   }
 
@@ -150,6 +156,13 @@
     display: inline-block;
   }
   
+  .project-short-description {
+    grid-column-start: 1;
+    grid-coumn-end: span 1;
+    grid-row-start: 5;
+    grid-row-end: 6;
+  }
+  
   @media (max-width: 768px) { 
   
     .project-header {
@@ -178,6 +191,11 @@
     .project-tag-list {
       grid-row-start: 5;
       grid-row-end: 6;
+    }
+    
+    .project-short-description {
+      grid-row-start: 6;
+      grid-row-end: 7;
     }
   }
 

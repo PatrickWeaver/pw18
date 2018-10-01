@@ -4,7 +4,7 @@
     <h6 v-if="admin" id="admin-header">
       Admin
     </h6>
-    <h1>Patrick Weaver</h1>
+    <h1 id="site-title">Patrick Weaver</h1>
     <top-menu :admin="admin"></top-menu>
     <router-view
       :admin="admin"
@@ -34,6 +34,10 @@
       if (apiKey) {
         this.admin = true
       }
+      
+      if (this.$router.currentRoute.path === '/') {
+        this.$router.push({ path: '/about' })
+      }
     },
     methods: {
       login(apiKey) {
@@ -52,6 +56,15 @@
 </script>
 
 <style>
+  
+  #site-title {
+    margin: 0 10px 15px; 
+  }
+  
+  .page-title {
+    margin: 1em 10px;
+  }
+  
   #admin-header {
     margin: 0 10px 10px;
     background-color: #fff;

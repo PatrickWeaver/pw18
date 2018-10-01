@@ -1,8 +1,13 @@
 <template>
   <li class="blog-post-preview">
-    <h3><a :href="'/blog/' + post.slug" @click.prevent="activatePost" >{{ post.title }}</a></h3>
-    <h5>{{ post.post_date }}</h5>
-    <p><span v-html="postPreview"></span><a :href="'/blog/' + post.slug" >Read More</a></p>
+    <h3 class="post-title">
+      <a :href="'/blog/' + post.slug" @click.prevent="activatePost" >
+        {{ post.title }}
+      </a>
+    </h3>
+    <h5 class="post-date"><readable-date :date="post.post_date"></readable-date></h5>
+    <div v-html="postPreview"></div>
+    <p class="read-more"><a :href="'/blog/' + post.slug" >Read More</a></p>
     <object-admin
       v-if="admin"
       @delete="deletePost"
@@ -14,6 +19,7 @@
 <script>
   
   import ObjectAdmin from './ObjectAdmin.vue'
+  import ReadableDate from './ReadableDate.vue'
   
   export default {
     props: [
@@ -26,13 +32,14 @@
         if (this.post.summary != '') {
           return this.post.summary.html
         } else {
-          return this.post.post_preview
+          return '<p>' + this.post.post_preview + '</p>'
         }
       }
       
     },
     components: {
-      ObjectAdmin
+      ObjectAdmin,
+      ReadableDate
     },
     methods: {
       activatePost(event) {
@@ -48,3 +55,11 @@
   }  
 
 </script>
+
+<style>
+
+  p.read-more {
+    margin: -.5em 0 .5em;
+  }
+
+</style>

@@ -1,7 +1,7 @@
 <template>
 
   <div>
-    <h2>Blog</h2>
+    <h2 class="page-title">Blog</h2>
     <div v-if="activePostSlug">
       <blog-post
         :index-loaded="list.length === 0 ? false : true"
@@ -12,7 +12,7 @@
         @delete="findAndDeletePost"
       ></blog-post>
     </div>
-    <div v-else>
+    <div v-else-if="list.length > 0">
       <ul>
         <blog-post-preview
           v-for="(post, index) in list"
@@ -24,6 +24,9 @@
           @delete="deletePost"
         ></blog-post-preview>
       </ul>
+    </div>
+    <div v-else>
+      <p>{{ status }}</p>  
     </div>
   </div>
 
@@ -41,6 +44,7 @@
   export default {
     data() {
       return {
+        status: '',
         list: []
       }
     },
@@ -48,6 +52,10 @@
       // fetch the data when the view is created and the data is
       // already being observed
       this.getBlogPosts()
+      var loadingMessage = "Loading blog posts."
+      var errorMessage = "Error loading blog posts."
+      setTimeout(() => this.status = loadingMessage, 1 * 1000)
+      setTimeout(() => this.status = errorMessage, 10 * 1000)
     },
     props: [
       'activePostSlug',
@@ -93,3 +101,24 @@
   }
 
 </script>
+
+<style>
+  
+  .post-title {
+    margin: .5em 0;
+  }
+
+  .post-title a {
+    color: #000;
+    text-decoration: none;
+  }
+  
+  .post-date {
+    margin: .25em 0; 
+  }
+  
+  .post-title a:hover {
+    text-decoration: underline;
+  }
+
+</style>

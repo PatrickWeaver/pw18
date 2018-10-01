@@ -39,7 +39,11 @@
       <li
         v-for="(image, index) in project.images"
       >
-        <portfolio-image v-bind:image="image" ></portfolio-image>
+        <portfolio-image
+          v-bind:image="image"
+          :active-image-uuid="activeImageUuid"
+          :project-name="project.name"
+        ></portfolio-image>
       </li>
     </ul>
     <object-admin
@@ -47,7 +51,10 @@
       @delete="deleteProject"
       @edit="editProject"
     ></object-admin>
+    
   </div>
+
+
 </template>
 
 <script>
@@ -58,9 +65,9 @@
 
   /* Components */
   import ObjectAdmin from './ObjectAdmin.vue'
+  import ProjectHeader from './PortfolioProjectHeader.vue'
   import PortfolioImage from './PortfolioImage.vue'
   import PortfolioTag from './PortfolioTag.vue'
-  import ProjectHeader from './PortfolioProjectHeader.vue'
   import UrlWithLabel from './UrlWithLabel.vue'
   import YearDateRange from './YearDateRange.vue'
 
@@ -78,7 +85,8 @@
     props: [
       'admin',
       'slug',
-      'indexLoaded'
+      'indexLoaded',
+      'activeImageUuid'
     ],
     created() {
       // fetch the data when the view is created and the data is
@@ -109,9 +117,9 @@
     },
     components: {
       ObjectAdmin,
+      ProjectHeader,
       PortfolioImage,
       PortfolioTag,
-      ProjectHeader,
       UrlWithLabel,
       YearDateRange
     }
@@ -137,11 +145,6 @@
   .image-list li {
     margin: 5px;
     display: inline-block;
-  }
-  
-  .image-list li img {
-    display: block;
-    max-height: 200px;
   }
 
 </style>

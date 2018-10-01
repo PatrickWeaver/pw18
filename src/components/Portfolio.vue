@@ -1,20 +1,21 @@
 <template>
 
   <div>
-    <h2>Portfolio</h2>
+    <h2 class="page-title">Portfolio</h2>
     <div v-if="activeProjectSlug">
       <portfolio-project
         :admin="admin"
         id="active-project"
         :slug="activeProjectSlug"
         :index-loaded="list.length === 0 ? false : true"
+        :active-image-uuid="activeImageUuid"
         @filter-by="filterBy"
         @delete-project="findAndDeleteProject"
         @edit-project="editProject"
         @return-to-index="returnToIndex"
       ></portfolio-project>
     </div>
-    <div v-else>
+    <div v-else-if="list.length > 0">
       <ul>
         <portfolio-project-index
           v-for="(project, index) in list"
@@ -29,6 +30,9 @@
           @edit="editProject"
         ></portfolio-project-index>
       </ul>
+    </div>
+    <div v-else>
+      <p>{{ status }}</p> 
     </div>
   </div>
 
@@ -46,6 +50,7 @@
   export default {
     data: () => {
       return {
+        status: '',
         list: [],
         filter: null
       }
@@ -57,9 +62,14 @@
       // fetch the data when the view is created and the data is
       // already being observed
       this.getPortfolioIndex()
+      var loadingMessage = "Loading projects."
+      var errorMessage = "Error loading projects."
+      setTimeout(() => this.status = loadingMessage, 1 * 1000)
+      setTimeout(() => this.status = errorMessage, 10 * 1000)
     },
     props: [
       'activeProjectSlug',
+      'activeImageUuid',
       'admin'
     ],
     watch: {

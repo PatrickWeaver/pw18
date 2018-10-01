@@ -6,8 +6,12 @@
       href="/blog"
       @click.prevent="$emit('return-to-index')"
     >⇦ Back</a>
-    <h3>{{ post.title }}</h3>
-    <h5>{{ post.post_date }}</h5>
+    <h3 class="post-title">
+      <a :href="'/blog/' + post.slug" @click.prevent="" >
+        {{ post.title }}
+      </a>
+    </h3>
+    <h5 class="post-date"><readable-date :date="post.post_date"></readable-date></h5>
     <div v-if="post.summary" v-html="post.summary.html" class="blog-post-summary"></div>
     <div v-if="post.body" v-html="post.body.html" class="blog-post-body"></div>
     <object-admin
