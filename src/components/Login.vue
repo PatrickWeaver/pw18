@@ -37,7 +37,7 @@
           this.$emit('login', response.api_key)
         } else {
           console.log(response)
-          alert("Errorz: " + response.Error)
+          alert("Error: " + response.Error)
         }
     
       }
