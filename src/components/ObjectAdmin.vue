@@ -2,10 +2,10 @@
 
   <div>
     <ul>
-      <li><button @click="$emit('edit-project')">
+      <li><button @click="$emit('edit')">
         Edit
       </button></li>
-      <li><button @click="$emit('delete-project')">
+      <li><button @click="$emit('delete')">
         Delete
       </button></li>
     </ul>

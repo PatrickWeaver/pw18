@@ -3,10 +3,13 @@
 }
 
 body {
-  margin: 5px;
+  padding: 5px;
   background-color: #85fff8;
   font-family: 'Yantramanav', sans-serif;
   font-size: 150%;
+  max-width: 900px;
+  min-width: 300px;
+  margin: 0 auto;
 }
 
 ul {
@@ -23,8 +26,12 @@ img, iframe {
   height: auto;
 }
 
-label, input {
+label, input, textarea {
   display: block;
+  width: 100%;
+  font-size: 125%;
+  line-height: 115%;
+  padding: 3px;
 }
 
 .url-with-label, code, pre {
@@ -36,33 +43,9 @@ label, input {
 /* - - - Portfolio - - - */
 /* - - - - - - - - - - */
 
-.portfolio-project {
-  background-color: #f8f8f8;
+.portfolio-project, .blog-post, .blog-post-preview, #about-text {
+  background-color: #fbfbfb;
   margin: 10px 0;
-  padding: 10px;
+  padding: 10px 15px;
   border-radius: 10px;
-}
-
-.tag-list li {
-  display: inline-block;
-  margin: 5px;
-}
-  
-
-
-
-
-
-/* - - - - - - - - - - */
-/* - - - Uploads - - - */
-/* - - - - - - - - - - */
-
-#login-form {
-  margin: .5em 0;
-  display: block;
-}
-
-#login-form label, #login-form input {
-  display: block;
-  margin: .5em 0;
 }

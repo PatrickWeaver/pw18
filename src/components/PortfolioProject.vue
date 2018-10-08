@@ -1,22 +1,27 @@
 <template>
   <div v-if="project" class="portfolio-project">
-
+    <a
+      v-if="indexLoaded"
+      href="/portfolio"
+      @click.prevent="$emit('return-to-index')"
+    >⇦ Back</a>
     <project-header
       @filter-by="filterBy"
       :project="project"
       :cover="cover"
     ></project-header>
-
-    <p v-if="project.description" v-html="project.description.html"></p>
-
-    <ul>
-      <li>
+    
+    <ul
+      class="link-list"
+      v-if="project.project_url || project.source_url"
+    >
+      <li v-if="project.project_url">
         <url-with-label
           label="Project"
           v-bind:url="project.project_url"
         ></url-with-label>
       </li>
-      <li>
+      <li v-if="project.source_url">
         <url-with-label
           label="Source"
           v-bind:url="project.source_url"
@@ -24,16 +29,32 @@
       </li>
     </ul>
 
+    <p
+      class="description"
+      v-if="project.description"
+      v-html="project.description.html"
+    ></p>
+
     <ul class="image-list">
-      <li v-for="(image, index) in project.images">
-        <portfolio-image v-bind:image="image" ></portfolio-image>
+      <li
+        v-for="(image, index) in project.images"
+      >
+        <portfolio-image
+          v-bind:image="image"
+          :active-image-uuid="activeImageUuid"
+          :project-name="project.name"
+        ></portfolio-image>
       </li>
     </ul>
-    <portfolio-admin
-      @delete-project="deleteProject"
-      @edit-project="editProject"
-    ></portfolio-admin>
+    <object-admin
+      v-if="admin"
+      @delete="deleteProject"
+      @edit="editProject"
+    ></object-admin>
+    
   </div>
+
+
 </template>
 
 <script>
@@ -43,10 +64,10 @@
   import findPortfolioProjectCover from '../helpers/findPortfolioProjectCover'
 
   /* Components */
-  import PortfolioAdmin from './PortfolioAdmin.vue'
+  import ObjectAdmin from './ObjectAdmin.vue'
+  import ProjectHeader from './PortfolioProjectHeader.vue'
   import PortfolioImage from './PortfolioImage.vue'
   import PortfolioTag from './PortfolioTag.vue'
-  import ProjectHeader from './PortfolioProjectHeader.vue'
   import UrlWithLabel from './UrlWithLabel.vue'
   import YearDateRange from './YearDateRange.vue'
 
@@ -62,7 +83,10 @@
       }
     },
     props: [
-      'slug'
+      'admin',
+      'slug',
+      'indexLoaded',
+      'activeImageUuid'
     ],
     created() {
       // fetch the data when the view is created and the data is
@@ -79,23 +103,48 @@
         this.project = api_data.project
       },
       deleteProject() {
-        this.$emit('delete-project', this.project)
+        this.$emit('delete', this.project)
       },
       editProject() {
-        this.$emit('edit-project', this.project.slug)
+        this.$emit('edit', this.project.slug)
       },
       filterBy(tagSlug) {
         this.$emit('filter-by', tagSlug)
+      },
+      returnToIndex() {
+         
       }
     },
     components: {
-      PortfolioAdmin,
+      ObjectAdmin,
+      ProjectHeader,
       PortfolioImage,
       PortfolioTag,
-      ProjectHeader,
       UrlWithLabel,
       YearDateRange
     }
   }
 
 </script>
+
+
+<style>
+  
+  .link-list li {
+    margin: 5px;
+  }
+
+  .description {
+    padding: 0 5px;
+  }
+  
+  .image-list {
+    margin: 5px;
+  }
+  
+  .image-list li {
+    margin: 5px;
+    display: inline-block;
+  }
+
+</style>

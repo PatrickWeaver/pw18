@@ -1,30 +1,38 @@
 <template>
 
   <div>
-    <h2>Portfolio</h2>
+    <h2 class="page-title">Portfolio</h2>
     <div v-if="activeProjectSlug">
       <portfolio-project
+        :admin="admin"
         id="active-project"
         :slug="activeProjectSlug"
+        :index-loaded="list.length === 0 ? false : true"
+        :active-image-uuid="activeImageUuid"
         @filter-by="filterBy"
         @delete-project="findAndDeleteProject"
         @edit-project="editProject"
+        @return-to-index="returnToIndex"
       ></portfolio-project>
     </div>
-    <div v-else>
+    <div v-else-if="list.length > 0">
       <ul>
         <portfolio-project-index
           v-for="(project, index) in list"
+          :admin="admin"
           :key="project.slug"
           :index="index"
           :project="project"
           :hide="filterProject(index)"
           @filter-by="filterBy"
           @activate-project="activateProject"
-          @delete-project="deleteProject"
-          @edit-project="editProject"
+          @delete="deleteProject"
+          @edit="editProject"
         ></portfolio-project-index>
       </ul>
+    </div>
+    <div v-else>
+      <p>{{ status }}</p> 
     </div>
   </div>
 
@@ -42,6 +50,7 @@
   export default {
     data: () => {
       return {
+        status: '',
         list: [],
         filter: null
       }
@@ -53,18 +62,26 @@
       // fetch the data when the view is created and the data is
       // already being observed
       this.getPortfolioIndex()
+      var loadingMessage = "Loading projects."
+      var errorMessage = "Error loading projects."
+      setTimeout(() => this.status = loadingMessage, 1 * 1000)
+      setTimeout(() => this.status = errorMessage, 10 * 1000)
     },
     props: [
-      'activeProjectSlug'
+      'activeProjectSlug',
+      'activeImageUuid',
+      'admin'
     ],
     watch: {
       // call again the method if the route changes
-      //'$route': 'getPortfolioIndex'
+      '$route': 'getPortfolioIndex'
     },
     methods: {
       async getPortfolioIndex() {
         if (!this.activeProjectSlug && this.list.length === 0) {
-          var api_data = await(api.getData('/v1/portfolio/projects/'))
+          var path = '/v1/portfolio/projects/'
+          var api_data = await(api.getData(path))
+          console.log(api_data)
           this.list = api_data.projects_list
         }
       },
@@ -80,7 +97,7 @@
           this.list.splice(index, 1)
           this.$router.push({ path: '/portfolio' })
         } else {
-          alert("Error: " + response[0].Error)
+          alert("Error: " + response.error)
         }
       },
       editProject(slug) {
@@ -104,6 +121,9 @@
         } else {
           return false
         }
+      },
+      returnToIndex() {
+         this.$router.push({ path: '/portfolio' })
       }
 
     },

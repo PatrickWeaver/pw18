@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>
-      New Project
+      Edit/New Project
     </h2>
 
     <form>
@@ -63,7 +63,6 @@
         description: '',
         startDate: new Date(),
         endDate: new Date(),
-        // Replace with picker
         statusId: null,
         projectUrl: '',
         sourceUrl: '',
@@ -123,7 +122,7 @@
           console.log(response)
           this.$router.push({ path: '/portfolio/' + response.slug })
         } else {
-          alert("Error: " + response[0].Error)
+          alert("Error: " + response.error)
         }
       },
       async removeTag(tagSlug) {
@@ -133,7 +132,7 @@
         if (response.success) {
           console.log(response)
         } else {
-          alert("Error: " + response[0].Error)
+          alert("Error: " + response.error)
         }
       }
     },

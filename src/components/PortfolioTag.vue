@@ -1,13 +1,16 @@
 <template>
 
-  <div >
+  <div>
     <a
       @click.prevent="filterBy"
       :href="'/portfolio?filter=' + tag.slug"
-      :style="'border: 1px solid black; padding: 10px 15px; display: inline-block; background-color: ' + color" >
+      :style="'background-color: ' + color"
+      class="tag"
+    >
       {{ tag.name }}
     </a>
   </div>
+
 
 </template>
 
@@ -33,3 +36,15 @@
   }
 
 </script>
+
+<style>
+  .tag {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 0px 5px;
+    display: inline-block;
+    text-decoration: none;
+    color: #333;
+    margin: 5px;
+  }
+</style>
