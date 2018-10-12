@@ -1,3 +1,8 @@
+var ENV = process.env.ENV;
+if (ENV != 'GLITCH') {
+	require('dotenv').config()
+}
+
 var express = require('express');
 var app = express();
 var history = require('connect-history-api-fallback');
