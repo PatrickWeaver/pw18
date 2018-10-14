@@ -3,15 +3,8 @@
   <div>
     <h2 class="page-title">About</h2>
     
-    <div id="about-text">
-      <p>
-        This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text.
-      </p>
-      
-      <p>
-       This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. This is the about text. 
-      </p>
-    </div>
+    <blob id="about-text" :slug="'pw-18-about'">
+    </blob>
 
   </div>
 
@@ -19,17 +12,19 @@
 
 <script>
 
-  /* Helpers */
-  import api from '../helpers/api'
+  /* Components */
+  import Blob from './Blob.vue'
 
   export default {
     data() {
-      return {
-      }
+      return {}
     },
     methods: {
-      
+    },
+    components: {
+      Blob
     }
+
   }
 
 </script>
