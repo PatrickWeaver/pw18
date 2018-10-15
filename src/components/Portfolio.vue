@@ -10,8 +10,8 @@
         :index-loaded="list.length === 0 ? false : true"
         :active-image-uuid="activeImageUuid"
         @filter-by="filterBy"
-        @delete-project="findAndDeleteProject"
-        @edit-project="editProject"
+        @delete="findAndDeleteProject"
+        @edit="editProject"
         @return-to-index="returnToIndex"
       ></portfolio-project>
     </div>
