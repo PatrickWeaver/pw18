@@ -35,7 +35,7 @@
   #menu li {
     background-color: #fbfbfb;
     padding: 5px 10px;
-    margin: 0 5px;
+    margin: 5px 5px;
     border-radius: 3px;
     display: inline-block;
   }
