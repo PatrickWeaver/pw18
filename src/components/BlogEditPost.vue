@@ -72,13 +72,13 @@
           this.autofillSlug = true
         }
       },
-      async getBlogProject() {
+      async getBlogPost() {
         var api_data = await(api.getData('/v1/blog/posts/' + this.activePostSlug ))
         var post = api_data.post
         this.title = post.title
         this.slug = post.slug
-        this.summary = post.summary
-        this.description = post.description.markdown
+        this.summary = post.summary.markdown
+        this.body = post.body.markdown
         this.postDate = new Date(post.post_date)
         this.draft = post.draft
       },

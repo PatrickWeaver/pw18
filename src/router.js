@@ -30,15 +30,15 @@ const routes = [
     component: BlogEditPost
   },
   {
-    name: 'blog-post',
-    path: '/blog/:activePostSlug',
-    component: Blog,
-    props: true
-  },
-  {
     name: 'blog-edit-post',
     path: '/blog/:activePostSlug/edit',
     component: BlogEditPost,
+    props: true
+  },
+  {
+    name: 'blog-post',
+    path: '/blog/:activePostSlug',
+    component: Blog,
     props: true
   },
   {
@@ -51,10 +51,10 @@ const routes = [
     path: '/portfolio/new',
     component: PortfolioEditProject
   },
-  {
-    name: 'portfolio-project',
-    path: '/portfolio/:activeProjectSlug',
-    component: Portfolio,
+    {
+    name: 'portfolio-edit-project',
+    path: '/portfolio/:activeProjectSlug/edit',
+    component: PortfolioEditProject,
     props: true
   },
   {
@@ -64,9 +64,9 @@ const routes = [
     props: true
   },
   {
-    name: 'portfolio-edit-project',
-    path: '/portfolio/:activeProjectSlug/edit',
-    component: PortfolioEditProject,
+    name: 'portfolio-project',
+    path: '/portfolio/:activeProjectSlug',
+    component: Portfolio,
     props: true
   },
   {
