@@ -15,7 +15,7 @@
      --><a
           :href="projectPath"
           class="close-link"
-          @click="closeActiveImage"
+          @click.prevent="closeActiveImage"
         >
           ❌ Close
         </a>

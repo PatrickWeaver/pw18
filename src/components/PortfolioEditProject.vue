@@ -9,6 +9,8 @@
       <input type="text" v-model="name" @change="updateSlug" />
       <label>Slug:</label>
       <input type="text" v-model="slug" @focus="autofillSlug = false" @blur="checkForAutofillSlug"/>
+      <label>Short Description:</label>
+      <textarea v-model="shortDescription"></textarea>
       <label>Description:</label>
       <textarea v-model="description"></textarea>
       <label>Start Date:</label>
@@ -60,6 +62,7 @@
         name: '',
         slug: '',
         autofillSlug: true,
+        shortDescription: '',
         description: '',
         startDate: new Date(),
         endDate: new Date(),
@@ -103,6 +106,7 @@
         var api_data = await(api.getData('/v1/portfolio/projects/' + this.activeProjectSlug ))
         this.name = api_data.project.name
         this.slug = api_data.project.slug
+        this.shortDescription = api_data.project.short_description.markdown
         this.description = api_data.project.description.markdown
         this.startDate = new Date(api_data.project.start_date)
         this.endDate = new Date(api_data.project.end_date)
