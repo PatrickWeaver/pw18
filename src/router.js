@@ -5,6 +5,7 @@ import About from './components/About.vue'
 import Blog from './components/Blog.vue'
 import BlogPost from './components/BlogPost.vue'
 import BlogEditPost from './components/BlogEditPost.vue'
+import CustomPage from './components/CustomPage.vue'
 import Login from './components/Login.vue'
 import Logout from './components/Logout.vue'
 import Portfolio from './components/Portfolio.vue'
@@ -82,6 +83,12 @@ const routes = [
     name: 'logout',
     path: '/logout',
     component: Logout
+  },
+  {
+    name: 'custom-page',
+    path: '/:customPageSlug',
+    component: CustomPage,
+    props: true
   }
 ]
 
