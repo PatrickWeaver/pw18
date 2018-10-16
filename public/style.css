@@ -17,8 +17,17 @@ ul {
   padding: 0;
 }
 
+.text ul {
+  list-style-type: disc;
+}
+
+.text ul, .text ol {
+  padding-left: 40px;
+  line-height: 150%;
+}
+
 p {
-  line-height: 125%;
+  line-height: 150%;
 }
 
 img, iframe {

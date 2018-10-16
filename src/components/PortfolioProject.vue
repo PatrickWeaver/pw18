@@ -30,7 +30,7 @@
     </ul>
 
     <p
-      class="description"
+      class="description text"
       v-if="project.description"
       v-html="project.description.html"
     ></p>
@@ -38,6 +38,7 @@
     <ul class="image-list">
       <li
         v-for="(image, index) in project.images"
+        :key="image.uuid"
       >
         <portfolio-image
           v-bind:image="image"

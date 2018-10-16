@@ -12,8 +12,8 @@
       </a>
     </h3>
     <h5 class="post-date"><readable-date :date="post.post_date"></readable-date></h5>
-    <div v-if="post.summary" v-html="post.summary.html" class="blog-post-summary"></div>
-    <div v-if="post.body" v-html="post.body.html" class="blog-post-body"></div>
+    <div v-if="post.summary" v-html="post.summary.html" class="blog-post-summary text"></div>
+    <div v-if="post.body" v-html="post.body.html" class="blog-post-body text"></div>
     <object-admin
       v-if="admin"
       @delete="deletePost"

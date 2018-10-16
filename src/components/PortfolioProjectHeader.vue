@@ -35,7 +35,10 @@
       class="project-tag-list"
       v-if="project.tags.length > 0"
     >
-      <li v-for="(tag, index) in project.tags">
+      <li
+        v-for="(tag, index) in project.tags"
+        :key="tag.slug"
+      >
         <portfolio-tag
           @filter-by="filterBy"
           :tag="tag"
