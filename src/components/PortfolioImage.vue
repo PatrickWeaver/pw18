@@ -73,13 +73,15 @@
     },
     methods: {
       checkActiveImage() {
+        var appElement = document.getElementById('app')
         if (this.isActiveImage) {
           this.active = true
           this.oneActive = true
-          document.documentElement.style.overflow = 'hidden'
+
+          appElement.style.overflow = 'hidden'
           return true
         } else {
-          document.documentElement.style.overflow = 'auto'
+          appElement.style.overflow = 'auto'
           this.active = false;
           return false
         }
@@ -113,6 +115,7 @@
 
 
 <style>
+
 
   .active-image-container {
     position: fixed;

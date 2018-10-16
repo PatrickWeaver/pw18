@@ -1,6 +1,6 @@
 <template>
 
-  <div>
+  <div id="app">
     <h6 v-if="admin" id="admin-header">
       Admin
     </h6>
