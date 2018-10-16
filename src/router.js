@@ -22,7 +22,7 @@ const routes = [
     path: '/about',
     component: Page,
     props: {
-      blobSlug: 'pw-18-about',
+      blobSlug: 'about',
       title: 'About'
     }
   },
@@ -58,7 +58,7 @@ const routes = [
     path: '/now',
     component: Page,
     props: {
-      blobSlug: 'pw-18-now',
+      blobSlug: 'now',
       title: 'Now'
     }
   },

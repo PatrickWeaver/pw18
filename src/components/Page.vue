@@ -3,7 +3,7 @@
   <div>
     <h2 v-if="title" class="page-title">{{ title }}</h2>
     
-    <blob id="about-text" :slug="blobSlug">
+    <blob id="about-text" :slug="slug">
     </blob>
 
   </div>
@@ -18,6 +18,11 @@
   export default {
     data() {
       return {}
+    },
+    computed: {
+      slug: function() {
+        return 'pw-18-' + this.blobSlug
+      }
     },
     methods: {
     },
