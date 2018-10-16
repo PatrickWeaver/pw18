@@ -79,7 +79,7 @@
         this.slug = post.slug
         this.summary = post.summary.markdown
         this.body = post.body.markdown
-        this.postDate = new Date(post.post_date)
+        this.postDate = post.post_date ? new Date(post.post_date) : null
         this.draft = post.draft
       },
       async submitNewPost() {

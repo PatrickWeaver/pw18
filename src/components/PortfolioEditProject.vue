@@ -108,8 +108,8 @@
         this.slug = api_data.project.slug
         this.shortDescription = api_data.project.short_description
         this.description = api_data.project.description.markdown
-        this.startDate = new Date(api_data.project.start_date)
-        this.endDate = new Date(api_data.project.end_date)
+        this.startDate = api_data.project.start_date ? new Date(api_data.project.start_date) : null
+        this.endDate = api_data.project.end_date ? new Date(api_data.project.end_date) : null
         this.statusId = api_data.project.status_id
         this.projectUrl = api_data.project.project_url
         this.sourceUrl = api_data.project.source_url
