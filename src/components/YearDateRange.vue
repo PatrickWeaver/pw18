@@ -25,7 +25,7 @@
         if (!startString) {
           return endYear
         }
-        if (startYear === endYear) {
+        if (startYear >= endYear) {
           return startYear
         } else {
           return "" + startYear + " - " + endYear
