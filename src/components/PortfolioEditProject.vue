@@ -30,6 +30,7 @@
       <button @click.prevent="submitNewProject">Submit</button>
     </form>
 
+    <hr/>
     <ul class="tag-list">
       <li
         v-for="(tag, index) in tags"
@@ -40,8 +41,21 @@
         ></portfolio-tag>
         <button @click="removeTag(tag.slug, index)">Remove</button>
       </li>
-
     </ul>
+    <hr/>
+    <ul class="image-list">
+      <li
+        v-for="(image, index) in images"
+        :key="image.uuid"
+      >
+        <portfolio-image
+          v-bind:image="image"
+          :active-image-uuid="false"
+          :project-name="name"
+        ></portfolio-image>
+        <button @click="removeImage(image.uuid, index)">Remove</button>
+      </li>
+    </ul> 
 
   </div>
 </template>
@@ -57,6 +71,7 @@
 
   /* Components */
   import PortfolioTag from './PortfolioTag.vue'
+  import PortfolioImage from './PortfolioImage.vue'
 
 
   export default {
@@ -73,7 +88,8 @@
         projectUrl: '',
         sourceUrl: '',
         isHidden: false,
-        tags: []
+        tags: [],
+        images: []
 
       }
     },
@@ -87,7 +103,8 @@
       '$route': 'getPortfolioProject'
     },
     components: {
-      PortfolioTag
+      PortfolioTag,
+      PortfolioImage
     },
     computed: {
       autoSlug() {
@@ -118,6 +135,7 @@
         this.sourceUrl = api_data.project.source_url
         this.isHidden = api_data.project.is_hidden
         this.tags = api_data.project.tags
+        this.images = api_data.project.images
       },
       async submitNewProject() {
         var path = '/v1/portfolio/projects/new/'
@@ -137,6 +155,16 @@
         var path = '/v1/portfolio/projects/' + this.slug + '/remove-tag/'
         var body = {identifier: 'slug', value: tagSlug}
         var response = await(api.sendData(body, path))
+        if (response.success) {
+          console.log(response)
+        } else {
+          alert("Error: " + response.error)
+        }
+      },
+      async removeImage(imageUuid, imageIndex) {
+        this.images.splice(imageIndex, 1)
+        var path = '/v1/portfolio/images/' + imageUuid + '/delete/'
+        var response = await(api.sendData({}, path))
         if (response.success) {
           console.log(response)
         } else {
