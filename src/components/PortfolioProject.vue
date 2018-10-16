@@ -37,7 +37,7 @@
 
     <ul class="image-list">
       <li
-        v-for="(image, index) in project.images"
+        v-for="(image) in project.images"
         :key="image.uuid"
       >
         <portfolio-image

@@ -31,11 +31,14 @@
     </form>
 
     <ul class="tag-list">
-      <li v-for="(tag, index) in tags">
+      <li
+        v-for="(tag, index) in tags"
+        :key="tag.slug"
+      >
         <portfolio-tag
           :tag="tag"
         ></portfolio-tag>
-        <button @click="removeTag(tag.slug)">Remove</button>
+        <button @click="removeTag(tag.slug, index)">Remove</button>
       </li>
 
     </ul>
@@ -129,7 +132,8 @@
           alert("Error: " + response.error)
         }
       },
-      async removeTag(tagSlug) {
+      async removeTag(tagSlug, tagIndex) {
+        this.tags.splice(tagIndex, 1)
         var path = '/v1/portfolio/projects/' + this.slug + '/remove-tag/'
         var body = {identifier: 'slug', value: tagSlug}
         var response = await(api.sendData(body, path))
