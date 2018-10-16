@@ -1,13 +1,12 @@
 import VueRouter from 'vue-router'
 
 /* Pages */
-import About from './components/About.vue'
 import Blog from './components/Blog.vue'
 import BlogPost from './components/BlogPost.vue'
 import BlogEditPost from './components/BlogEditPost.vue'
-import CustomPage from './components/CustomPage.vue'
 import Login from './components/Login.vue'
 import Logout from './components/Logout.vue'
+import Page from './components/Page.vue'
 import Portfolio from './components/Portfolio.vue'
 import PortfolioProject from './components/PortfolioProject.vue'
 import PortfolioEditProject from './components/PortfolioEditProject.vue'
@@ -15,9 +14,17 @@ import Upload from './components/Upload.vue'
 
 const routes = [
   {
+    path: '/',
+    redirect: '/about'
+  },
+  {
     name: 'about',
     path: '/about',
-    component: About
+    component: Page,
+    props: {
+      blobSlug: 'pw-18-about',
+      title: 'About'
+    }
   },
   {
     name: 'blog',
@@ -40,6 +47,20 @@ const routes = [
     path: '/blog/:activePostSlug',
     component: Blog,
     props: true
+  },
+  {
+    name: 'new',
+    path: '/new',
+    redirect: '/now'
+  },
+  {
+    name: 'now',
+    path: '/now',
+    component: Page,
+    props: {
+      blobSlug: 'pw-18-now',
+      title: 'Now'
+    }
   },
   {
     name: 'portfolio',
@@ -86,9 +107,12 @@ const routes = [
   },
   {
     name: 'custom-page',
-    path: '/:customPageSlug',
-    component: CustomPage,
-    props: true
+    path: '/:blobSlug',
+    component: Page,
+    props: (route) =>({
+      blobSlug: route.params.blobSlug,
+      title: ''
+    })
   }
 ]
 

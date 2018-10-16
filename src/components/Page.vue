@@ -1,9 +1,9 @@
 <template>
 
   <div>
-    <h2 class="page-title">About</h2>
+    <h2 v-if="title" class="page-title">{{ title }}</h2>
     
-    <blob id="about-text" :slug="'pw-18-about'">
+    <blob id="about-text" :slug="blobSlug">
     </blob>
 
   </div>
@@ -23,7 +23,11 @@
     },
     components: {
       Blob
-    }
+    },
+    props: [
+      'title',
+      'blobSlug'
+    ]
 
   }
 
