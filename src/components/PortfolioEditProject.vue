@@ -30,32 +30,48 @@
       <button @click.prevent="submitNewProject">Submit</button>
     </form>
 
-    <hr/>
-    <ul class="tag-list">
-      <li
-        v-for="(tag, index) in tags"
-        :key="tag.slug"
-      >
-        <portfolio-tag
-          :tag="tag"
-        ></portfolio-tag>
-        <button @click="removeTag(tag.slug, index)">Remove</button>
-      </li>
-    </ul>
-    <hr/>
-    <ul class="image-list">
-      <li
-        v-for="(image, index) in images"
-        :key="image.uuid"
-      >
-        <portfolio-image
-          v-bind:image="image"
-          :active-image-uuid="false"
-          :project-name="name"
-        ></portfolio-image>
-        <button @click="removeImage(image.uuid, index)">Remove</button>
-      </li>
-    </ul> 
+    <select id="tag-selector" name="tags" v-model="newTag">
+      <option disabled value=null>Available Tags:</option>
+      <option v-for="tag in availableTags" :value="tag" :key="tag.slug">{{ tag.name }}</option>
+    </select>
+
+    <button
+      @click.prevent="addRemoveTag(newTag.slug, tags.length, 'add')"
+    >
+      Add Tag
+    </button>
+
+    <div v-if="tags.length > 0">
+      <hr/>
+      <ul class="tag-list">
+        <li
+          v-for="(tag, index) in tags"
+          :key="tag.slug"
+        >
+          <portfolio-tag
+            :tag="tag"
+          ></portfolio-tag>
+          <button @click="addRemoveTag(tag.slug, index, 'remove')">Remove</button>
+        </li>
+      </ul>
+    </div>
+
+    <div v-if="images.length > 0">
+      <hr/>
+      <ul class="image-list">
+        <li
+          v-for="(image, index) in images"
+          :key="image.uuid"
+        >
+          <portfolio-image
+            v-bind:image="image"
+            :active-image-uuid="false"
+            :project-name="name"
+          ></portfolio-image>
+          <button @click="addDeleteImage(image.uuid, index, 'delete')">Remove</button>
+        </li>
+      </ul> 
+    </div>
 
   </div>
 </template>
@@ -78,16 +94,20 @@
     data() {
       return {
         name: '',
+        projectId: '',
         slug: '',
         autofillSlug: true,
         shortDescription: '',
         description: '',
         startDate: new Date(),
         endDate: new Date(),
+        availableStatuses: [],
         statusId: null,
         projectUrl: '',
         sourceUrl: '',
         isHidden: false,
+        availableTags: [],
+        newTag: null,
         tags: [],
         images: []
 
@@ -96,6 +116,7 @@
     created() {
       if (this.activeProjectSlug) {
         this.getPortfolioProject()
+        this.getTags()
       }
     },
     watch: {
@@ -125,7 +146,9 @@
       async getPortfolioProject() {
         var api_data = await(api.getData('/v1/portfolio/projects/' + this.activeProjectSlug ))
         this.name = api_data.project.name
+        this.projectId = api_data.project.id
         this.slug = api_data.project.slug
+        this.currentSlug = api_data.project.slug
         this.shortDescription = api_data.project.short_description
         this.description = api_data.project.description.markdown
         this.startDate = api_data.project.start_date ? new Date(api_data.project.start_date) : null
@@ -136,6 +159,17 @@
         this.isHidden = api_data.project.is_hidden
         this.tags = api_data.project.tags
         this.images = api_data.project.images
+      },
+      async getTags() {
+        var api_data = await(api.getData('/v1/portfolio/tags/'))
+        for (var i in api_data.tags_list) {
+          var t = api_data.tags_list[i];
+          if (t.status) {
+            this.availableStatuses.push(t)
+          } else {
+            this.availableTags.push(t)
+          }
+        }
       },
       async submitNewProject() {
         var path = '/v1/portfolio/projects/new/'
@@ -150,9 +184,14 @@
           alert("Error: " + response.error)
         }
       },
-      async removeTag(tagSlug, tagIndex) {
-        this.tags.splice(tagIndex, 1)
-        var path = '/v1/portfolio/projects/' + this.slug + '/remove-tag/'
+      async addRemoveTag(tagSlug, tagIndex, action) {
+        if (action === 'remove') {
+          this.tags.splice(tagIndex, 1)
+        } else {
+          this.tags.splice(tagIndex, 0, this.newTag)
+          this.newTag = null
+        }
+        var path = '/v1/portfolio/projects/' + this.currentSlug + '/' + action + '-tag/'
         var body = {identifier: 'slug', value: tagSlug}
         var response = await(api.sendData(body, path))
         if (response.success) {
@@ -161,9 +200,9 @@
           alert("Error: " + response.error)
         }
       },
-      async removeImage(imageUuid, imageIndex) {
+      async addDeleteImage(imageUuid, imageIndex, action) {
         this.images.splice(imageIndex, 1)
-        var path = '/v1/portfolio/images/' + imageUuid + '/delete/'
+        var path = '/v1/portfolio/images/' + imageUuid + '/' + action + '/'
         var response = await(api.sendData({}, path))
         if (response.success) {
           console.log(response)
