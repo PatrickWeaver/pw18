@@ -5,6 +5,15 @@
     </h2>
 
     <form>
+      <portfolio-image
+        v-if="cover"
+        :image="cover"
+        :cover="true"
+      ></portfolio-image>
+      <button
+        @click.prevent="makeOrRemoveCover(cover.uuid, false)"
+        v-if="cover"
+      >Remove Cover</button>
       <label>Name:</label>
       <input type="text" v-model="name" @change="updateSlug" />
       <label>Slug:</label>
@@ -72,7 +81,9 @@
       <input type="text" v-model="newImageUrl">
       <label>Order:</label>
       <input type="number" v-model="newImageOrder">
-      <button @click.prevent="addImage(newImageUrl, newImageOrder)">Add Image</button>
+      <label>Cover Image?</label>
+      <input type="checkbox" v-model="newImageCover" />
+      <button @click.prevent="addImage(newImageUrl)">Add Image</button>
     </form>
 
     <div v-if="images.length > 0">
@@ -87,7 +98,11 @@
             :active-image-uuid="false"
             :project-name="name"
           ></portfolio-image>
-          <button @click="deleteImage(image.uuid, index, 'delete')">Remove</button>
+          <button
+            @click="makeOrRemoveCover(image.uuid, true)"
+            v-if="!image.cover"
+          >Make Cover</button>
+          <button @click="deleteImage(image.uuid, index, 'delete')">Delete</button>
         </li>
       </ul> 
     </div>
@@ -99,6 +114,7 @@
 
   /* Helpers */
   import api from '../helpers/api'
+  import findPortfolioProjectCover from '../helpers/findPortfolioProjectCover'
 
   /* NPM */
   import * as slug from 'slug'
@@ -130,7 +146,8 @@
         tags: [],
         images: [],
         newImageUrl: null,
-        newImageOrder: 0
+        newImageOrder: 0,
+        newImageCover: false
 
       }
     },
@@ -151,6 +168,9 @@
     computed: {
       autoSlug() {
         return slug(this.name)
+      },
+      cover: function() {
+        return findPortfolioProjectCover(this.images)
       }
     },
     methods: {
@@ -222,22 +242,38 @@
           alert("Error: " + response.error)
         }
       },
-      async addImage(url, order) {
+      async addImage(url) {
         var path = '/v1/portfolio/images/new/'
         var body = {
           url: url,
           project_id: this.projectId,
-          order: order
+          order: this.newImageOrder,
+          cover: this.newImageCover
         }
         var response = await(api.sendData(body, path))
         if (response.success) {
           this.images.splice(response.order, 0, response)
+          this.newImageUrl = ''
+        } else {
+          alert("Error: " + response.error)
+        }
+      },
+      async makeOrRemoveCover(uuid, coverStatus) {
+        var path = '/v1/portfolio/images/' + uuid + '/edit/'
+        var body = {
+          cover: coverStatus
+        }
+        var response = await(api.sendData(body, path))
+        if (response.success) {
+          this.getPortfolioProject()
+          console.log(response)
         } else {
           alert("Error: " + response.error)
         }
       },
       async deleteImage(imageUuid, imageIndex, action) {
         this.images.splice(imageIndex, 1)
+        this.newImageOrder = this.images.length
         var path = '/v1/portfolio/images/' + imageUuid + '/' + action + '/'
         var response = await(api.sendData({}, path))
         if (response.success) {
