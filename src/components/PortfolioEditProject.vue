@@ -35,7 +35,9 @@
       <button @click.prevent="submitNewProject">Submit</button>
     </form>
 
-    <select id="tag-selector" name="tags" v-model="newTag">
+    <hr>
+
+    <select id="tag-selector" name="new-tags" v-model="newTag">
       <option disabled value=null>Available Tags:</option>
       <option v-for="tag in availableTags" :value="tag" :key="tag.slug">
         {{ tag.name }}
@@ -63,6 +65,16 @@
       </ul>
     </div>
 
+    <hr>
+
+    <form id="new-image-form">
+      <label>Image URL:</label>
+      <input type="text" v-model="newImageUrl">
+      <label>Order:</label>
+      <input type="number" v-model="newImageOrder">
+      <button @click.prevent="addImage(newImageUrl, newImageOrder)">Add Image</button>
+    </form>
+
     <div v-if="images.length > 0">
       <hr/>
       <ul class="image-list">
@@ -75,7 +87,7 @@
             :active-image-uuid="false"
             :project-name="name"
           ></portfolio-image>
-          <button @click="addDeleteImage(image.uuid, index, 'delete')">Remove</button>
+          <button @click="deleteImage(image.uuid, index, 'delete')">Remove</button>
         </li>
       </ul> 
     </div>
@@ -116,7 +128,9 @@
         availableTags: [],
         newTag: null,
         tags: [],
-        images: []
+        images: [],
+        newImageUrl: null,
+        newImageOrder: 0
 
       }
     },
@@ -166,6 +180,7 @@
         this.isHidden = api_data.project.is_hidden
         this.tags = api_data.project.tags
         this.images = api_data.project.images
+        this.newImageOrder = api_data.project.images.length
       },
       async getTags() {
         var api_data = await(api.getData('/v1/portfolio/tags/'))
@@ -207,7 +222,21 @@
           alert("Error: " + response.error)
         }
       },
-      async addDeleteImage(imageUuid, imageIndex, action) {
+      async addImage(url, order) {
+        var path = '/v1/portfolio/images/new/'
+        var body = {
+          url: url,
+          project_id: this.projectId,
+          order: order
+        }
+        var response = await(api.sendData(body, path))
+        if (response.success) {
+          this.images.splice(response.order, 0, response)
+        } else {
+          alert("Error: " + response.error)
+        }
+      },
+      async deleteImage(imageUuid, imageIndex, action) {
         this.images.splice(imageIndex, 1)
         var path = '/v1/portfolio/images/' + imageUuid + '/' + action + '/'
         var response = await(api.sendData({}, path))
