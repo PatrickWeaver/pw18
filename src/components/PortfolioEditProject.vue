@@ -44,20 +44,23 @@
       <button @click.prevent="submitNewProject">Submit</button>
     </form>
 
-    <hr>
+    <div v-if="activeProjectSlug">
+      <hr>
 
-    <select id="tag-selector" name="new-tags" v-model="newTag">
-      <option disabled value=null>Available Tags:</option>
-      <option v-for="tag in availableTags" :value="tag" :key="tag.slug">
-        {{ tag.name }}
-      </option>
-    </select>
+      <select id="tag-selector" name="new-tags" v-model="newTag">
+        <option disabled value=null>Available Tags:</option>
+        <option v-for="tag in availableTags" :value="tag" :key="tag.slug">
+          {{ tag.name }}
+        </option>
+      </select>
 
-    <button
-      @click.prevent="addRemoveTag(newTag.slug, tags.length, 'add')"
-    >
-      Add Tag
-    </button>
+      <button
+        @click.prevent="addRemoveTag(newTag.slug, tags.length, 'add')"
+      >
+        Add Tag
+      </button>
+    </div>
+
 
     <div v-if="tags.length > 0">
       <hr/>
@@ -74,21 +77,23 @@
       </ul>
     </div>
 
-    <hr>
+    <div v-if="activeProjectSlug">
+      <hr>
 
-    <form id="new-image-form">
-      <label>Image URL:</label>
-      <input type="text" v-model="newImageUrl">
-      <label>Order:</label>
-      <input type="number" v-model="newImageOrder">
-      <label>Alt Text:</label>
-      <textarea v-model="newImageAltText"></textarea>
-      <label>Caption:</label>
-      <textarea v-model="newImageCaption"></textarea>
-      <label>Cover Image?</label>
-      <input type="checkbox" v-model="newImageCover" />
-      <button @click.prevent="addImage(newImageUrl)">Add Image</button>
-    </form>
+      <form id="new-image-form">
+        <label>Image URL:</label>
+        <input type="text" v-model="newImageUrl">
+        <label>Order:</label>
+        <input type="number" v-model="newImageOrder">
+        <label>Alt Text:</label>
+        <textarea v-model="newImageAltText"></textarea>
+        <label>Caption:</label>
+        <textarea v-model="newImageCaption"></textarea>
+        <label>Cover Image?</label>
+        <input type="checkbox" v-model="newImageCover" />
+        <button @click.prevent="addImage(newImageUrl)">Add Image</button>
+      </form>
+    </div>
 
     <div v-if="images.length > 0">
       <hr/>
