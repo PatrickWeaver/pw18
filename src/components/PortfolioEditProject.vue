@@ -81,6 +81,10 @@
       <input type="text" v-model="newImageUrl">
       <label>Order:</label>
       <input type="number" v-model="newImageOrder">
+      <label>Alt Text:</label>
+      <textarea v-model="newImageAltText"></textarea>
+      <label>Caption:</label>
+      <textarea v-model="newImageCaption"></textarea>
       <label>Cover Image?</label>
       <input type="checkbox" v-model="newImageCover" />
       <button @click.prevent="addImage(newImageUrl)">Add Image</button>
@@ -147,6 +151,8 @@
         images: [],
         newImageUrl: null,
         newImageOrder: 0,
+        newImageAltText: null,
+        newImageCaption: null,
         newImageCover: false
 
       }
@@ -248,12 +254,16 @@
           url: url,
           project_id: this.projectId,
           order: this.newImageOrder,
+          alt_text: this.newImageAltText,
+          caption: this.newImageCaption,
           cover: this.newImageCover
         }
         var response = await(api.sendData(body, path))
         if (response.success) {
-          this.images.splice(response.order, 0, response)
+          this.getPortfolioProject()
           this.newImageUrl = ''
+          this.newImageAltText = ''
+          this.newImgaeCaption = ''
         } else {
           alert("Error: " + response.error)
         }
