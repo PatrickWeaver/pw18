@@ -19,8 +19,13 @@
       <label>End Date:</label>
       <input type="date" :value="endDate && endDate.toISOString().split('T')[0]"
                      @input="endDate = $event.target.valueAsDate" />
-      <label>Status Id:</label>
-      <input type="number" v-model="statusId" />
+      <label>Status:</label>
+      <select v-model="statusId">
+        <option disabled value=null>Available Statuses:</option>
+        <option v-for="status in availableStatuses" :value="status.id" :key="status.slug">
+          {{ status.name }}
+        </option>
+      </select>
       <label>Project URL:</label>
       <input type="text" v-model="projectUrl" />
       <label>Source URL:</label>
@@ -32,7 +37,9 @@
 
     <select id="tag-selector" name="tags" v-model="newTag">
       <option disabled value=null>Available Tags:</option>
-      <option v-for="tag in availableTags" :value="tag" :key="tag.slug">{{ tag.name }}</option>
+      <option v-for="tag in availableTags" :value="tag" :key="tag.slug">
+        {{ tag.name }}
+      </option>
     </select>
 
     <button
@@ -116,8 +123,8 @@
     created() {
       if (this.activeProjectSlug) {
         this.getPortfolioProject()
-        this.getTags()
       }
+      this.getTags()
     },
     watch: {
       // call again the method if the route changes
