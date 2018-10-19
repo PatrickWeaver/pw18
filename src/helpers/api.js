@@ -1,13 +1,16 @@
 import * as settings from '../../settings'
 import * as axios from 'axios'
 
-async function getData(path, apiKey) {
+async function getData(path, apiKey='', queries={}) {
   var apiKeyQuery = ''
   apiKey = localStorage.getItem('pw18-api-key')
   if (apiKey) {
-    apiKeyQuery = 'api_key=' + apiKey + '&'
+    apiKeyQuery = 'api_key=' + apiKey
   }
-  var qs = '?' + apiKeyQuery + 'quantity=10'
+  var qs = '?' + apiKeyQuery
+  for (var i in queries) {
+    qs += '&' + i + '=' + queries[i]
+  }
   var response = await(axios.get(settings.API_URL + path + qs))
   return response.data
 }

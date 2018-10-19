@@ -80,7 +80,7 @@
       async getPortfolioIndex() {
         if (!this.activeProjectSlug && this.list.length === 0) {
           var path = '/v1/portfolio/projects/'
-          var api_data = await(api.getData(path))
+          var api_data = await(api.getData(path, '', {quantity: 10}))
           console.log(api_data)
           this.list = api_data.projects_list
         }

@@ -68,7 +68,7 @@
     methods: {
       async getBlogPosts() {
         if (!this.activePostSlug && this.list.length === 0) {
-          var list = await(api.getData('/v1/blog/posts/'))
+          var list = await(api.getData('/v1/blog/posts/', '', {quantity: 10}))
           this.list = list.posts_list
         }
       },
