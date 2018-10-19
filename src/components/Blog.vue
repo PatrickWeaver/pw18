@@ -13,6 +13,13 @@
       ></blog-post>
     </div>
     <div v-else-if="list.length > 0">
+      <pagination
+        v-if="pageNumber > 1"
+        :pages="pages"
+        :pageNumber="pageNumber"
+        :section="'blog'"
+      >
+      </pagination>
       <ul>
         <blog-post-preview
           v-for="(post, index) in list"
@@ -24,6 +31,7 @@
           @delete="deletePost"
         ></blog-post-preview>
       </ul>
+      <pagination :pages="pages" :pageNumber="pageNumber" :section="'blog'"></pagination>
     </div>
     <div v-else>
       <p>{{ status }}</p>  
@@ -37,6 +45,7 @@
    /* Components */
   import BlogPostPreview from './BlogPostPreview.vue'
   import BlogPost from './BlogPost.vue'
+  import Pagination from './Pagination.vue'
 
   /* Helpers */
   import api from '../helpers/api'
@@ -45,7 +54,8 @@
     data() {
       return {
         status: '',
-        list: []
+        list: [],
+        pages: 1
       }
     },
     created() {
@@ -59,7 +69,8 @@
     },
     props: [
       'activePostSlug',
-      'admin'
+      'admin',
+      'pageNumber'
     ],
     watch: {
       // call again the method if the route changes
@@ -68,8 +79,17 @@
     methods: {
       async getBlogPosts() {
         if (!this.activePostSlug && this.list.length === 0) {
-          var list = await(api.getData('/v1/blog/posts/', '', {quantity: 10}))
-          this.list = list.posts_list
+          var path = '/v1/blog/posts/'
+          var per_page = 5
+          var qs = {
+            quantity: per_page
+          }
+          if (this.pageNumber) {
+            qs['page'] = this.pageNumber
+          }
+          var api_data = await(api.getData(path, '', qs))
+          this.list = api_data.posts_list
+          this.pages = Math.floor(api_data.total_posts/per_page) + 1
         }
       },
       activatePost(slug) {
@@ -96,7 +116,8 @@
     },
     components: {
       BlogPostPreview,
-      BlogPost
+      BlogPost,
+      Pagination
     }
   }
 

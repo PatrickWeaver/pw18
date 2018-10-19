@@ -16,6 +16,13 @@
       ></portfolio-project>
     </div>
     <div v-else-if="list.length > 0">
+      <pagination
+        v-if="pageNumber > 1"
+        :pages="pages"
+        :pageNumber="pageNumber"
+        :section="'portfolio'"
+      >
+      </pagination>
       <ul>
         <portfolio-project-index
           v-for="(project, index) in list"
@@ -30,6 +37,7 @@
           @edit="editProject"
         ></portfolio-project-index>
       </ul>
+      <pagination :pages="pages" :pageNumber="pageNumber" :section="'portfolio'"></pagination>
     </div>
     <div v-else>
       <p>{{ status }}</p> 
@@ -43,6 +51,7 @@
   /* Components */
   import PortfolioProjectIndex from './PortfolioProjectIndex.vue'
   import PortfolioProject from './PortfolioProject.vue'
+  import Pagination from './Pagination.vue'
 
   /* Helpers */
   import api from '../helpers/api'
@@ -52,6 +61,7 @@
       return {
         status: '',
         list: [],
+        pages: 1,
         filter: null
       }
     },
@@ -70,7 +80,8 @@
     props: [
       'activeProjectSlug',
       'activeImageUuid',
-      'admin'
+      'admin',
+      'pageNumber'
     ],
     watch: {
       // call again the method if the route changes
@@ -79,10 +90,18 @@
     methods: {
       async getPortfolioIndex() {
         if (!this.activeProjectSlug && this.list.length === 0) {
+          var per_page = 10
           var path = '/v1/portfolio/projects/'
-          var api_data = await(api.getData(path, '', {quantity: 10}))
+          var qs = {
+            quantity: per_page
+          }
+          if (this.pageNumber) {
+            qs['page'] = this.pageNumber
+          }
+          var api_data = await(api.getData(path, '', qs))
           console.log(api_data)
           this.list = api_data.projects_list
+          this.pages = Math.floor(api_data.total_projects/per_page) + 1
         }
       },
       activateProject(slug) {
@@ -129,8 +148,13 @@
     },
     components: {
       PortfolioProjectIndex,
-      PortfolioProject
+      PortfolioProject,
+      Pagination
     }
   }
 
 </script>
+
+<style>
+
+</style>

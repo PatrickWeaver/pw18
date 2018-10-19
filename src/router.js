@@ -37,6 +37,16 @@ const routes = [
     component: BlogEditPost
   },
   {
+    name: 'blog-page',
+    path: '/blog/page/:pageNumber',
+    component: Blog,
+    props: true
+  },
+  {
+    path: '/blog/page',
+    redirect: '/blog'
+  },
+  {
     name: 'blog-edit-post',
     path: '/blog/:activePostSlug/edit',
     component: BlogEditPost,
@@ -72,7 +82,17 @@ const routes = [
     path: '/portfolio/new',
     component: PortfolioEditProject
   },
-    {
+  {
+    name: 'portfolio-page',
+    path: '/portfolio/page/:pageNumber',
+    component: Portfolio,
+    props: true 
+  },
+  {
+    path: '/portfolio/page',
+    redirect: '/portfolio'
+  },
+  {
     name: 'portfolio-edit-project',
     path: '/portfolio/:activeProjectSlug/edit',
     component: PortfolioEditProject,
