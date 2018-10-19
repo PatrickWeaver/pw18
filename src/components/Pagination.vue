@@ -9,7 +9,7 @@
       :key="index"
     >
       <a
-        :href="'/' + section + '/page/' + index"
+        :href="'/' + section + '/page/' + index + filterQs"
         :class="'page-number ' + [pageNumber == index ? 'active-page' : 'inactive-page']">
         {{ index }}
       </a>
@@ -22,10 +22,16 @@
 
   export default {
     props: [
+      'filter',
       'pages',
       'pageNumber',
       'section'
-    ]
+    ],
+    computed: {
+      filterQs() {
+        return this.filter ? '?filter=' + this.filter : ''
+      } 
+    }
   }
 
 </script>
