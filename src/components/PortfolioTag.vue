@@ -1,6 +1,6 @@
 <template>
 
-  <div>
+  <div class="tag-container">
     <a
       @click.prevent="filterBy"
       :href="'/portfolio?filter=' + tag.slug"
@@ -38,6 +38,10 @@
 </script>
 
 <style>
+  .tag-container {
+    display: inline-block;
+  }
+
   .tag {
     border: 1px solid #ccc;
     border-radius: 3px;

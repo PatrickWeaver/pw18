@@ -73,7 +73,7 @@
         }
       },
       async getBlogPost() {
-        var api_data = await(api.getData('/v1/blog/posts/' + this.activePostSlug ))
+        var api_data = await(api.getData('/v1/blog/posts/' + this.activePostSlug))
         var post = api_data.post
         this.title = post.title
         this.slug = post.slug

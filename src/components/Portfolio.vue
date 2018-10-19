@@ -23,14 +23,21 @@
         :section="'portfolio'"
       >
       </pagination>
+      <div v-if="filterTag" class="filter-status">
+        <h3>Filtered By: </h3>
+        <portfolio-tag
+          v-if="filterTag"
+          @filter-by="filterBy"
+          :tag="filterTag"
+        ></portfolio-tag>
+      </div>
       <ul>
         <portfolio-project-index
-          v-for="(project, index) in list"
+          v-for="(project, index) in pageList"
           :admin="admin"
           :key="project.slug"
           :index="index"
           :project="project"
-          :hide="filterProject(index)"
           @filter-by="filterBy"
           @activate-project="activateProject"
           @delete="deleteProject"
@@ -52,6 +59,7 @@
   import PortfolioProjectIndex from './PortfolioProjectIndex.vue'
   import PortfolioProject from './PortfolioProject.vue'
   import Pagination from './Pagination.vue'
+  import PortfolioTag from './PortfolioTag.vue'
 
   /* Helpers */
   import api from '../helpers/api'
@@ -61,8 +69,11 @@
       return {
         status: '',
         list: [],
+        pageList: [],
         pages: 1,
-        filter: null
+        perPage: 5,
+        filter: null,
+        filterTag: null
       }
     },
     computed: {
@@ -73,11 +84,7 @@
     created() {
       // fetch the data when the view is created and the data is
       // already being observed
-      this.getPortfolioIndex()
-      var loadingMessage = "Loading projects."
-      var errorMessage = "Error loading projects."
-      setTimeout(() => this.status = loadingMessage, 1 * 1000)
-      setTimeout(() => this.status = errorMessage, 10 * 1000)
+      this.onReload()
     },
     props: [
       'activeProjectSlug',
@@ -87,23 +94,42 @@
     ],
     watch: {
       // call again the method if the route changes
-      '$route': 'getPortfolioIndex'
+      '$route': 'onReload'
     },
     methods: {
+      onReload() {
+        this.getPortfolioIndex()
+        this.getFilterTag()
+        var loadingMessage = "Loading projects."
+        var errorMessage = "Error loading projects."
+        setTimeout(() => this.status = loadingMessage, 1 * 1000)
+        setTimeout(() => this.status = errorMessage, 10 * 1000)
+      },
       async getPortfolioIndex() {
-        if (!this.activeProjectSlug && this.list.length === 0) {
-          var per_page = 5
-          var path = '/v1/portfolio/projects/'
-          var qs = {
-            quantity: per_page
+        if (!this.activeProjectSlug) {
+          if (this.list.length === 0) {
+            var apiData = await(api.getIndex('portfolio', 'projects'))
+            this.list = apiData.projects_list
+            this.pages = Math.floor(apiData.total_projects/this.perPage) + 1
           }
-          if (this.pageNumber) {
-            qs['page'] = this.pageNumber
+          var pageStart = (this.currentPage - 1) * this.perPage
+          var pageEnd = pageStart + this.perPage
+          this.pageList = this.list.slice(pageStart, pageEnd)
+        }
+      },
+      async getFilterTag() {
+        this.filterTag = null
+        if (this.$route.query.filter) {
+          this.filter = this.$route.query.filter
+        }
+        var getStatus = false
+        var tags_list = await(api.getTags(this.admin, getStatus))
+        for (var i in tags_list) {
+          var tag = tags_list[i]
+          if (tag.slug === this.filter) {
+            this.filterTag = tag
+            break
           }
-          var api_data = await(api.getData(path, '', qs))
-          console.log(api_data)
-          this.list = api_data.projects_list
-          this.pages = Math.floor(api_data.total_projects/per_page) + 1
         }
       },
       activateProject(slug) {
@@ -127,22 +153,6 @@
       filterBy(tagSlug) {
         this.$router.push({ path: '/portfolio?filter=' + tagSlug })
       },
-      filterProject(index) {
-        // Return false to NOT filter out project
-        // Return true to filter out project
-        var filter = this.$route.query.filter
-        if (filter) {
-          var status = this.list[index].status.slug
-          var tags = this.list[index].tags.map(i => i.slug)
-          if (filter === status || tags.indexOf(filter) > -1) {
-            return false
-          } else {
-            return true
-          }
-        } else {
-          return false
-        }
-      },
       returnToIndex() {
          this.$router.push({ path: '/portfolio' })
       }
@@ -151,12 +161,15 @@
     components: {
       PortfolioProjectIndex,
       PortfolioProject,
-      Pagination
+      Pagination,
+      PortfolioTag
     }
   }
 
 </script>
 
 <style>
-
+  .filter-status h3 {
+    display: inline-block;
+  }
 </style>

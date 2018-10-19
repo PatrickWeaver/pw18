@@ -100,7 +100,7 @@
     },
     methods: {
       async getPortfolioProject() {
-        var api_data = await(api.getData('/v1/portfolio/projects/' + this.slug ))
+        var api_data = await(api.getData('/v1/portfolio/projects/' + this.slug))
         this.project = api_data.project
       },
       deleteProject() {

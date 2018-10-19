@@ -1,5 +1,5 @@
 <template>
-  <li v-if="!hide" class="portfolio-project">
+  <li class="portfolio-project">
     <project-header
       :project="project"
       :cover="cover"
@@ -36,7 +36,6 @@
     props: [
       'index',
       'project',
-      'hide',
       'admin'
     ],
     components: {

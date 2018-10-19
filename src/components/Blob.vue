@@ -34,7 +34,7 @@
     },
     methods: {
       async getBlob() {
-        var api_data = await(api.getData('/v1/blobs/' + this.slug ))
+        var api_data = await(api.getData('/v1/blobs/' + this.slug))
         this.body = api_data.blob.body.html
       }
     }

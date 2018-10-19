@@ -166,7 +166,7 @@
       if (this.activeProjectSlug) {
         this.getPortfolioProject()
       }
-      this.getTags()
+      this.getAndSortTags()
     },
     watch: {
       // call again the method if the route changes
@@ -196,7 +196,7 @@
         }
       },
       async getPortfolioProject() {
-        var api_data = await(api.getData('/v1/portfolio/projects/' + this.activeProjectSlug ))
+        var api_data = await(api.getData('/v1/portfolio/projects/' + this.activeProjectSlug))
         this.name = api_data.project.name
         this.projectId = api_data.project.id
         this.slug = api_data.project.slug
@@ -213,10 +213,10 @@
         this.images = api_data.project.images
         this.newImageOrder = api_data.project.images.length
       },
-      async getTags() {
-        var api_data = await(api.getData('/v1/portfolio/tags/'))
-        for (var i in api_data.tags_list) {
-          var t = api_data.tags_list[i];
+      async getAndSortTags() {
+        var tags_list = await(api.getTags(this.admin))
+        for (var i in tags_list) {
+          var t = tags_list[i];
           if (t.status) {
             this.availableStatuses.push(t)
           } else {
@@ -299,7 +299,8 @@
       }
     },
     props: [
-      'activeProjectSlug'
+      'activeProjectSlug',
+      'admin'
     ],
     watch: {
       autoSlug() {

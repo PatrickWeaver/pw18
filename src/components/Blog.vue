@@ -22,7 +22,7 @@
       </pagination>
       <ul>
         <blog-post-preview
-          v-for="(post, index) in list"
+          v-for="(post, index) in pageList"
           :key="post.slug"
           :post="post"
           :admin="admin"
@@ -55,7 +55,9 @@
       return {
         status: '',
         list: [],
-        pages: 1
+        pageList: [],
+        pages: 1,
+        perPage: 2
       }
     },
     computed: {
@@ -83,18 +85,15 @@
     },
     methods: {
       async getBlogPosts() {
-        if (!this.activePostSlug && this.list.length === 0) {
-          var path = '/v1/blog/posts/'
-          var per_page = 5
-          var qs = {
-            quantity: per_page
+        if (!this.activeProjectSlug) {
+          if (this.list.length === 0) {
+            var apiData = await(api.getIndex('blog', 'posts'))
+            this.list = apiData.posts_list
+            this.pages = Math.floor(apiData.total_posts/this.perPage) + 1
           }
-          if (this.pageNumber) {
-            qs['page'] = this.pageNumber
-          }
-          var api_data = await(api.getData(path, '', qs))
-          this.list = api_data.posts_list
-          this.pages = Math.floor(api_data.total_posts/per_page) + 1
+          var pageStart = (this.currentPage - 1) * this.perPage
+          var pageEnd = pageStart + this.perPage
+          this.pageList = this.list.slice(pageStart, pageEnd)
         }
       },
       activatePost(slug) {
