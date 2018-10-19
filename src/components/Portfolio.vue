@@ -54,6 +54,7 @@
       ></pagination>
     </div>
     <div v-else>
+      <img v-if="status" src="/images/clock.gif" class="loading-clock">
       <p>{{ status }}</p> 
     </div>
   </div>
