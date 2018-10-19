@@ -10,7 +10,7 @@
     >
       <a
         :href="'/' + section + '/page/' + index"
-        :class="'page-number ' + [pageNumber == index ? 'active-page' : '']">
+        :class="'page-number ' + [pageNumber == index ? 'active-page' : 'inactive-page']">
         {{ index }}
       </a>
     </li>
@@ -47,6 +47,10 @@
 
   .active-page {
     border: 2px solid #bfbfcf;
+  }
+
+  .inactive-page:hover {
+    text-decoration: underline;
   }
 
 </style>

@@ -14,9 +14,9 @@
     </div>
     <div v-else-if="list.length > 0">
       <pagination
-        v-if="pageNumber > 1"
+        v-if="currentPage > 1"
         :pages="pages"
-        :pageNumber="pageNumber"
+        :pageNumber="currentPage"
         :section="'blog'"
       >
       </pagination>
@@ -31,7 +31,7 @@
           @delete="deletePost"
         ></blog-post-preview>
       </ul>
-      <pagination :pages="pages" :pageNumber="pageNumber" :section="'blog'"></pagination>
+      <pagination :pages="pages" :pageNumber="currentPage" :section="'blog'"></pagination>
     </div>
     <div v-else>
       <p>{{ status }}</p>  
@@ -56,6 +56,11 @@
         status: '',
         list: [],
         pages: 1
+      }
+    },
+    computed: {
+      currentPage() {
+        return this.pageNumber ? this.pageNumber : 1
       }
     },
     created() {

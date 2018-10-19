@@ -19,7 +19,7 @@
       <pagination
         v-if="pageNumber > 1"
         :pages="pages"
-        :pageNumber="pageNumber"
+        :pageNumber="currentPage"
         :section="'portfolio'"
       >
       </pagination>
@@ -37,7 +37,7 @@
           @edit="editProject"
         ></portfolio-project-index>
       </ul>
-      <pagination :pages="pages" :pageNumber="pageNumber" :section="'portfolio'"></pagination>
+      <pagination :pages="pages" :pageNumber="currentPage" :section="'portfolio'"></pagination>
     </div>
     <div v-else>
       <p>{{ status }}</p> 
@@ -66,7 +66,9 @@
       }
     },
     computed: {
-
+      currentPage() {
+        return this.pageNumber ? this.pageNumber : 1
+      }
     },
     created() {
       // fetch the data when the view is created and the data is
@@ -90,7 +92,7 @@
     methods: {
       async getPortfolioIndex() {
         if (!this.activeProjectSlug && this.list.length === 0) {
-          var per_page = 10
+          var per_page = 5
           var path = '/v1/portfolio/projects/'
           var qs = {
             quantity: per_page
