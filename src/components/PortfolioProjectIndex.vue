@@ -63,5 +63,12 @@
     }
   }
 
-
 </script>
+
+<style>
+
+  .portfolio-project {
+    margin: 1em 0;
+  }
+
+</style>

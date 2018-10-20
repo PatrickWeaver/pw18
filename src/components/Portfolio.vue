@@ -53,7 +53,7 @@
         :section="'portfolio'"
         :filter="filter"
         @go-to-page="goToPage"
-      ></pagination>
+      ></pagination>   
     </div>
     <div v-else>
       <img v-if="status" src="/images/clock.gif" class="loading-clock">
@@ -82,7 +82,7 @@
         filteredList: [],
         pageList: [],
         pages: 1,
-        perPage: 2,
+        perPage: 5,
         filter: null,
         filterTag: null
       }
