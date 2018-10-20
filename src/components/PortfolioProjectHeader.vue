@@ -36,7 +36,7 @@
       v-if="project.tags.length > 0"
     >
       <li
-        v-for="(tag, index) in project.tags"
+        v-for="(tag) in project.tags"
         :key="tag.slug"
       >
         <portfolio-tag

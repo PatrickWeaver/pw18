@@ -22,7 +22,7 @@
       </pagination>
       <ul>
         <blog-post-preview
-          v-for="(post, index) in pageList"
+          v-for="(post) in pageList"
           :key="post.slug"
           :post="post"
           :admin="admin"

@@ -5,6 +5,13 @@
         {{ post.title }}
       </a>
     </h3>
+    <div class="cover-image-container">
+      <img 
+        class="cover-image"
+        :src="post.cover_image_url"
+        :alt="post.cover_image_alt_text"
+      />
+    </div>
     <h5 class="post-date"><readable-date :date="post.post_date"></readable-date></h5>
     <div v-html="postPreview"></div>
     <p class="read-more"><a :href="'/blog/' + post.slug" >Read More</a></p>
@@ -58,8 +65,31 @@
 
 <style>
 
+  .blog-post-preview {
+    overflow: auto;
+  }
+
   p.read-more {
     margin: -.5em 0 .5em;
+  }
+
+  .cover-image {
+    max-width: 400px;
+    float: right;
+    margin: 0 10px 10px;
+    border-radius: 10px;
+  }
+
+  @media (max-width: 768px) {
+    .cover-image-container {
+      text-align: center;
+    }
+    .cover-image {
+      float: none;
+      margin: 0 auto 10px;
+      width: 100%;
+    }
+
   }
 
 </style>
