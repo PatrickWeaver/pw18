@@ -14,7 +14,9 @@
     </div>
     <h5 class="post-date"><readable-date :date="post.post_date"></readable-date></h5>
     <div v-html="postPreview"></div>
-    <p class="read-more"><a :href="'/blog/' + post.slug" >Read More</a></p>
+    <p class="read-more">
+      <a :href="'/blog/' + post.slug" >Read More</a>
+    </p>
     <object-admin
       v-if="admin"
       @delete="deletePost"

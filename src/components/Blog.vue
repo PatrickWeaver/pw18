@@ -18,6 +18,7 @@
         :pages="pages"
         :pageNumber="currentPage"
         :section="'blog'"
+        @go-to-page="goToPage"
       >
       </pagination>
       <ul>
@@ -31,7 +32,12 @@
           @delete="deletePost"
         ></blog-post-preview>
       </ul>
-      <pagination :pages="pages" :pageNumber="currentPage" :section="'blog'"></pagination>
+      <pagination
+        :pages="pages"
+        :pageNumber="currentPage"
+        :section="'blog'"
+        @go-to-page="goToPage"
+      ></pagination>
     </div>
     <div v-else>
       <p>{{ status }}</p>  
@@ -116,6 +122,9 @@
       },
       editPost(slug) {
         this.$router.push({ path: '/blog/' + slug + '/edit' })
+      },
+      goToPage(pageNumber, filterQs) {
+        this.$router.push({ path: '/blog/page/' + pageNumber + '/' + filterQs })
       }
     },
     components: {

@@ -22,6 +22,7 @@
         :pageNumber="currentPage"
         :section="'portfolio'"
         :filter="filter"
+        @go-to-page="goToPage"
       >
       </pagination>
       <div v-if="filterTag" class="filter-status">
@@ -51,6 +52,7 @@
         :pageNumber="currentPage"
         :section="'portfolio'"
         :filter="filter"
+        @go-to-page="goToPage"
       ></pagination>
     </div>
     <div v-else>
@@ -181,6 +183,9 @@
       },
       returnToIndex() {
          this.$router.push({ path: '/portfolio' })
+      },
+      goToPage(pageNumber, filterQs) {
+        this.$router.push({ path: '/portfolio/page/' + pageNumber + '/' + filterQs })
       }
 
     },

@@ -9,6 +9,7 @@
       :key="index"
     >
       <a
+        @click.prevent="goToPage(index)"
         :href="'/' + section + '/page/' + index + filterQs"
         :class="'page-number ' + [pageNumber == index ? 'active-page' : 'inactive-page']">
         {{ index }}
@@ -31,6 +32,11 @@
       filterQs() {
         return this.filter ? '?filter=' + this.filter : ''
       } 
+    },
+    methods: {
+      goToPage(pageNumber) {
+        this.$emit('go-to-page', pageNumber, this.filterQs)
+      }
     }
   }
 
