@@ -16,44 +16,20 @@
       ></portfolio-project>
     </div>
     <div v-else-if="list.length > 0">
-      <pagination
-        v-if="pageNumber > 1"
+      <portfolio-index
         :pages="pages"
-        :pageNumber="currentPage"
-        :section="'portfolio'"
         :filter="filter"
-        @go-to-page="goToPage"
+        :goToPage="goToPage"
+        :filterBy="filterBy"
+        :filterTag="filterTag"
+        :admin="admin"
+        :pageList="pageList"
+        :activateProject="activateProject"
+        :deleteProject="deleteProject"
+        :editProject="editProject"
+        :currentPage="currentPage"
       >
-      </pagination>
-      <div v-if="filterTag" class="filter-status">
-        <h3>Filtered By: </h3>
-        <portfolio-tag
-          v-if="filterTag"
-          @filter-by="filterBy"
-          :tag="filterTag"
-        ></portfolio-tag>
-        <button @click="clearFilter">❌  Remove Filter</button>
-      </div>
-      <ul>
-        <portfolio-project-index
-          v-for="(project, index) in pageList"
-          :admin="admin"
-          :key="project.slug"
-          :index="index"
-          :project="project"
-          @filter-by="filterBy"
-          @activate-project="activateProject"
-          @delete="deleteProject"
-          @edit="editProject"
-        ></portfolio-project-index>
-      </ul>
-      <pagination
-        :pages="pages"
-        :pageNumber="currentPage"
-        :section="'portfolio'"
-        :filter="filter"
-        @go-to-page="goToPage"
-      ></pagination>   
+      </portfolio-index>
     </div>
     <div v-else>
       <img v-if="status" src="/images/clock.gif" class="loading-clock">
@@ -66,10 +42,8 @@
 <script>
 
   /* Components */
-  import PortfolioProjectIndex from './PortfolioProjectIndex.vue'
+  import PortfolioIndex from './PortfolioIndex.vue'
   import PortfolioProject from './PortfolioProject.vue'
-  import Pagination from './Pagination.vue'
-  import PortfolioTag from './PortfolioTag.vue'
 
   /* Helpers */
   import api from '../helpers/api'
@@ -190,10 +164,8 @@
 
     },
     components: {
-      PortfolioProjectIndex,
-      PortfolioProject,
-      Pagination,
-      PortfolioTag
+      PortfolioIndex,
+      PortfolioProject
     }
   }
 
