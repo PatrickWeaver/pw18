@@ -88,6 +88,14 @@
         setTimeout(() => this.status = loadingMessage, 1 * 1000)
         setTimeout(() => this.status = errorMessage, 10 * 1000)
       },
+      scrollToAnchor() {
+        const anchor = this.$router.currentRoute.hash;
+        this.$nextTick(() => {
+          if (anchor && document.querySelector(anchor)) {
+            location.href = anchor;
+          }
+        });
+      },
       async getPortfolioIndex() {
         if (!this.activeProjectSlug) {
           if (this.list.length === 0) {
@@ -126,6 +134,7 @@
           var pageEnd = pageStart + this.perPage
           this.pageList = this.filteredList.slice(pageStart, pageEnd)
         }
+        this.scrollToAnchor()
       },
       activateProject(slug) {
         this.$router.push({ path: '/portfolio/' + slug })

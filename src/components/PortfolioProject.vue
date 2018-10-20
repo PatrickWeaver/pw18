@@ -2,7 +2,7 @@
   <div v-if="project" class="portfolio-project">
     <a
       v-if="indexLoaded"
-      href="/portfolio"
+      :href="'/portfolio#' + project.slug"
       @click.prevent="returnToIndex"
     >⇦ Back</a>
     <project-header
@@ -113,7 +113,7 @@
         this.$emit('filter-by', tagSlug)
       },
       returnToIndex() {
-         this.$router.push({ path: '/portfolio' })
+         this.$router.push({ path: '/portfolio#' + this.project.slug })
       }
     },
     components: {

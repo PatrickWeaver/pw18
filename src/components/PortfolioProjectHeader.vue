@@ -1,7 +1,11 @@
 <template>
   <div v-if="project" class="project-header">
     <h3 class="project-name">
-      <a @click.prevent="activateProject" :href="'/portfolio/' + project.slug" >
+      <a
+        @click.prevent="activateProject"
+        :href="'/portfolio/' + project.slug"
+        :id="project.slug"
+      >
         {{ project.name }}
       </a>
     </h3>
