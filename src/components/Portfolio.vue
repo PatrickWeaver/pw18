@@ -12,7 +12,6 @@
         @filter-by="filterBy"
         @delete="findAndDeleteProject"
         @edit="editProject"
-        @return-to-index="returnToIndex"
       ></portfolio-project>
     </div>
     <div v-else-if="list.length > 0">
@@ -154,9 +153,6 @@
       },
       filterBy(tagSlug) {
         this.$router.push({ path: '/portfolio?filter=' + tagSlug })
-      },
-      returnToIndex() {
-         this.$router.push({ path: '/portfolio' })
       },
       goToPage(pageNumber, filterQs) {
         this.$router.push({ path: '/portfolio/page/' + pageNumber + '/' + filterQs })
