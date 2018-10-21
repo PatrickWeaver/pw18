@@ -35,7 +35,11 @@
     methods: {
       async getBlob() {
         var api_data = await(api.getData('/v1/blobs/' + this.slug))
-        this.body = api_data.blob.body.html
+        if (api_data.blob) {
+          this.body = api_data.blob.body.html
+        } else {
+          this.$router.push({ name: '404' })
+        }
       }
     }
   }

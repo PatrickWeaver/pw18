@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Blog from './components/Blog.vue'
 import BlogPost from './components/BlogPost.vue'
 import BlogEditPost from './components/BlogEditPost.vue'
+import Error404 from './components/Error404.vue'
 import Login from './components/Login.vue'
 import Logout from './components/Logout.vue'
 import Page from './components/Page.vue'
@@ -133,6 +134,11 @@ const routes = [
       blobSlug: route.params.blobSlug,
       title: ''
     })
+  },
+  {
+    name: '404',
+    path: '/404',
+    component: Error404
   }
 ]
 
