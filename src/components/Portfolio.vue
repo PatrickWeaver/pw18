@@ -27,6 +27,7 @@
         :deleteProject="deleteProject"
         :editProject="editProject"
         :currentPage="currentPage"
+        @clear-filter="clearFilter"
       >
       </portfolio-index>
     </div>

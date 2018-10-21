@@ -16,7 +16,7 @@
       @filter-by="filterBy"
       :tag="filterTag"
     ></portfolio-tag>
-    <button @click="clearFilter">❌  Remove Filter</button>
+    <button @click="$emit('clear-filter')">❌  Remove Filter</button>
     </div>
     <ul>
     <portfolio-project-index
