@@ -56,7 +56,7 @@
         filteredList: [],
         pageList: [],
         pages: 1,
-        perPage: 5,
+        perPage: 10,
         filter: null,
         filterTag: null
       }

@@ -63,7 +63,7 @@
         list: [],
         pageList: [],
         pages: 1,
-        perPage: 2
+        perPage: 5
       }
     },
     computed: {
