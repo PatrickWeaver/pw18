@@ -1,10 +1,16 @@
 <template>
 
-  <div>
+  <div id="app">
     <h6 v-if="admin" id="admin-header">
       Admin
     </h6>
-    <h1 id="site-title">Patrick Weaver</h1>
+    <a
+      id="site-title"
+      href="'/'"
+      @click.prevent="index"
+    >
+      <h1>Patrick Weaver</h1>
+    </a>
     <top-menu :admin="admin"></top-menu>
     <router-view
       :admin="admin"
@@ -30,16 +36,15 @@
       TopMenu
     },
     created() {
-      var apiKey = localStorage.getItem('pw18-api-key')
-      if (apiKey) {
-        this.admin = true
-      }
-      
-      if (this.$router.currentRoute.path === '/') {
-        this.$router.push({ path: '/about' })
-      }
+      this.refresh()
+    },
+    watch: {
+      '$route': 'refresh'
     },
     methods: {
+      index() {
+        this.$router.push({ path: '/' })
+      },
       login(apiKey) {
         this.admin = true
         localStorage.setItem('pw18-api-key', apiKey);
@@ -49,6 +54,16 @@
         localStorage.removeItem('pw18-api-key')
         this.admin = false
         this.$router.push({ path: '/' })
+      },
+      refresh() {
+        var apiKey = localStorage.getItem('pw18-api-key')
+        if (apiKey) {
+          this.admin = true
+        }
+        
+        if (this.$router.currentRoute.path === '/') {
+          this.$router.push({ path: '/about' })
+        }
       }
     }
   }
@@ -56,9 +71,14 @@
 </script>
 
 <style>
-  
+
   #site-title {
-    margin: 0 10px 15px; 
+    text-decoration: none;
+    color: #000000;
+  }
+  
+  #site-title h1 {
+    margin: 0 10px 15px;
   }
   
   .page-title {

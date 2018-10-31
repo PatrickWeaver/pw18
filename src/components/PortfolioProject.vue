@@ -2,8 +2,8 @@
   <div v-if="project" class="portfolio-project">
     <a
       v-if="indexLoaded"
-      href="/portfolio"
-      @click.prevent="$emit('return-to-index')"
+      :href="'/portfolio#' + project.slug"
+      @click.prevent="returnToIndex"
     >⇦ Back</a>
     <project-header
       @filter-by="filterBy"
@@ -30,14 +30,15 @@
     </ul>
 
     <p
-      class="description"
+      class="description text"
       v-if="project.description"
       v-html="project.description.html"
     ></p>
 
     <ul class="image-list">
       <li
-        v-for="(image, index) in project.images"
+        v-for="(image) in project.images"
+        :key="image.uuid"
       >
         <portfolio-image
           v-bind:image="image"
@@ -99,7 +100,7 @@
     },
     methods: {
       async getPortfolioProject() {
-        var api_data = await(api.getData('/v1/portfolio/projects/' + this.slug ))
+        var api_data = await(api.getData('/v1/portfolio/projects/' + this.slug))
         this.project = api_data.project
       },
       deleteProject() {
@@ -112,7 +113,7 @@
         this.$emit('filter-by', tagSlug)
       },
       returnToIndex() {
-         
+         this.$router.push({ path: '/portfolio#' + this.project.slug })
       }
     },
     components: {

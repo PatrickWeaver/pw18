@@ -1,15 +1,38 @@
 import * as settings from '../../settings'
 import * as axios from 'axios'
 
-async function getData(path, apiKey) {
-  var apiKeyQuery = ''
-  apiKey = localStorage.getItem('pw18-api-key')
-  if (apiKey) {
-    apiKeyQuery = 'api_key=' + apiKey + '&'
+async function getData(path, queries={}, admin=false,) {
+  var apiKey = 'false'
+  if (admin) {
+    apiKey = localStorage.getItem('pw18-api-key')
   }
-  var qs = '?' + apiKeyQuery + 'quantity=10'
+  var qs = '?api_key=' + apiKey
+  for (var i in queries) {
+    qs += '&' + i + '=' + queries[i]
+  }
   var response = await(axios.get(settings.API_URL + path + qs))
   return response.data
+}
+
+async function getIndex(section, object, admin = false) {
+    var path = '/v1/' + section + '/' + object + '/'
+    var qs = {
+      quantity: 'all'
+    }
+    var apiData = await(getData(path, qs))
+    return apiData
+}
+
+async function getTags(admin = false, status = null) {
+  var path = '/v1/portfolio/tags/'
+  var qs = {
+    quantity: 'all'
+  }
+  if ( !(status === null) ) {
+   qs['status'] = status
+  }
+  var api_data = await(getData(path, qs, admin))
+  return api_data.tags_list
 }
 
 async function sendData(data, path) {
@@ -35,6 +58,8 @@ async function sendFile(file, path) {
 
 export default {
   getData: getData,
+  getIndex: getIndex,
+  getTags: getTags,
   sendData: sendData,
   sendFile: sendFile
 }

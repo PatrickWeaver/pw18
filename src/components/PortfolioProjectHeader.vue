@@ -1,7 +1,11 @@
 <template>
   <div v-if="project" class="project-header">
     <h3 class="project-name">
-      <a @click.prevent="activateProject" :href="'/portfolio/' + project.slug" >
+      <a
+        @click.prevent="activateProject"
+        :href="'/portfolio/' + project.slug"
+        :id="project.slug"
+      >
         {{ project.name }}
       </a>
     </h3>
@@ -35,7 +39,10 @@
       class="project-tag-list"
       v-if="project.tags.length > 0"
     >
-      <li v-for="(tag, index) in project.tags">
+      <li
+        v-for="(tag) in project.tags"
+        :key="tag.slug"
+      >
         <portfolio-tag
           @filter-by="filterBy"
           :tag="tag"
@@ -48,7 +55,6 @@
     >
       {{ project.short_description }}  
     </p>
-
   </div>
 </template>
 
@@ -97,8 +103,8 @@
     display: grid;
     grid-template-columns: Calc(50% - 10px) Calc(50% - 10px);
     column-gap: 20px;
+    grid-template-rows: repeat( auto-fit 1em);
   }
-
   
   .project-name {
     margin-top: 0;
@@ -121,7 +127,7 @@
     grid-column-start: 2;
     grid-column-end: span 1;
     grid-row-start: 1;
-    grid-row-end: 5;
+    grid-row-end: 7;
     margin: 0 auto 20px;
   }
   
@@ -158,7 +164,7 @@
   
   .project-short-description {
     grid-column-start: 1;
-    grid-coumn-end: span 1;
+    grid-column-end: span 1;
     grid-row-start: 5;
     grid-row-end: 6;
   }
@@ -174,6 +180,7 @@
       grid-column-end: span 1;
       grid-row-start: 2;
       grid-row-end: 3;
+      margin: 0 0 20px;
     }
 
     .status-tag {

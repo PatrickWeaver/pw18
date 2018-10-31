@@ -15,7 +15,7 @@
      --><a
           :href="projectPath"
           class="close-link"
-          @click="closeActiveImage"
+          @click.prevent="closeActiveImage"
         >
           ❌ Close
         </a>
@@ -23,7 +23,9 @@
       <img
         :src="image.url"
         class="active-image"
+        :alt="image.alt_text"
       >
+      <p class="gallery-image-caption">{{ image.caption }}</p>
     </div>
   </div>
   <div v-else>
@@ -32,8 +34,13 @@
       :href="this.$router.currentRoute.path + '/' + image.uuid"
       @click.prevent="loadImage"
     >
-      <img class="gallery-image" :src="image.url" >
+      <img
+        class="gallery-image"
+        :src="image.url"
+        :alt="image.alt_text"
+      >
     </a>
+    <p class="gallery-image-caption">{{ image.caption }}</p>
   </div>
   
 
@@ -73,13 +80,15 @@
     },
     methods: {
       checkActiveImage() {
+        var appElement = document.getElementById('app')
         if (this.isActiveImage) {
           this.active = true
           this.oneActive = true
-          document.documentElement.style.overflow = 'hidden'
+
+          appElement.style.overflow = 'hidden'
           return true
         } else {
-          document.documentElement.style.overflow = 'auto'
+          appElement.style.overflow = 'auto'
           this.active = false;
           return false
         }
@@ -113,6 +122,7 @@
 
 
 <style>
+
 
   .active-image-container {
     position: fixed;

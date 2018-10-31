@@ -1,12 +1,13 @@
 import VueRouter from 'vue-router'
 
 /* Pages */
-import About from './components/About.vue'
 import Blog from './components/Blog.vue'
 import BlogPost from './components/BlogPost.vue'
 import BlogEditPost from './components/BlogEditPost.vue'
+import Error404 from './components/Error404.vue'
 import Login from './components/Login.vue'
 import Logout from './components/Logout.vue'
+import Page from './components/Page.vue'
 import Portfolio from './components/Portfolio.vue'
 import PortfolioProject from './components/PortfolioProject.vue'
 import PortfolioEditProject from './components/PortfolioEditProject.vue'
@@ -14,31 +15,63 @@ import Upload from './components/Upload.vue'
 
 const routes = [
   {
-    name: 'about',
-    path: '/about',
-    component: About
+    path: '/',
+    redirect: '/about'
   },
   {
-    name: 'blog',
-    path: '/blog',
+    name: 'about',
+    path: '/about',
+    component: Page,
+    props: {
+      blobSlug: 'about',
+      title: 'About'
+    }
+  },
+  {
+    name: 'writing',
+    path: '/writing',
     component: Blog
   },
   {
-    name: 'blog-new',
-    path: '/blog/new',
+    name: 'writing-new',
+    path: '/writing/new',
     component: BlogEditPost
   },
   {
-    name: 'blog-post',
-    path: '/blog/:activePostSlug',
+    name: 'writing-page',
+    path: '/writing/page/:pageNumber',
     component: Blog,
     props: true
   },
   {
-    name: 'blog-edit-post',
-    path: '/blog/:activePostSlug/edit',
+    path: '/writing/page',
+    redirect: '/blog'
+  },
+  {
+    name: 'writing-edit-post',
+    path: '/writing/:activePostSlug/edit',
     component: BlogEditPost,
     props: true
+  },
+  {
+    name: 'writing-post',
+    path: '/writing/:activePostSlug',
+    component: Blog,
+    props: true
+  },
+  {
+    name: 'new',
+    path: '/new',
+    redirect: '/now'
+  },
+  {
+    name: 'now',
+    path: '/now',
+    component: Page,
+    props: {
+      blobSlug: 'now',
+      title: 'Now'
+    }
   },
   {
     name: 'portfolio',
@@ -51,9 +84,19 @@ const routes = [
     component: PortfolioEditProject
   },
   {
-    name: 'portfolio-project',
-    path: '/portfolio/:activeProjectSlug',
+    name: 'portfolio-page',
+    path: '/portfolio/page/:pageNumber',
     component: Portfolio,
+    props: true 
+  },
+  {
+    path: '/portfolio/page',
+    redirect: '/portfolio'
+  },
+  {
+    name: 'portfolio-edit-project',
+    path: '/portfolio/:activeProjectSlug/edit',
+    component: PortfolioEditProject,
     props: true
   },
   {
@@ -63,9 +106,9 @@ const routes = [
     props: true
   },
   {
-    name: 'portfolio-edit-project',
-    path: '/portfolio/:activeProjectSlug/edit',
-    component: PortfolioEditProject,
+    name: 'portfolio-project',
+    path: '/portfolio/:activeProjectSlug',
+    component: Portfolio,
     props: true
   },
   {
@@ -82,10 +125,31 @@ const routes = [
     name: 'logout',
     path: '/logout',
     component: Logout
+  },
+  {
+    name: 'custom-page',
+    path: '/:blobSlug',
+    component: Page,
+    props: (route) =>({
+      blobSlug: route.params.blobSlug,
+      title: ''
+    })
+  },
+  {
+    name: '404',
+    path: '/404',
+    component: Error404
   }
 ]
 
 export default new VueRouter({
   mode: 'history',
-  routes
+  routes,
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }  
 })

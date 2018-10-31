@@ -10,28 +10,29 @@
         :index-loaded="list.length === 0 ? false : true"
         :active-image-uuid="activeImageUuid"
         @filter-by="filterBy"
-        @delete-project="findAndDeleteProject"
-        @edit-project="editProject"
-        @return-to-index="returnToIndex"
+        @delete="findAndDeleteProject"
+        @edit="editProject"
       ></portfolio-project>
     </div>
     <div v-else-if="list.length > 0">
-      <ul>
-        <portfolio-project-index
-          v-for="(project, index) in list"
-          :admin="admin"
-          :key="project.slug"
-          :index="index"
-          :project="project"
-          :hide="filterProject(index)"
-          @filter-by="filterBy"
-          @activate-project="activateProject"
-          @delete="deleteProject"
-          @edit="editProject"
-        ></portfolio-project-index>
-      </ul>
+      <portfolio-index
+        :pages="pages"
+        :filter="filter"
+        :goToPage="goToPage"
+        :filterBy="filterBy"
+        :filterTag="filterTag"
+        :admin="admin"
+        :pageList="pageList"
+        :activateProject="activateProject"
+        :deleteProject="deleteProject"
+        :editProject="editProject"
+        :currentPage="currentPage"
+        @clear-filter="clearFilter"
+      >
+      </portfolio-index>
     </div>
     <div v-else>
+      <img v-if="status" src="/images/clock.gif" class="loading-clock">
       <p>{{ status }}</p> 
     </div>
   </div>
@@ -41,7 +42,7 @@
 <script>
 
   /* Components */
-  import PortfolioProjectIndex from './PortfolioProjectIndex.vue'
+  import PortfolioIndex from './PortfolioIndex.vue'
   import PortfolioProject from './PortfolioProject.vue'
 
   /* Helpers */
@@ -52,41 +53,98 @@
       return {
         status: '',
         list: [],
-        filter: null
+        filteredList: [],
+        pageList: [],
+        pages: 1,
+        perPage: 10,
+        filter: null,
+        filterTag: null
       }
     },
     computed: {
-
+      currentPage() {
+        return this.pageNumber ? this.pageNumber : 1
+      }
     },
     created() {
       // fetch the data when the view is created and the data is
       // already being observed
-      this.getPortfolioIndex()
-      var loadingMessage = "Loading projects."
-      var errorMessage = "Error loading projects."
-      setTimeout(() => this.status = loadingMessage, 1 * 1000)
-      setTimeout(() => this.status = errorMessage, 10 * 1000)
+      this.onReload()
     },
     props: [
       'activeProjectSlug',
       'activeImageUuid',
-      'admin'
+      'admin',
+      'pageNumber'
     ],
     watch: {
       // call again the method if the route changes
-      '$route': 'getPortfolioIndex'
+      '$route': 'onReload'
     },
     methods: {
+      onReload() {
+        this.getPortfolioIndex()
+        var loadingMessage = "Loading projects."
+        var errorMessage = "Error loading projects."
+        setTimeout(() => this.status = loadingMessage, 1 * 1000)
+        setTimeout(() => this.status = errorMessage, 10 * 1000)
+      },
+      scrollToAnchor() {
+        const anchor = this.$router.currentRoute.hash;
+        this.$nextTick(() => {
+          if (anchor && document.querySelector(anchor)) {
+            location.href = anchor;
+          }
+        });
+      },
       async getPortfolioIndex() {
-        if (!this.activeProjectSlug && this.list.length === 0) {
-          var path = '/v1/portfolio/projects/'
-          var api_data = await(api.getData(path))
-          console.log(api_data)
-          this.list = api_data.projects_list
+        if (!this.activeProjectSlug) {
+          if (this.list.length === 0) {
+            var apiData = await(api.getIndex('portfolio', 'projects'))
+            this.list = apiData.projects_list
+          }
+
+          // Filter projects and set filterTag
+          if (this.$route.query.filter) {
+            this.filter = this.$route.query.filter
+          }
+          if (this.filter) {
+            this.filteredList = []
+            for (var i in this.list) {
+              var project = this.list[i]
+              if (project.status.slug === this.filter) {
+                this.filteredList.push(project)
+                this.filterTag = project.status
+              } else {
+                for (var j in project.tags) {
+                  var tag = project.tags[j]
+                  if (tag.slug === this.filter) {
+                    this.filteredList.push(project)
+                    this.filterTag = tag
+                    break
+                  }
+                }
+              }
+            }
+          } else {
+            this.filteredList = this.list
+          }
+
+          this.pages = Math.ceil(this.filteredList.length/this.perPage)
+          var pageStart = (this.currentPage - 1) * this.perPage
+          var pageEnd = pageStart + this.perPage
+          this.pageList = this.filteredList.slice(pageStart, pageEnd)
         }
+        this.scrollToAnchor()
       },
       activateProject(slug) {
         this.$router.push({ path: '/portfolio/' + slug })
+      },
+      clearFilter() {
+        this.filteredList = this.list
+        this.filter = null
+        this.filterTag = null
+        this.$router.push({ path: '/portfolio'})
       },
       findAndDeleteProject(project) {
         this.deleteProject(project.slug, this.list.indexOf(project))
@@ -106,31 +164,22 @@
       filterBy(tagSlug) {
         this.$router.push({ path: '/portfolio?filter=' + tagSlug })
       },
-      filterProject(index) {
-        // Return false to NOT filter out project
-        // Return true to filter out project
-        var filter = this.$route.query.filter
-        if (filter) {
-          var status = this.list[index].status.slug
-          var tags = this.list[index].tags.map(i => i.slug)
-          if (filter === status || tags.indexOf(filter) > -1) {
-            return false
-          } else {
-            return true
-          }
-        } else {
-          return false
-        }
-      },
-      returnToIndex() {
-         this.$router.push({ path: '/portfolio' })
+      goToPage(pageNumber, filterQs) {
+        this.$router.push({ path: '/portfolio/page/' + pageNumber + '/' + filterQs })
       }
 
     },
     components: {
-      PortfolioProjectIndex,
+      PortfolioIndex,
       PortfolioProject
     }
   }
 
 </script>
+
+<style>
+  .filter-status h3, .filter-status button {
+    display: inline-block;
+  }
+
+</style>

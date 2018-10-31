@@ -72,14 +72,14 @@
           this.autofillSlug = true
         }
       },
-      async getBlogProject() {
-        var api_data = await(api.getData('/v1/blog/posts/' + this.activePostSlug ))
+      async getBlogPost() {
+        var api_data = await(api.getData('/v1/blog/posts/' + this.activePostSlug))
         var post = api_data.post
         this.title = post.title
         this.slug = post.slug
-        this.summary = post.summary
-        this.description = post.description.markdown
-        this.postDate = new Date(post.post_date)
+        this.summary = post.summary.markdown
+        this.body = post.body.markdown
+        this.postDate = post.post_date ? new Date(post.post_date) : null
         this.draft = post.draft
       },
       async submitNewPost() {
@@ -90,7 +90,7 @@
         var response = await(api.sendData(snake(this.$data), path))
         if (response.success) {
           console.log(response)
-          this.$router.push({ path: '/blog/' + response.slug })
+          this.$router.push({ path: '/writing/' + response.slug })
         } else {
           alert("Error: " + response.error)
         }

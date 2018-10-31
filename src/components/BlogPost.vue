@@ -3,17 +3,17 @@
   <div class="blog-post">
     <a
       v-if="indexLoaded"
-      href="/blog"
+      href="/writing"
       @click.prevent="$emit('return-to-index')"
     >⇦ Back</a>
     <h3 class="post-title">
-      <a :href="'/blog/' + post.slug" @click.prevent="" >
+      <a :href="'/writing/' + post.slug" @click.prevent="" >
         {{ post.title }}
       </a>
     </h3>
     <h5 class="post-date"><readable-date :date="post.post_date"></readable-date></h5>
-    <div v-if="post.summary" v-html="post.summary.html" class="blog-post-summary"></div>
-    <div v-if="post.body" v-html="post.body.html" class="blog-post-body"></div>
+    <div v-if="post.summary" v-html="post.summary.html" class="blog-post-summary text"></div>
+    <div v-if="post.body" v-html="post.body.html" class="blog-post-body text"></div>
     <object-admin
       v-if="admin"
       @delete="deletePost"
@@ -53,7 +53,7 @@
     },
     methods: {
       async getBlogPost() {
-        var api_data = await(api.getData('/v1/blog/posts/' + this.slug ))
+        var api_data = await(api.getData('/v1/blog/posts/' + this.slug))
         this.post = api_data.post
       },
       activatePost (event) {

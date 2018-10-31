@@ -1,5 +1,5 @@
 <template>
-  <li v-if="!hide" class="portfolio-project">
+  <li class="portfolio-project">
     <project-header
       :project="project"
       :cover="cover"
@@ -36,7 +36,6 @@
     props: [
       'index',
       'project',
-      'hide',
       'admin'
     ],
     components: {
@@ -63,16 +62,13 @@
       }
     }
   }
-  /*
-  export default {
-    props: {
-      list: {
-        type: Array,
-        required: true
-      }
-    }
-  }
-  */
-
 
 </script>
+
+<style>
+
+  .portfolio-project {
+    margin: 1em 0;
+  }
+
+</style>

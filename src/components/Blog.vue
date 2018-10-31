@@ -1,7 +1,7 @@
 <template>
 
   <div>
-    <h2 class="page-title">Blog</h2>
+    <h2 class="page-title">Writing</h2>
     <div v-if="activePostSlug">
       <blog-post
         :index-loaded="list.length === 0 ? false : true"
@@ -13,9 +13,17 @@
       ></blog-post>
     </div>
     <div v-else-if="list.length > 0">
+      <pagination
+        v-if="currentPage > 1"
+        :pages="pages"
+        :pageNumber="currentPage"
+        :section="'blog'"
+        @go-to-page="goToPage"
+      >
+      </pagination>
       <ul>
         <blog-post-preview
-          v-for="(post, index) in list"
+          v-for="(post) in pageList"
           :key="post.slug"
           :post="post"
           :admin="admin"
@@ -24,6 +32,12 @@
           @delete="deletePost"
         ></blog-post-preview>
       </ul>
+      <pagination
+        :pages="pages"
+        :pageNumber="currentPage"
+        :section="'blog'"
+        @go-to-page="goToPage"
+      ></pagination>
     </div>
     <div v-else>
       <p>{{ status }}</p>  
@@ -37,6 +51,7 @@
    /* Components */
   import BlogPostPreview from './BlogPostPreview.vue'
   import BlogPost from './BlogPost.vue'
+  import Pagination from './Pagination.vue'
 
   /* Helpers */
   import api from '../helpers/api'
@@ -45,7 +60,15 @@
     data() {
       return {
         status: '',
-        list: []
+        list: [],
+        pageList: [],
+        pages: 1,
+        perPage: 5
+      }
+    },
+    computed: {
+      currentPage() {
+        return this.pageNumber ? this.pageNumber : 1
       }
     },
     created() {
@@ -59,7 +82,8 @@
     },
     props: [
       'activePostSlug',
-      'admin'
+      'admin',
+      'pageNumber'
     ],
     watch: {
       // call again the method if the route changes
@@ -67,16 +91,22 @@
     },
     methods: {
       async getBlogPosts() {
-        if (!this.activePostSlug && this.list.length === 0) {
-          var list = await(api.getData('/v1/blog/posts/'))
-          this.list = list.posts_list
+        if (!this.activeProjectSlug) {
+          if (this.list.length === 0) {
+            var apiData = await(api.getIndex('blog', 'posts'))
+            this.list = apiData.posts_list
+            this.pages = Math.floor(apiData.total_posts/this.perPage) + 1
+          }
+          var pageStart = (this.currentPage - 1) * this.perPage
+          var pageEnd = pageStart + this.perPage
+          this.pageList = this.list.slice(pageStart, pageEnd)
         }
       },
       activatePost(slug) {
-        this.$router.push({ path: '/blog/' + slug })
+        this.$router.push({ path: '/writing/' + slug })
       },
       returnToIndex() {
-         this.$router.push({ path: '/blog' })
+         this.$router.push({ path: '/writing' })
       },
       findAndDeletePost(post) {
         this.deletePost(post.slug, this.list.indexOf(post))
@@ -85,18 +115,22 @@
         var response = await(api.sendData({}, '/v1/blog/posts/' + slug + '/delete/'))
         if (response.success) {
           this.list.splice(index, 1)
-          this.$router.push({ path: '/blog' })
+          this.$router.push({ path: '/writing' })
         } else {
           alert("Error: " + response.error)
         }
       },
       editPost(slug) {
-        this.$router.push({ path: '/blog/' + slug + '/edit' })
+        this.$router.push({ path: '/writing/' + slug + '/edit' })
+      },
+      goToPage(pageNumber, filterQs) {
+        this.$router.push({ path: '/writing/page/' + pageNumber + '/' + filterQs })
       }
     },
     components: {
       BlogPostPreview,
-      BlogPost
+      BlogPost,
+      Pagination
     }
   }
 
