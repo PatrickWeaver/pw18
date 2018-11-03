@@ -26,7 +26,7 @@
 
 </script>
 
-<style>
+<style scoped>
   
   #menu {
     margin: 10px 0;

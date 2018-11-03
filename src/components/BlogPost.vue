@@ -76,7 +76,7 @@
 </script>
 
 
-<style>
+<style scoped>
   .blog-post-summary {
     background-color: white;
     margin-bottom: 2em;

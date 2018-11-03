@@ -42,7 +42,7 @@
 
 </script>
 
-<style>
+<style scoped>
   .pagination li {
     display: inline-block;
     margin: .25em;

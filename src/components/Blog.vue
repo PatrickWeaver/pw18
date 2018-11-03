@@ -136,7 +136,7 @@
 
 </script>
 
-<style>
+<style scoped>
   
   .post-title {
     margin: .5em 0;

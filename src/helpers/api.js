@@ -44,7 +44,7 @@ async function sendData(data, path) {
 
 async function sendFile(file, path) {
   var formData = new FormData();
-  formData.append('api_key', '');
+  formData.append('api_key', localStorage.getItem('pw18-api-key'));
   formData.append('file', file);
 
   var options = {

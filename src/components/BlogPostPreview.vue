@@ -65,7 +65,7 @@
 
 </script>
 
-<style>
+<style scoped>
 
   .blog-post-preview {
     overflow: auto;

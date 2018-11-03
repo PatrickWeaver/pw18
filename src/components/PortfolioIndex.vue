@@ -74,7 +74,7 @@
 
 </script>
 
-<style>
+<style scoped>
   
   .remove-filter-link {
     font-size: 75%;

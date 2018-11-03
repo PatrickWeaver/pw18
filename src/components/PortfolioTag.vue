@@ -37,7 +37,7 @@
 
 </script>
 
-<style>
+<style scoped>
   .tag-container {
     display: inline-block;
   }

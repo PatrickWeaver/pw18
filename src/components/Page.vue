@@ -38,7 +38,7 @@
 
 </script>
 
-<style>
+<style scoped>
   
   .page img, .page iframe {
     max-width: 800px;

@@ -13,6 +13,7 @@
     </a>
     <top-menu :admin="admin"></top-menu>
     <router-view
+      class="main-container"
       :admin="admin"
       @login="login"
       @logout="logout"
@@ -91,4 +92,9 @@
     padding: 5px;
     text-align: center;
   }
+  
+  .main-container > div {
+    min-height: 8em;
+  }
+  
 </style>

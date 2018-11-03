@@ -65,7 +65,7 @@
 
 </script>
 
-<style>
+<style scoped>
 
   .portfolio-project {
     margin: 1em 0;
