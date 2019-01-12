@@ -16,6 +16,9 @@
       :admin="admin"
       @login="login"
       @logout="logout"
+      @get-from-api="getFromApi"
+      :list="list"
+      :page-list="pageList"
     ></router-view>
   </div>
 
@@ -26,10 +29,15 @@
   
   import TopMenu from './TopMenu.vue'
   
+  import api from '../helpers/api'
+  
   export default {
     data: function () {
       return {
-        admin: false
+        admin: false,
+        listType: null,
+        list: [],
+        pageList: []
       }
     },
     components: {
@@ -64,6 +72,19 @@
         if (this.$router.currentRoute.path === '/') {
           this.$router.push({ path: '/about' })
         }
+        
+      },
+      async getFromApi(apiCategory, apiObject, apiListName, apiTotalName, pages, perPage, currentPage) {
+        if (this.list.length === 0 || apiCategory != this.listType) {
+          this.listType = apiCategory
+          var apiData = await(api.getIndex(apiCategory, apiObject))
+          console.log(apiData)
+          this.list = apiData[apiListName]
+          pages = Math.floor(apiData[apiTotalName]/perPage) + 1
+        }
+        var pageStart = (currentPage - 1) * perPage
+        var pageEnd = pageStart + perPage
+        this.pageList = this.list.slice(pageStart, pageEnd)
       }
     }
   }

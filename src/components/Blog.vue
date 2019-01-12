@@ -60,8 +60,6 @@
     data() {
       return {
         status: '',
-        list: [],
-        pageList: [],
         pages: 1,
         perPage: 5
       }
@@ -74,7 +72,7 @@
     created() {
       // fetch the data when the view is created and the data is
       // already being observed
-      this.getBlogPosts()
+      this.$emit('get-from-api', 'blog', 'posts', 'posts_list', 'total_posts', this.pages, this.perPage, this.currentPage)
       var loadingMessage = "Loading blog posts."
       var errorMessage = "Error loading blog posts."
       setTimeout(() => this.status = loadingMessage, 1 * 1000)
@@ -83,25 +81,15 @@
     props: [
       'activePostSlug',
       'admin',
-      'pageNumber'
+      'pageNumber',
+      'list',
+      'pageList'
     ],
     watch: {
       // call again the method if the route changes
       '$route': 'getBlogPosts'
     },
     methods: {
-      async getBlogPosts() {
-        if (!this.activePostSlug) {
-          if (this.list.length === 0) {
-            var apiData = await(api.getIndex('blog', 'posts'))
-            this.list = apiData.posts_list
-            this.pages = Math.floor(apiData.total_posts/this.perPage) + 1
-          }
-          var pageStart = (this.currentPage - 1) * this.perPage
-          var pageEnd = pageStart + this.perPage
-          this.pageList = this.list.slice(pageStart, pageEnd)
-        }
-      },
       activatePost(slug) {
         this.$router.push({ path: '/blog/' + slug })
       },

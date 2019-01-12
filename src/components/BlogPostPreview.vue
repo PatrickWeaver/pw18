@@ -39,8 +39,10 @@
     computed: {
       postPreview() {
         if (this.post.summary != '') {
+          console.log(this.post.title, "YES SUMMARY");
           return this.post.summary.html
         } else {
+          console.log(this.post.title, "NO SUMMARY");
           return '<p>' + this.post.post_preview + '</p>'
         }
       }
