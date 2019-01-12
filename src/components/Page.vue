@@ -13,7 +13,7 @@
 <script>
 
   /* Components */
-  import Blob from './Blob.vue'
+  import Blob from './blobs/Blob.vue'
 
   export default {
     data() {

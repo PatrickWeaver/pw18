@@ -1,7 +1,7 @@
 import VueRouter from 'vue-router'
 
 /* Pages */
-import Blobs from './components/Blobs.vue'
+import Blobs from './components/blobs/Blobs.vue'
 import Blog from './components/Blog.vue'
 import BlogPost from './components/BlogPost.vue'
 import BlogEditPost from './components/BlogEditPost.vue'
