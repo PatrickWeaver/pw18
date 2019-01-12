@@ -18,15 +18,15 @@
       <portfolio-index
         :pages="pages"
         :filter="filter"
-        :goToPage="goToPage"
-        :filterBy="filterBy"
-        :filterTag="filterTag"
+        :go-to-page="goToPage"
+        :filter-by="filterBy"
+        :filter-tag="filterTag"
         :admin="admin"
-        :pageList="pageList"
-        :activateProject="activateProject"
-        :deleteProject="deleteProject"
-        :editProject="editProject"
-        :currentPage="currentPage"
+        :page-list="pageList"
+        :activate-project="activateProject"
+        :delete-project="deleteProject"
+        :edit-project="editProject"
+        :current-page="currentPage"
         @clear-filter="clearFilter"
       >
       </portfolio-index>

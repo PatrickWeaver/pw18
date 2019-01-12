@@ -30,7 +30,7 @@
                      @input="endDate = $event.target.valueAsDate" />
       <label>Status:</label>
       <select v-model="statusId">
-        <option disabled value=null>Available Statuses:</option>
+        <option disabled value="null">Available Statuses:</option>
         <option v-for="status in availableStatuses" :value="status.id" :key="status.slug">
           {{ status.name }}
         </option>

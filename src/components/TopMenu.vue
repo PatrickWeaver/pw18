@@ -2,6 +2,7 @@
 
   <ul id="menu">
     <li><router-link to="/about">About</router-link></li>
+    <li v-if="admin"><router-link  to="/blobs">Blobs</router-link></li>
     <li v-if="admin"><router-link to="/upload">Upload</router-link></li>
     <li><router-link to="/portfolio">Portfolio</router-link></li>
     <li v-if="admin"><router-link  to="/portfolio/new">New Project</router-link></li>

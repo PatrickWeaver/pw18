@@ -1,6 +1,7 @@
 import VueRouter from 'vue-router'
 
 /* Pages */
+import Blobs from './components/Blobs.vue'
 import Blog from './components/Blog.vue'
 import BlogPost from './components/BlogPost.vue'
 import BlogEditPost from './components/BlogEditPost.vue'
@@ -26,6 +27,11 @@ const routes = [
       blobSlug: 'about',
       title: 'About'
     }
+  },
+  {
+    name: 'blobs',
+    path: '/blobs',
+    component: Blobs
   },
   {
     name: 'blog',

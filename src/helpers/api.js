@@ -14,8 +14,11 @@ async function getData(path, queries={}, admin=false,) {
   return response.data
 }
 
-async function getIndex(section, object, admin = false) {
-    var path = '/v1/' + section + '/' + object + '/'
+async function getIndex(section, object = false, admin = false) {
+    var path = '/v1/' + section + '/'
+    if (object) {
+      path += object + '/'
+    }
     var qs = {
       quantity: 'all'
     }

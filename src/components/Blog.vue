@@ -16,7 +16,7 @@
       <pagination
         v-if="currentPage > 1"
         :pages="pages"
-        :pageNumber="currentPage"
+        :page-number="currentPage"
         :section="'blog'"
         @go-to-page="goToPage"
       >
@@ -34,7 +34,7 @@
       </ul>
       <pagination
         :pages="pages"
-        :pageNumber="currentPage"
+        :page-number="currentPage"
         :section="'blog'"
         @go-to-page="goToPage"
       ></pagination>
@@ -91,7 +91,7 @@
     },
     methods: {
       async getBlogPosts() {
-        if (!this.activeProjectSlug) {
+        if (!this.activePostSlug) {
           if (this.list.length === 0) {
             var apiData = await(api.getIndex('blog', 'posts'))
             this.list = apiData.posts_list
