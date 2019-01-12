@@ -3,130 +3,120 @@
     <h2>
       Edit/New Project
     </h2>
-    
-    <div> 
-      <form>
-        <portfolio-image
-          v-if="cover"
-          :image="cover"
-          :cover="true"
-        ></portfolio-image>
-        <button
-          @click.prevent="makeOrRemoveCover(cover.uuid, false)"
-          v-if="cover"
-        >Remove Cover</button>
-        <label>Name:</label>
-        <input type="text" v-model="name" @change="updateSlug" />
-        <label>Slug:</label>
-        <input type="text" v-model="slug" @focus="autofillSlug = false" @blur="checkForAutofillSlug"/>
-        <label>Short Description:</label>
-        <textarea v-model="shortDescription"></textarea>
-        <label>Description:</label>
-        <textarea v-model="description"></textarea>
-        <label>Start Date:</label>
-        <input type="date" :value="startDate && startDate.toISOString().split('T')[0]"
-                       @input="startDate = $event.target.valueAsDate" />
-        <label>End Date:</label>
-        <input type="date" :value="endDate && endDate.toISOString().split('T')[0]"
-                       @input="endDate = $event.target.valueAsDate" />
-        <label>Status:</label>
-        <select v-model="statusId">
-          <option disabled :value="null">Available Statuses:</option>
-          <option v-for="status in availableStatuses" :value="status.id" :key="status.slug">
-            {{ status.name }}
-          </option>
-        </select>
-        <label>Project URL:</label>
-        <input type="text" v-model="projectUrl" />
-        <label>Source URL:</label>
-        <input type="text" v-model="sourceUrl" />
-        <label>Hide Project:</label>
-        <input type="checkbox" v-model="isHidden" />
-        <button @click.prevent="submitNewProject">Submit</button>
-      </form>
 
-      <div v-if="activeProjectSlug">
-        <hr>
-        <h4>
-          Add existing Tag:
-        </h4>
-        <select id="tag-selector" name="new-tags" v-model="newTag">
-          <option disabled :value="null">Available Tags:</option>
-          <option v-for="tag in availableTags" :value="tag" :key="tag.slug">
-            {{ tag.name }}
-          </option>
-        </select>
+    <form>
+      <portfolio-image
+        v-if="cover"
+        :image="cover"
+        :cover="true"
+      ></portfolio-image>
+      <button
+        @click.prevent="makeOrRemoveCover(cover.uuid, false)"
+        v-if="cover"
+      >Remove Cover</button>
+      <label>Name:</label>
+      <input type="text" v-model="name" @change="updateSlug" />
+      <label>Slug:</label>
+      <input type="text" v-model="slug" @focus="autofillSlug = false" @blur="checkForAutofillSlug"/>
+      <label>Short Description:</label>
+      <textarea v-model="shortDescription"></textarea>
+      <label>Description:</label>
+      <textarea v-model="description"></textarea>
+      <label>Start Date:</label>
+      <input type="date" :value="startDate && startDate.toISOString().split('T')[0]"
+                     @input="startDate = $event.target.valueAsDate" />
+      <label>End Date:</label>
+      <input type="date" :value="endDate && endDate.toISOString().split('T')[0]"
+                     @input="endDate = $event.target.valueAsDate" />
+      <label>Status:</label>
+      <select v-model="statusId">
+        <option disabled value=null>Available Statuses:</option>
+        <option v-for="status in availableStatuses" :value="status.id" :key="status.slug">
+          {{ status.name }}
+        </option>
+      </select>
+      <label>Project URL:</label>
+      <input type="text" v-model="projectUrl" />
+      <label>Source URL:</label>
+      <input type="text" v-model="sourceUrl" />
+      <label>Hide Project:</label>
+      <input type="checkbox" v-model="isHidden" />
+      <button @click.prevent="$router.push({ path: '/' })">Cancel</button>
+      <button @click.prevent="submitNewProject">Submit</button>
+    </form>
 
-        <button
-          @click.prevent="addRemoveTag(newTag.slug, tags.length, 'add')"
+    <div v-if="activeProjectSlug">
+      <hr>
+
+      <select id="tag-selector" name="new-tags" v-model="newTag">
+        <option disabled value="null">Available Tags:</option>
+        <option v-for="tag in availableTags" :value="tag" :key="tag.slug">
+          {{ tag.name }}
+        </option>
+      </select>
+
+      <button
+        @click.prevent="addRemoveTag(newTag.slug, tags.length, 'add')"
+      >
+        Add Tag
+      </button>
+    </div>
+
+
+    <div v-if="tags.length > 0">
+      <hr/>
+      <ul class="tag-list">
+        <li
+          v-for="(tag, index) in tags"
+          :key="tag.slug"
         >
-          Add Tag
-        </button>
-      </div>
-
-      <div v-if="tags.length > 0">
-        <hr/>
-        <h4>
-          Current Tags:
-        </h4>
-        <ul class="tag-list">
-          <li
-            v-for="(tag, index) in tags"
-            :key="tag.slug"
-          >
-            <portfolio-tag
-              :tag="tag"
-            ></portfolio-tag>
-            <button @click="addRemoveTag(tag.slug, index, 'remove')">Remove</button>
-          </li>
-        </ul>
-      </div>
-      
-      <new-tag
-        v-if="activeProjectSlug"
-        :project-slug="activeProjectSlug"
-        @add-created-tag="addCreatedTag"
-      ></new-tag>
-
-      <div v-if="activeProjectSlug">
-        <hr>
-
-        <form id="new-image-form">
-          <label>Image URL:</label>
-          <input type="text" v-model="newImageUrl">
-          <label>Order:</label>
-          <input type="number" v-model="newImageOrder">
-          <label>Alt Text:</label>
-          <textarea v-model="newImageAltText"></textarea>
-          <label>Caption:</label>
-          <textarea v-model="newImageCaption"></textarea>
-          <label>Cover Image?</label>
-          <input type="checkbox" v-model="newImageCover" />
-          <button @click.prevent="addImage">Add Image</button>
-        </form>
+          <portfolio-tag
+            :tag="tag"
+          ></portfolio-tag>
+          <button @click="addRemoveTag(tag.slug, index, 'remove')">Remove</button>
+        </li>
+      </ul>
     </div>
 
-      <div v-if="images.length > 0">
-        <hr/>
-        <ul class="image-list">
-          <li
-            v-for="(image, index) in images"
-            :key="image.uuid"
-          >
-            <portfolio-image
-              v-bind:image="image"
-              :active-image-uuid="false"
-              :project-name="name"
-            ></portfolio-image>
-            <button
-              @click="makeOrRemoveCover(image.uuid, true)"
-              v-if="!image.cover"
-            >Make Cover</button>
-            <button @click="deleteImage(image.uuid, index, 'delete')">Delete</button>
-          </li>
-        </ul> 
-      </div>
+    <div v-if="activeProjectSlug">
+      <hr>
+
+      <form id="new-image-form">
+        <label>Image URL:</label>
+        <input type="text" v-model="newImageUrl">
+        <label>Order:</label>
+        <input type="number" v-model="newImageOrder">
+        <label>Alt Text:</label>
+        <textarea v-model="newImageAltText"></textarea>
+        <label>Caption:</label>
+        <textarea v-model="newImageCaption"></textarea>
+        <label>Cover Image?</label>
+        <input type="checkbox" v-model="newImageCover" />
+        <button @click.prevent="addImage(newImageUrl)">Add Image</button>
+      </form>
     </div>
+
+    <div v-if="images.length > 0">
+      <hr/>
+      <ul class="image-list">
+        <li
+          v-for="(image, index) in images"
+          :key="image.uuid"
+        >
+          <portfolio-image
+            v-bind:image="image"
+            :active-image-uuid="false"
+            :project-name="name"
+          ></portfolio-image>
+          <button
+            @click="makeOrRemoveCover(image.uuid, true)"
+            v-if="!image.cover"
+          >Make Cover</button>
+          <button @click="deleteImage(image.uuid, index, 'delete')">Delete</button>
+        </li>
+      </ul> 
+    </div>
+
   </div>
 </template>
 
@@ -143,7 +133,6 @@
   /* Components */
   import PortfolioTag from './PortfolioTag.vue'
   import PortfolioImage from './PortfolioImage.vue'
-  import NewTag from './PortfolioNewTag.vue'
 
 
   export default {
@@ -171,6 +160,7 @@
         newImageAltText: null,
         newImageCaption: null,
         newImageCover: false
+
       }
     },
     created() {
@@ -185,8 +175,7 @@
     },
     components: {
       PortfolioTag,
-      PortfolioImage,
-      NewTag
+      PortfolioImage
     },
     computed: {
       autoSlug() {
@@ -250,7 +239,6 @@
         }
       },
       async addRemoveTag(tagSlug, tagIndex, action) {
-        // 🚸 Could remove tagSlug param by doing this in a different order?
         if (action === 'remove') {
           this.tags.splice(tagIndex, 1)
         } else {
@@ -266,14 +254,10 @@
           alert("Error: " + response.error)
         }
       },
-      async addCreatedTag(newTag) {
-        this.newTag = newTag
-        this.addRemoveTag(newTag.slug, this.tags.length, 'add')
-      },
-      async addImage() {
+      async addImage(url) {
         var path = '/v1/portfolio/images/new/'
         var body = {
-          url: this.newImageUrl,
+          url: url,
           project_id: this.projectId,
           order: this.newImageOrder,
           alt_text: this.newImageAltText,
@@ -285,7 +269,7 @@
           this.getPortfolioProject()
           this.newImageUrl = ''
           this.newImageAltText = ''
-          this.newImageCaption = ''
+          this.newImgaeCaption = ''
         } else {
           alert("Error: " + response.error)
         }

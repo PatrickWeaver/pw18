@@ -16,11 +16,7 @@
       @filter-by="filterBy"
       :tag="filterTag"
     ></portfolio-tag>
-    <a
-       href="/portfolio"
-       class="interface-link remove-filter-link"
-       @click.prevent="$emit('clear-filter')"
-    >❌  Remove Filter</a>
+    <button @click="$emit('clear-filter')">❌  Remove Filter</button>
     </div>
     <ul>
     <portfolio-project-index
@@ -74,10 +70,6 @@
 
 </script>
 
-<style scoped>
-  
-  .remove-filter-link {
-    font-size: 75%;
-  }
+<style>
 
 </style>

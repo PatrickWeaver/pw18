@@ -98,7 +98,7 @@
 </script>
 
 
-<style scoped>
+<style>
   .project-header {
     display: grid;
     grid-template-columns: Calc(50% - 10px) Calc(50% - 10px);
@@ -133,8 +133,6 @@
   
   .cover img {
     max-height: 400px;
-    max-width: 100%;
-    width: auto;
   }
 
   .status-tag {

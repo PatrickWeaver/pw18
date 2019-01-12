@@ -28,34 +28,34 @@ const routes = [
     }
   },
   {
-    name: 'writing',
-    path: '/writing',
+    name: 'blog',
+    path: '/blog',
     component: Blog
   },
   {
-    name: 'writing-new',
-    path: '/writing/new',
+    name: 'blog-new',
+    path: '/blog/new',
     component: BlogEditPost
   },
   {
-    name: 'writing-page',
-    path: '/writing/page/:pageNumber',
+    name: 'blog-page',
+    path: '/blog/page/:pageNumber',
     component: Blog,
     props: true
   },
   {
-    path: '/writing/page',
+    path: '/blog/page',
     redirect: '/blog'
   },
   {
-    name: 'writing-edit-post',
-    path: '/writing/:activePostSlug/edit',
+    name: 'blog-edit-post',
+    path: '/blog/:activePostSlug/edit',
     component: BlogEditPost,
     props: true
   },
   {
-    name: 'writing-post',
-    path: '/writing/:activePostSlug',
+    name: 'blog-post',
+    path: '/blog/:activePostSlug',
     component: Blog,
     props: true
   },

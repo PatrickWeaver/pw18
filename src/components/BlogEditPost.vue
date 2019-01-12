@@ -18,6 +18,7 @@
                      @input="postDate = $event.target.valueAsDate" />
       <label>Draft:</label>
       <input type="checkbox" v-model="draft" />
+      <button @click.prevent="$router.push({ path: '/' })">Cancel</button>
       <button @click.prevent="submitNewPost">Submit</button>
     </form>
 
@@ -90,7 +91,7 @@
         var response = await(api.sendData(snake(this.$data), path))
         if (response.success) {
           console.log(response)
-          this.$router.push({ path: '/writing/' + response.slug })
+          this.$router.push({ path: '/blog/' + response.slug })
         } else {
           alert("Error: " + response.error)
         }

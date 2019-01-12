@@ -1,7 +1,7 @@
 <template>
 
   <div>
-    <h2 class="page-title">Writing</h2>
+    <h2 class="page-title">Blog</h2>
     <div v-if="activePostSlug">
       <blog-post
         :index-loaded="list.length === 0 ? false : true"
@@ -103,10 +103,10 @@
         }
       },
       activatePost(slug) {
-        this.$router.push({ path: '/writing/' + slug })
+        this.$router.push({ path: '/blog/' + slug })
       },
       returnToIndex() {
-         this.$router.push({ path: '/writing' })
+         this.$router.push({ path: '/blog' })
       },
       findAndDeletePost(post) {
         this.deletePost(post.slug, this.list.indexOf(post))
@@ -115,16 +115,16 @@
         var response = await(api.sendData({}, '/v1/blog/posts/' + slug + '/delete/'))
         if (response.success) {
           this.list.splice(index, 1)
-          this.$router.push({ path: '/writing' })
+          this.$router.push({ path: '/blog' })
         } else {
           alert("Error: " + response.error)
         }
       },
       editPost(slug) {
-        this.$router.push({ path: '/writing/' + slug + '/edit' })
+        this.$router.push({ path: '/blog/' + slug + '/edit' })
       },
       goToPage(pageNumber, filterQs) {
-        this.$router.push({ path: '/writing/page/' + pageNumber + '/' + filterQs })
+        this.$router.push({ path: '/blog/page/' + pageNumber + '/' + filterQs })
       }
     },
     components: {
@@ -136,7 +136,7 @@
 
 </script>
 
-<style scoped>
+<style>
   
   .post-title {
     margin: .5em 0;

@@ -129,7 +129,7 @@
 </script>
 
 
-<style scoped>
+<style>
   
   .link-list li {
     margin: 5px;

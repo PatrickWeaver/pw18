@@ -1,7 +1,7 @@
 <template>
   <div v-if="cover">
     <!-- Cover image --> 
-    <img class="cover-image" :src="image.url">
+    <img :src="image.url">
   </div>
   <div v-else-if="active">
     <!-- Active image -->
@@ -121,13 +121,8 @@
 </script>
 
 
-<style scoped>
-  
-  .cover-image {
-    max-width: 100%;
-    height: auto;
-    width: auto;
-  }
+<style>
+
 
   .active-image-container {
     position: fixed;
@@ -171,7 +166,6 @@
   .gallery-image {
     display: block;
     max-height: 200px;
-    width: auto;
   }
 
 </style>

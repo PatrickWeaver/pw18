@@ -1,7 +1,7 @@
 <template>
   <li class="blog-post-preview">
     <h3 class="post-title">
-      <a :href="'/writing/' + post.slug" @click.prevent="activatePost" >
+      <a :href="'/blog/' + post.slug" @click.prevent="activatePost" >
         {{ post.title }}
       </a>
     </h3>
@@ -15,7 +15,7 @@
     <h5 class="post-date"><readable-date :date="post.post_date"></readable-date></h5>
     <div v-html="postPreview"></div>
     <p class="read-more">
-      <a :href="'/writing/' + post.slug" >Read More</a>
+      <a :href="'/blog/' + post.slug" >Read More</a>
     </p>
     <object-admin
       v-if="admin"
@@ -65,7 +65,7 @@
 
 </script>
 
-<style scoped>
+<style>
 
   .blog-post-preview {
     overflow: auto;

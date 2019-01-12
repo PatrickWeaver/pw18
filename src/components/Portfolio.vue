@@ -18,15 +18,15 @@
       <portfolio-index
         :pages="pages"
         :filter="filter"
-        :go-to-page="goToPage"
-        :filter-by="filterBy"
-        :filter-tag="filterTag"
+        :goToPage="goToPage"
+        :filterBy="filterBy"
+        :filterTag="filterTag"
         :admin="admin"
-        :page-list="pageList"
-        :activate-project="activateProject"
-        :delete-project="deleteProject"
-        :edit-project="editProject"
-        :current-page="currentPage"
+        :pageList="pageList"
+        :activateProject="activateProject"
+        :deleteProject="deleteProject"
+        :editProject="editProject"
+        :currentPage="currentPage"
         @clear-filter="clearFilter"
       >
       </portfolio-index>
@@ -177,7 +177,7 @@
 
 </script>
 
-<style scoped>
+<style>
   .filter-status h3, .filter-status button {
     display: inline-block;
   }

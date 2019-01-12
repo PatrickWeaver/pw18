@@ -3,11 +3,11 @@
   <div class="blog-post">
     <a
       v-if="indexLoaded"
-      href="/writing"
+      href="/blog"
       @click.prevent="$emit('return-to-index')"
     >⇦ Back</a>
     <h3 class="post-title">
-      <a :href="'/writing/' + post.slug" @click.prevent="" >
+      <a :href="'/blog/' + post.slug" @click.prevent="" >
         {{ post.title }}
       </a>
     </h3>
@@ -76,7 +76,7 @@
 </script>
 
 
-<style scoped>
+<style>
   .blog-post-summary {
     background-color: white;
     margin-bottom: 2em;
