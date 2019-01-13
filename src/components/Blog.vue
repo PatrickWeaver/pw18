@@ -2,6 +2,7 @@
 
   <div>
     <h2 class="page-title">Blog</h2>
+    <!-- if -->
     <div v-if="activePostSlug">
       <blog-post
         :index-loaded="list.length === 0 ? false : true"
@@ -12,6 +13,7 @@
         @delete="findAndDeletePost"
       ></blog-post>
     </div>
+    <!-- Else If-->
     <div v-else-if="list.length > 0">
       <pagination
         v-if="currentPage > 1"
@@ -39,6 +41,7 @@
         @go-to-page="goToPage"
       ></pagination>
     </div>
+    <!-- Else -->
     <div v-else>
       <p>{{ status }}</p>  
     </div>
@@ -72,6 +75,7 @@
     created() {
       // fetch the data when the view is created and the data is
       // already being observed
+      this.$emit('set-list-type', 'blog');
       this.$emit('get-from-api', 'blog', 'posts', 'posts_list', 'total_posts', this.pages, this.perPage, this.currentPage)
       var loadingMessage = "Loading blog posts."
       var errorMessage = "Error loading blog posts."
@@ -125,6 +129,10 @@
 </script>
 
 <style>
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Yantramanav', sans-serif;
+  }
   
   .post-title {
     margin: .5em 0;

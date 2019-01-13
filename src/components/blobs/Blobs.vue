@@ -27,7 +27,7 @@
     created() {
       // fetch the data when the view is created and the data is
       // already being observed
-      //this.getBlobs()
+      this.$emit('set-list-type', 'blobs');
       this.$emit('get-from-api', 'blobs', false, 'blobs_list', 'total_blobs', this.pages, this.perPage, this.currentPage)
       var loadingMessage = "Loading blog posts."
       var errorMessage = "Error loading blog posts."

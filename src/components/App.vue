@@ -17,6 +17,7 @@
       @login="login"
       @logout="logout"
       @get-from-api="getFromApi"
+      @set-list-type="setListType"
       :list="list"
       :page-list="pageList"
     ></router-view>
@@ -72,13 +73,20 @@
         if (this.$router.currentRoute.path === '/') {
           this.$router.push({ path: '/about' })
         }
-        
+      },
+      setListType(type) {
+        console.log("Page List:", this.pageList);
+        if (this.listType != type) {
+          this.list = [];
+          this.pageList = [];
+          this.listType = type;
+          //this.$nextTick()
+          console.log("Page List 2:", this.pageList);
+        }
       },
       async getFromApi(apiCategory, apiObject, apiListName, apiTotalName, pages, perPage, currentPage) {
-        if (this.list.length === 0 || apiCategory != this.listType) {
-          this.listType = apiCategory
+        if (this.list.length === 0) {
           var apiData = await(api.getIndex(apiCategory, apiObject))
-          console.log(apiData)
           this.list = apiData[apiListName]
           pages = Math.floor(apiData[apiTotalName]/perPage) + 1
         }
