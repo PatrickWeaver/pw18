@@ -26,10 +26,10 @@
 <script>
   
   /* Helpers */
-  import api from '../helpers/api'
+  import api from '../../helpers/api'
   
   /* Components */
-  import ObjectAdmin from './ObjectAdmin.vue'
+  import ObjectAdmin from '../ObjectAdmin.vue'
   
   export default {
     data() {

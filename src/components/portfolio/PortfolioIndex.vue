@@ -3,7 +3,7 @@
     <pagination
       v-if="currentPage > 1"
       :pages="pages"
-      :pageNumber="currentPage"
+      :page-number="currentPage"
       :section="'portfolio'"
       :filter="filter"
       @go-to-page="goToPage"
@@ -33,7 +33,7 @@
     </ul>
     <pagination
       :pages="pages"
-      :pageNumber="currentPage"
+      :page-number="currentPage"
       :section="'portfolio'"
       :filter="filter"
       @go-to-page="goToPage"
@@ -43,7 +43,7 @@
 
 <script>
 
-  import Pagination from './Pagination.vue'
+  import Pagination from '../Pagination.vue'
   import PortfolioProjectIndex from './PortfolioIndexProject.vue'
   import PortfolioTag from './PortfolioTag.vue'
 

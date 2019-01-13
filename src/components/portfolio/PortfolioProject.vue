@@ -61,16 +61,16 @@
 <script>
 
   /* Helpers */
-  import api from '../helpers/api'
-  import findPortfolioProjectCover from '../helpers/findPortfolioProjectCover'
+  import api from '../../helpers/api'
+  import findPortfolioProjectCover from '../../helpers/findPortfolioProjectCover'
 
   /* Components */
-  import ObjectAdmin from './ObjectAdmin.vue'
+  import ObjectAdmin from '../ObjectAdmin.vue'
   import ProjectHeader from './PortfolioProjectHeader.vue'
   import PortfolioImage from './PortfolioImage.vue'
   import PortfolioTag from './PortfolioTag.vue'
-  import UrlWithLabel from './UrlWithLabel.vue'
-  import YearDateRange from './YearDateRange.vue'
+  import UrlWithLabel from '../UrlWithLabel.vue'
+  import YearDateRange from '../YearDateRange.vue'
 
   export default {
     data() {

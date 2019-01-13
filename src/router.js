@@ -2,16 +2,16 @@ import VueRouter from 'vue-router'
 
 /* Pages */
 import Blobs from './components/blobs/Blobs.vue'
-import Blog from './components/Blog.vue'
-import BlogPost from './components/BlogPost.vue'
-import BlogEditPost from './components/BlogEditPost.vue'
+import Blog from './components/blog/Blog.vue'
+import BlogPost from './components/blog/BlogPost.vue'
+import BlogEditPost from './components/blog/BlogEditPost.vue'
 import Error404 from './components/Error404.vue'
 import Login from './components/Login.vue'
 import Logout from './components/Logout.vue'
 import Page from './components/Page.vue'
-import Portfolio from './components/Portfolio.vue'
-import PortfolioProject from './components/PortfolioProject.vue'
-import PortfolioEditProject from './components/PortfolioEditProject.vue'
+import Portfolio from './components/portfolio/Portfolio.vue'
+import PortfolioProject from './components/portfolio/PortfolioProject.vue'
+import PortfolioEditProject from './components/portfolio/PortfolioEditProject.vue'
 import Upload from './components/Upload.vue'
 
 const routes = [

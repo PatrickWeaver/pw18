@@ -123,8 +123,8 @@
 <script>
 
   /* Helpers */
-  import api from '../helpers/api'
-  import findPortfolioProjectCover from '../helpers/findPortfolioProjectCover'
+  import api from '../../helpers/api'
+  import findPortfolioProjectCover from '../../helpers/findPortfolioProjectCover'
 
   /* NPM */
   import * as slug from 'slug'

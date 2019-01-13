@@ -28,7 +28,7 @@
 <script>
 
   /* Helpers */
-  import api from '../helpers/api'
+  import api from '../../helpers/api'
 
   /* NPM */
   import * as slug from 'slug'

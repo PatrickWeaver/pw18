@@ -54,10 +54,10 @@
    /* Components */
   import BlogPostPreview from './BlogPostPreview.vue'
   import BlogPost from './BlogPost.vue'
-  import Pagination from './Pagination.vue'
+  import Pagination from '../Pagination.vue'
 
   /* Helpers */
-  import api from '../helpers/api'
+  import api from '../../helpers/api'
 
   export default {
     data() {

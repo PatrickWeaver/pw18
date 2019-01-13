@@ -61,13 +61,13 @@
 <script>
 
   /* Helpers */
-  import api from '../helpers/api'
+  import api from '../../helpers/api'
 
   /* Components */
   import PortfolioImage from './PortfolioImage.vue'
   import PortfolioTag from './PortfolioTag.vue'
-  import UrlWithLabel from './UrlWithLabel.vue'
-  import YearDateRange from './YearDateRange.vue'
+  import UrlWithLabel from '../UrlWithLabel.vue'
+  import YearDateRange from '../YearDateRange.vue'
 
   export default {
     data() {

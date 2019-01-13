@@ -27,8 +27,8 @@
 
 <script>
   
-  import ObjectAdmin from './ObjectAdmin.vue'
-  import ReadableDate from './ReadableDate.vue'
+  import ObjectAdmin from '../ObjectAdmin.vue'
+  import ReadableDate from '../ReadableDate.vue'
   
   export default {
     props: [
