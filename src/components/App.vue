@@ -16,10 +16,6 @@
       :admin="admin"
       @login="login"
       @logout="logout"
-      @get-from-api="getFromApi"
-      @set-list-type="setListType"
-      :list="list"
-      :page-list="pageList"
     ></router-view>
   </div>
 
@@ -36,9 +32,9 @@
     data: function () {
       return {
         admin: false,
-        listType: null,
-        list: [],
-        pageList: []
+        //listType: null,
+        //list: [],
+        //pageList: []
       }
     },
     components: {

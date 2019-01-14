@@ -16,38 +16,33 @@
   /* Components */
   import BlobPreview from './BlobPreview.vue'
   
+  /* Helpers */
+  import api from '../../helpers/api.js'
+  
   export default {
     data() {
       return {
         status: '',
-        pages: 1,
-        perPage: 5
+        pages: null,
+        perPage: 5,
+        pageList: [],
+        currentPage: 1
       }
     },
     created() {
-      // fetch the data when the view is created and the data is
-      // already being observed
-      this.$emit('set-list-type', 'blobs');
-      this.$emit('get-from-api', 'blobs', false, 'blobs_list', 'total_blobs', this.pages, this.perPage, this.currentPage)
-      var loadingMessage = "Loading blog posts."
-      var errorMessage = "Error loading blog posts."
-      setTimeout(() => this.status = loadingMessage, 1 * 1000)
-      setTimeout(() => this.status = errorMessage, 10 * 1000)
+      this.getIndex()
     },
-    props: [
-      'list',
-      'pageList'
-    ],
     computed: {
-      currentPage() {
-        return this.pageNumber ? this.pageNumber : 1
-      }
     },
     components: {
       BlobPreview
     },
     methods: {
+      async getIndex() {
+        var currentPageListData = await api.getIndexList('blobs', false, 'blobs_list', 'total_blobs', this.perPage, this.currentPage);
+        this.pageList = currentPageListData.pageList
+        this.pages = currentPageListData.pages
+      }
     }
   }  
-
 </script>

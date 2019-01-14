@@ -5,7 +5,6 @@
       <li><em>/{{ blob.slug }}</em></li>
       <li>{{ blob.created_date }}</li>
       <li>Hidden: {{ blob.hidden }}</li>
-      <div v-if="blob.body" v-html="blob.body.html" />
     </ul>
   </div>
 </template>

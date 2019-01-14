@@ -1,6 +1,29 @@
 import * as settings from '../../settings'
 import * as axios from 'axios'
 
+async function getIndexPageList(apiCategory, apiObject, apiListName, apiTotalName, perPage, currentPage) {
+  var apiData = await(getIndex(apiCategory, apiObject))
+  /*
+  return {
+    list: apiData[apiListName],
+    total: apiData[apiTotalName]
+  }
+  */
+  const fullList = apiData[apiListName]
+  const total = apiData[apiTotalName]
+  return paginateIndex(fullList, total, perPage, currentPage);
+}
+
+function paginateIndex(list, total, perPage, currentPage) {
+  var pages = Math.floor(total/perPage) + 1
+  var pageStart = (currentPage - 1) * perPage
+  var pageEnd = pageStart + perPage
+  return {
+    pageList: list.slice(pageStart, pageEnd),
+    pages: pages
+  }
+}
+
 async function getData(path, queries={}, admin=false,) {
   var apiKey = 'false'
   if (admin) {
@@ -60,6 +83,8 @@ async function sendFile(file, path) {
 }
 
 export default {
+  getIndexList: getIndexPageList,
+  paginateIndex: paginateIndex,
   getData: getData,
   getIndex: getIndex,
   getTags: getTags,

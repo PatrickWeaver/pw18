@@ -5,7 +5,7 @@
     <!-- if -->
     <div v-if="activePostSlug">
       <blog-post
-        :index-loaded="list.length === 0 ? false : true"
+        :index-loaded="pageList.length === 0 ? false : true"
         :slug="activePostSlug"
         :admin="admin"
         @return-to-index="returnToIndex"
@@ -14,7 +14,7 @@
       ></blog-post>
     </div>
     <!-- Else If-->
-    <div v-else-if="list.length > 0">
+    <div v-else-if="pageList.length > 0">
       <pagination
         v-if="currentPage > 1"
         :pages="pages"
@@ -63,43 +63,46 @@
     data() {
       return {
         status: '',
-        pages: 1,
-        perPage: 5
-      }
-    },
-    computed: {
-      currentPage() {
-        return this.pageNumber ? this.pageNumber : 1
+        pages: null,
+        perPage: 5,
+        pageList: [],
+        currentPage: 1
       }
     },
     created() {
+      this.getIndex()
       // fetch the data when the view is created and the data is
       // already being observed
+      /*
       this.$emit('set-list-type', 'blog');
       this.$emit('get-from-api', 'blog', 'posts', 'posts_list', 'total_posts', this.pages, this.perPage, this.currentPage)
       var loadingMessage = "Loading blog posts."
       var errorMessage = "Error loading blog posts."
       setTimeout(() => this.status = loadingMessage, 1 * 1000)
       setTimeout(() => this.status = errorMessage, 10 * 1000)
+      */
     },
     props: [
       'activePostSlug',
-      'admin',
-      'pageNumber',
-      'list',
-      'pageList'
+      'admin'
     ],
     watch: {
       // call again the method if the route changes
       '$route': 'getBlogPosts'
     },
     methods: {
+      async getIndex() {
+        var currentPageListData = await api.getIndexList('blog', 'posts', 'posts_list', 'total_posts', this.perPage, this.currentPage);
+        console.log("CPLD\n", currentPageListData)
+        this.pageList = currentPageListData.pageList
+        this.pages = currentPageListData.pages
+      },
       activatePost(slug) {
         this.$router.push({ path: '/blog/' + slug })
       },
       returnToIndex() {
          this.$router.push({ path: '/blog' })
-      },
+      },/*
       findAndDeletePost(post) {
         this.deletePost(post.slug, this.list.indexOf(post))
       },
@@ -111,7 +114,7 @@
         } else {
           alert("Error: " + response.error)
         }
-      },
+      },*/
       editPost(slug) {
         this.$router.push({ path: '/blog/' + slug + '/edit' })
       },
