@@ -3,12 +3,6 @@ import * as axios from 'axios'
 
 async function getIndexPageList(apiCategory, apiObject, apiListName, apiTotalName, perPage, currentPage) {
   var apiData = await(getIndex(apiCategory, apiObject))
-  /*
-  return {
-    list: apiData[apiListName],
-    total: apiData[apiTotalName]
-  }
-  */
   const fullList = apiData[apiListName]
   const total = apiData[apiTotalName]
   return paginateIndex(fullList, total, perPage, currentPage);

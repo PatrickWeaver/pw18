@@ -30,6 +30,7 @@
   
   /* Components */
   import ObjectAdmin from '../ObjectAdmin.vue'
+  import ReadableDate from '../ReadableDate.vue'
   
   export default {
     data() {
@@ -69,7 +70,8 @@
     computed: {
     },
     components: {
-      ObjectAdmin
+      ObjectAdmin,
+      ReadableDate
     }
   }  
 

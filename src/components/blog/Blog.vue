@@ -71,29 +71,19 @@
     },
     created() {
       this.getIndex()
-      // fetch the data when the view is created and the data is
-      // already being observed
-      /*
-      this.$emit('set-list-type', 'blog');
-      this.$emit('get-from-api', 'blog', 'posts', 'posts_list', 'total_posts', this.pages, this.perPage, this.currentPage)
-      var loadingMessage = "Loading blog posts."
-      var errorMessage = "Error loading blog posts."
-      setTimeout(() => this.status = loadingMessage, 1 * 1000)
-      setTimeout(() => this.status = errorMessage, 10 * 1000)
-      */
+    },
+    watch: {
+      pageNumber: 'getIndex'
     },
     props: [
       'activePostSlug',
-      'admin'
+      'admin',
+      'pageNumber'
     ],
-    watch: {
-      // call again the method if the route changes
-      '$route': 'getBlogPosts'
-    },
     methods: {
       async getIndex() {
+        this.currentPage = this.pageNumber ? this.pageNumber : this.currentPage
         var currentPageListData = await api.getIndexList('blog', 'posts', 'posts_list', 'total_posts', this.perPage, this.currentPage);
-        console.log("CPLD\n", currentPageListData)
         this.pageList = currentPageListData.pageList
         this.pages = currentPageListData.pages
       },
@@ -102,19 +92,19 @@
       },
       returnToIndex() {
          this.$router.push({ path: '/blog' })
-      },/*
-      findAndDeletePost(post) {
-        this.deletePost(post.slug, this.list.indexOf(post))
       },
-      async deletePost(slug, index) {
+      findAndDeletePost(post) {
+        this.deletePost(post.slug, this.pageList.indexOf(post))
+        this.pageList.splice(index, 1)
+      },
+      async deletePost(slug) {
         var response = await(api.sendData({}, '/v1/blog/posts/' + slug + '/delete/'))
         if (response.success) {
-          this.list.splice(index, 1)
           this.$router.push({ path: '/blog' })
         } else {
           alert("Error: " + response.error)
         }
-      },*/
+      },
       editPost(slug) {
         this.$router.push({ path: '/blog/' + slug + '/edit' })
       },
