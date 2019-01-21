@@ -2,7 +2,8 @@ import * as slug from 'slug'
 
 export function updateSlug() {
   if (this.autofillSlug) {
-    this.slug = slug(this.title)
+    var sluggable = this.title ? this.title : this.name;
+    this.slug = sluggable ? sluggable : "error no sluggable available";
   }
 }
 
