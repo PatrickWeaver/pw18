@@ -39,12 +39,17 @@
 
   /* Helpers */
   import api from '../../helpers/api'
+  import {editObject} from '../../helpers/general'
 
   export default {
     data() {
       return {
         indexLoaded: false
       }
+    },
+    beforeCreate() {
+      this.deletePost = api.deleteObject.bind(this, 'blog', 'posts');
+      this.editPost = editObject.bind(this, 'blog');
     },
     created() {
       document.title += ' | Blog'
@@ -60,18 +65,6 @@
       },
       returnToIndex() {
          this.$router.push({ path: '/blog' })
-      },
-      async deletePost(slug) {
-        var success = await api.deleteObject('blog', 'posts', slug)
-        if (success) {
-          this.$router.push({ path: '/blog' })
-          return true;
-        } else {
-          return false;
-        }
-      },
-      editPost(slug) {  
-        this.$router.push({ path: '/blog/' + slug + '/edit' })
       }
     },
     components: {

@@ -5,12 +5,12 @@
       :cover="cover"
       @filter-by="filterBy"
       @activate-project="activateProject"
-    ></project-header>
+    />
     <object-admin
       v-if="admin"
       @delete="deleteProject"
       @edit="editProject"
-    ></object-admin>
+    />
   </li>
 </template>
 

@@ -2,25 +2,38 @@
   <div v-if="blob">
     <h3 class="blob-title">{{ blob.title }}</h3>
     <ul>
-      <li><em>/{{ blob.slug }}</em></li>
+      <li><a :href="'/blobs/' + blob.slug"><em>/{{ blob.slug }}</em></a></li>
       <li>{{ blob.created_date }}</li>
       <li>Hidden: {{ blob.hidden }}</li>
     </ul>
+    <object-admin
+      v-if="admin"
+      @delete="() => deleteBlob(blob.slug)"
+      @edit="() => editBlob(blob.slug)"
+    />
   </div>
 </template>
 
 <script>
   
+  import ObjectAdmin from '../ObjectAdmin.vue'
+  import api from '../../helpers/api'
+  import {editObject} from '../../helpers/general'
+  
   export default {
+    beforeCreate() {
+      this.deleteBlob = api.deleteObject.bind(this, 'blobs', null);
+      this.editBlob = editObject.bind(this, 'blobs');
+    },
     props: [
+      'admin',
       'blob'
     ],
-    computed: {
-    },
+    computed: {},
     components: {
+      ObjectAdmin
     },
-    methods: {
-    }
+    methods: {}
   }  
 
 </script>

@@ -90,7 +90,7 @@
       },
       async removePostFromListAndDelete(slug, index) {
         const removedPost = this.pageList.splice(index, 1)
-        var success = await this.deletePost(slug, index)
+        var success = await this.deletePost(slug)
         if (!success) {
           this.pageList.splice(index, 0, removedPost[0])
         }

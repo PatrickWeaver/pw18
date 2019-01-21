@@ -29,6 +29,7 @@ async function deleteObject(section, object, slug) {
   path += slug + '/delete/';
   var response = await(sendData({}, path))
   if (response.success) {
+    this.$router.push({ path: '/' + section })
     return true;
   } else {
     console.log("ERROR:", response.error);
@@ -64,6 +65,8 @@ async function getTags(admin = false, status = null) {
 async function sendData(data, path) {
   var apiKey = localStorage.getItem('pw18-api-key')
   var body = Object.assign({api_key: apiKey}, data);
+  console.log("PATH:", path);
+  console.log("DATA:", data);
   try {
     var response = await axios.post(settings.API_URL + path, body)
   } catch(err) {

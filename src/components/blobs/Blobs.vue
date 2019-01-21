@@ -3,6 +3,7 @@
     <h2 class="page-title">Blobs</h2>
     <ul>
       <preview 
+        :admin="admin"
         v-for="(blob) in pageList"
         :key="blob.slug"
         :blob="blob"
@@ -32,6 +33,9 @@
     created() {
       this.getIndex()
     },
+    props: [
+      'admin'
+    ],
     computed: {
     },
     components: {

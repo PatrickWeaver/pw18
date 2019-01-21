@@ -125,6 +125,7 @@
   /* Helpers */
   import api from '../../helpers/api'
   import findPortfolioProjectCover from '../../helpers/findPortfolioProjectCover'
+  import {updateSlug} from '../../helpers/general'
 
   /* NPM */
   import * as slug from 'slug'
@@ -163,6 +164,9 @@
 
       }
     },
+    beforeCreate() {
+      this.updateSlug = updateSlug.bind(this);
+    },
     created() {
       if (this.activeProjectSlug) {
         this.getPortfolioProject()
@@ -186,11 +190,6 @@
       }
     },
     methods: {
-      updateSlug() {
-        if (this.autofillSlug) {
-          this.slug = slug(this.name)
-        }
-      },
       checkForAutofillSlug() {
         if (this.slug === slug(this.name)) {
           this.autofillSlug = true

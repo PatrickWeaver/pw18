@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>
-      Edit/New Project
+      Edit/New Blob
     </h2>
 
     <form>
@@ -9,17 +9,12 @@
       <input type="text" v-model="title" @change="updateSlug" />
       <label>Slug:</label>
       <input type="text" v-model="slug" @focus="autofillSlug = false" @blur="checkForAutofillSlug"/>
-      <label>Summary:</label>
-      <textarea v-model="summary"></textarea>
       <label>Body:</label>
       <textarea v-model="body"></textarea>
-      <label>Post Date:</label>
-      <input type="date" :value="postDate && postDate.toISOString().split('T')[0]"
-                     @input="postDate = $event.target.valueAsDate" />
-      <label>Draft:</label>
-      <input type="checkbox" v-model="draft" />
+      <label>Hidden from Index:</label>
+      <input type="checkbox" v-model="isHidden" />
       <button @click.prevent="$router.push({ path: '/' })">Cancel</button>
-      <button @click.prevent="submitNewPost">Submit</button>
+      <button @click.prevent="submitNewBlob">Submit</button>
     </form>
 
   </div>
@@ -41,23 +36,21 @@
         title: '',
         slug: '',
         autofillSlug: true,
-        summary: '',
         body: '',
-        postDate: new Date(),
-        draft: false
+        isHidden: false
       }
     },
     beforeCreate() {
       this.updateSlug = updateSlug.bind(this);
     },
     created() {
-      if (this.activePostSlug) {
-        this.getBlogPost()
+      if (this.activeBlobSlug) {
+        this.getBlob()
       }
     },
     watch: {
       // call again the method if the route changes
-      '$route': 'getBlogPost'
+      '$route': 'getBlob'
     },
     components: {
     },
@@ -72,32 +65,30 @@
           this.autofillSlug = true
         }
       },
-      async getBlogPost() {
-        var api_data = await(api.getData('/v1/blog/posts/' + this.activePostSlug))
-        var post = api_data.post
-        this.title = post.title
-        this.slug = post.slug
-        this.summary = post.summary.markdown
-        this.body = post.body.markdown
-        this.postDate = post.post_date ? new Date(post.post_date) : null
-        this.draft = post.draft
+      async getBlob() {
+        var api_data = await(api.getData('/v1/blobs/' + this.activeBlobSlug))
+        var blob = api_data.blob
+        this.title = blob.title
+        this.slug = blob.slug
+        this.body = blob.body.markdown
+        this.isHidden = blob.is_hidden
       },
-      async submitNewPost() {
-        var path = '/v1/blog/posts/new/'
-        if (this.activePostSlug) {
-          path = '/v1/blog/posts/' + this.activePostSlug + '/edit/'
+      async submitNewBlob() {
+        var path = '/v1/blobs/new/'
+        if (this.activeBlobSlug) {
+          path = '/v1/blobs/' + this.activeBlobSlug + '/edit/'
         }
         var response = await(api.sendData(snake(this.$data), path))
         if (response.success) {
           console.log(response)
-          this.$router.push({ path: '/blog/' + response.slug })
+          this.$router.push({ path: '/blobs/' + response.slug })
         } else {
           alert("Error: " + response.error)
         }
       }
     },
     props: [
-      'activePostSlug'
+      'activeBlobSlug'
     ],
     watch: {
       autoSlug() {

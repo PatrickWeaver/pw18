@@ -2,16 +2,22 @@ import VueRouter from 'vue-router'
 
 /* Pages */
 import Blobs from './components/blobs/Blobs.vue'
+import Blob from './components/blobs/Blob.vue'
+import EditBlob from './components/blob/EditBlob.vue'
+
 import Blog from './components/blog/Blog.vue'
 import BlogPost from './components/blog/Post.vue'
 import BlogEditPost from './components/blog/EditPost.vue'
+
 import Error404 from './components/Error404.vue'
 import Login from './components/Login.vue'
 import Logout from './components/Logout.vue'
 import Page from './components/Page.vue'
+
 import Portfolio from './components/portfolio/Portfolio.vue'
 import PortfolioProject from './components/portfolio/Project.vue'
 import PortfolioEditProject from './components/portfolio/EditProject.vue'
+
 import Upload from './components/Upload.vue'
 
 const routes = [
@@ -27,6 +33,26 @@ const routes = [
       blobSlug: 'about',
       title: 'About'
     }
+  },
+  {
+    name: 'blob-new',
+    path: '/blobs/new',
+    component: EditBlob
+  },
+  {
+    name: 'blob-edit',
+    path: '/blobs/:activeBlobSlug/edit',
+    component: EditBlob,
+    props: true
+  },
+  {
+    name: 'blob',
+    path: '/blobs/:slug',
+    component: Blob,
+    props: (route) =>({
+      slug: route.params.slug,
+      showTitle: true
+    })
   },
   {
     name: 'blobs',
