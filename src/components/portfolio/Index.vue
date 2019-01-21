@@ -7,29 +7,28 @@
       :section="'portfolio'"
       :filter="filter"
       @go-to-page="goToPage"
-    >
-    </pagination>
+    />
     <div v-if="filterTag" class="filter-status">
-    <h3>Filtered By: </h3>
-    <portfolio-tag
-      v-if="filterTag"
-      @filter-by="filterBy"
-      :tag="filterTag"
-    ></portfolio-tag>
-    <button @click="$emit('clear-filter')">❌  Remove Filter</button>
+      <h3>Filtered By: </h3>
+      <tag
+        v-if="filterTag"
+        @filter-by="filterBy"
+        :tag="filterTag"
+      />
+      <button @click="$emit('clear-filter')">❌  Remove Filter</button>
     </div>
     <ul>
-    <portfolio-project-index
-      v-for="(project, index) in pageList"
-      :admin="admin"
-      :key="project.slug"
-      :index="index"
-      :project="project"
-      @filter-by="filterBy"
-      @activate-project="activateProject"
-      @delete="deleteProject"
-      @edit="editProject"
-    ></portfolio-project-index>
+      <index-project
+        v-for="(project, index) in pageList"
+        :admin="admin"
+        :key="project.slug"
+        :index="index"
+        :project="project"
+        @filter-by="filterBy"
+        @activate-project="activateProject"
+        @delete="deleteProject"
+        @edit="editProject"
+      />
     </ul>
     <pagination
       :pages="pages"
@@ -37,20 +36,20 @@
       :section="'portfolio'"
       :filter="filter"
       @go-to-page="goToPage"
-    ></pagination>
+    />
   </div>
 </template>
 
 <script>
 
   import Pagination from '../Pagination.vue'
-  import PortfolioProjectIndex from './PortfolioIndexProject.vue'
-  import PortfolioTag from './PortfolioTag.vue'
+  import IndexProject from './IndexProject.vue'
+  import Tag from './Tag.vue'
 
   export default {
     components: {
-      PortfolioProjectIndex,
-      PortfolioTag,
+      IndexProject,
+      Tag,
       Pagination
     },
     props: [

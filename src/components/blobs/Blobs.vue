@@ -2,7 +2,7 @@
   <div>
     <h2 class="page-title">Blobs</h2>
     <ul>
-      <blob-preview 
+      <preview 
         v-for="(blob) in pageList"
         :key="blob.slug"
         :blob="blob"
@@ -14,7 +14,7 @@
 <script>
   
   /* Components */
-  import BlobPreview from './BlobPreview.vue'
+  import Preview from './Preview.vue'
   
   /* Helpers */
   import api from '../../helpers/api.js'
@@ -35,7 +35,7 @@
     computed: {
     },
     components: {
-      BlobPreview
+      Preview
     },
     methods: {
       async getIndex() {

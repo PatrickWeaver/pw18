@@ -3,7 +3,7 @@
   <div>
     <h2 class="page-title">Portfolio</h2>
     <div v-if="activeProjectSlug">
-      <portfolio-project
+      <project
         :admin="admin"
         id="active-project"
         :slug="activeProjectSlug"
@@ -12,10 +12,10 @@
         @filter-by="filterBy"
         @delete="findAndDeleteProject"
         @edit="editProject"
-      ></portfolio-project>
+      />
     </div>
     <div v-else-if="list.length > 0">
-      <portfolio-index
+      <index
         :pages="pages"
         :filter="filter"
         :go-to-page="goToPage"
@@ -28,8 +28,7 @@
         :edit-project="editProject"
         :current-page="currentPage"
         @clear-filter="clearFilter"
-      >
-      </portfolio-index>
+      />
     </div>
     <div v-else>
       <img v-if="status" src="/images/clock.gif" class="loading-clock">
@@ -42,8 +41,8 @@
 <script>
 
   /* Components */
-  import PortfolioIndex from './PortfolioIndex.vue'
-  import PortfolioProject from './PortfolioProject.vue'
+  import Index from './Index.vue'
+  import Project from './Project.vue'
 
   /* Helpers */
   import api from '../../helpers/api'
@@ -170,8 +169,8 @@
 
     },
     components: {
-      PortfolioIndex,
-      PortfolioProject
+      Index,
+      Project
     }
   }
 

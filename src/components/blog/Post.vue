@@ -61,7 +61,7 @@
         this.$emit('activate-post', this.post.slug)
       },
       deletePost() {
-        this.$emit('delete', this.post) 
+        this.$emit('delete', this.post.slug) 
       },
       editPost() {
         this.$emit('edit', this.post.slug)

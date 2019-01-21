@@ -19,14 +19,14 @@
         v-if="cover"
         :image="cover"
         :cover="true"
-      ></portfolio-image>
+      />
     </a>
 
-    <portfolio-tag
+    <tag
       class="status-tag"
       @filter-by="filterBy"
       :tag="project.status"
-    ></portfolio-tag>
+    />
 
     <h4 class="project-date-range">
       <year-date-range
@@ -43,10 +43,10 @@
         v-for="(tag) in project.tags"
         :key="tag.slug"
       >
-        <portfolio-tag
+        <tag
           @filter-by="filterBy"
           :tag="tag"
-        ></portfolio-tag>
+        />
       </li>
     </ul>
     <p
@@ -64,8 +64,8 @@
   import api from '../../helpers/api'
 
   /* Components */
-  import PortfolioImage from './PortfolioImage.vue'
-  import PortfolioTag from './PortfolioTag.vue'
+  import PortfolioImage from './Image.vue'
+  import Tag from './Tag.vue'
   import UrlWithLabel from '../UrlWithLabel.vue'
   import YearDateRange from '../YearDateRange.vue'
 
@@ -80,7 +80,7 @@
     ],
     components: {
       PortfolioImage,
-      PortfolioTag,
+      Tag,
       UrlWithLabel,
       YearDateRange
     },

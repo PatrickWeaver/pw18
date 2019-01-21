@@ -2,49 +2,31 @@
 
   <div>
     <h2 class="page-title">Blog</h2>
-    <!-- if -->
+    
+    <!-- if single blog post-->
     <div v-if="activePostSlug">
-      <blog-post
-        :index-loaded="pageList.length === 0 ? false : true"
+      <post
+        :index-loaded="indexLoaded"
         :slug="activePostSlug"
         :admin="admin"
         @return-to-index="returnToIndex"
         @edit="editPost"
-        @delete="findAndDeletePost"
-      ></blog-post>
+        @delete="deletePost"
+      />
     </div>
-    <!-- Else If-->
-    <div v-else-if="pageList.length > 0">
-      <pagination
-        v-if="currentPage > 1"
-        :pages="pages"
-        :page-number="currentPage"
-        :section="'blog'"
-        @go-to-page="goToPage"
-      >
-      </pagination>
-      <ul>
-        <blog-post-preview
-          v-for="(post) in pageList"
-          :key="post.slug"
-          :post="post"
-          :admin="admin"
-          @activate-post="activatePost"
-          @edit="editPost"
-          @delete="deletePost"
-        ></blog-post-preview>
-      </ul>
-      <pagination
-        :pages="pages"
-        :page-number="currentPage"
-        :section="'blog'"
-        @go-to-page="goToPage"
-      ></pagination>
-    </div>
-    <!-- Else -->
+    
+    <!-- Else list of blog posts -->
     <div v-else>
-      <p>{{ status }}</p>  
+      <!-- List of post previews -->
+      <index 
+        :admin="admin"
+        :page-number="pageNumber"
+        :edit-post="editPost"
+        :delete-post="deletePost"
+        @index-load="indexLoad"
+      />
     </div>
+    
   </div>
 
 </template>
@@ -52,9 +34,8 @@
 <script>
 
    /* Components */
-  import BlogPostPreview from './BlogPostPreview.vue'
-  import BlogPost from './BlogPost.vue'
-  import Pagination from '../Pagination.vue'
+  import Index from './Index.vue'
+  import Post from './Post.vue'
 
   /* Helpers */
   import api from '../../helpers/api'
@@ -62,18 +43,11 @@
   export default {
     data() {
       return {
-        status: '',
-        pages: null,
-        perPage: 5,
-        pageList: [],
-        currentPage: 1
+        indexLoaded: false
       }
     },
     created() {
-      this.getIndex()
-    },
-    watch: {
-      pageNumber: 'getIndex'
+      document.title += ' | Blog'
     },
     props: [
       'activePostSlug',
@@ -81,41 +55,28 @@
       'pageNumber'
     ],
     methods: {
-      async getIndex() {
-        this.currentPage = this.pageNumber ? this.pageNumber : this.currentPage
-        var currentPageListData = await api.getIndexList('blog', 'posts', 'posts_list', 'total_posts', this.perPage, this.currentPage);
-        this.pageList = currentPageListData.pageList
-        this.pages = currentPageListData.pages
-      },
-      activatePost(slug) {
-        this.$router.push({ path: '/blog/' + slug })
+      indexLoad() {
+        this.indexLoaded = true;
       },
       returnToIndex() {
          this.$router.push({ path: '/blog' })
       },
-      findAndDeletePost(post) {
-        this.deletePost(post.slug, this.pageList.indexOf(post))
-        this.pageList.splice(index, 1)
-      },
       async deletePost(slug) {
-        var response = await(api.sendData({}, '/v1/blog/posts/' + slug + '/delete/'))
-        if (response.success) {
+        var success = await api.deleteObject('blog', 'posts', slug)
+        if (success) {
           this.$router.push({ path: '/blog' })
+          return true;
         } else {
-          alert("Error: " + response.error)
+          return false;
         }
       },
-      editPost(slug) {
+      editPost(slug) {  
         this.$router.push({ path: '/blog/' + slug + '/edit' })
-      },
-      goToPage(pageNumber, filterQs) {
-        this.$router.push({ path: '/blog/page/' + pageNumber + '/' + filterQs })
       }
     },
     components: {
-      BlogPostPreview,
-      BlogPost,
-      Pagination
+      Post,
+      Index
     }
   }
 

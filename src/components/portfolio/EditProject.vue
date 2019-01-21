@@ -5,11 +5,11 @@
     </h2>
 
     <form>
-      <portfolio-image
+      <image
         v-if="cover"
         :image="cover"
         :cover="true"
-      ></portfolio-image>
+      />
       <button
         @click.prevent="makeOrRemoveCover(cover.uuid, false)"
         v-if="cover"
@@ -17,11 +17,11 @@
       <label>Name:</label>
       <input type="text" v-model="name" @change="updateSlug" />
       <label>Slug:</label>
-      <input type="text" v-model="slug" @focus="autofillSlug = false" @blur="checkForAutofillSlug"/>
+      <input type="text" v-model="slug" @focus="autofillSlug = false" @blur="checkForAutofillSlug" />
       <label>Short Description:</label>
-      <textarea v-model="shortDescription"></textarea>
+      <textarea v-model="shortDescription" />
       <label>Description:</label>
-      <textarea v-model="description"></textarea>
+      <textarea v-model="description" />
       <label>Start Date:</label>
       <input type="date" :value="startDate && startDate.toISOString().split('T')[0]"
                      @input="startDate = $event.target.valueAsDate" />
@@ -70,9 +70,9 @@
           v-for="(tag, index) in tags"
           :key="tag.slug"
         >
-          <portfolio-tag
+          <tag
             :tag="tag"
-          ></portfolio-tag>
+          />
           <button @click="addRemoveTag(tag.slug, index, 'remove')">Remove</button>
         </li>
       </ul>
@@ -87,9 +87,9 @@
         <label>Order:</label>
         <input type="number" v-model="newImageOrder">
         <label>Alt Text:</label>
-        <textarea v-model="newImageAltText"></textarea>
+        <textarea v-model="newImageAltText" />
         <label>Caption:</label>
-        <textarea v-model="newImageCaption"></textarea>
+        <textarea v-model="newImageCaption" />
         <label>Cover Image?</label>
         <input type="checkbox" v-model="newImageCover" />
         <button @click.prevent="addImage(newImageUrl)">Add Image</button>
@@ -107,7 +107,7 @@
             v-bind:image="image"
             :active-image-uuid="false"
             :project-name="name"
-          ></portfolio-image>
+          />
           <button
             @click="makeOrRemoveCover(image.uuid, true)"
             v-if="!image.cover"
@@ -131,8 +131,8 @@
   import * as snake from 'snakecase-keys'
 
   /* Components */
-  import PortfolioTag from './PortfolioTag.vue'
-  import PortfolioImage from './PortfolioImage.vue'
+  import Tag from './Tag.vue'
+  import PortfolioImage from './Image.vue'
 
 
   export default {
@@ -174,7 +174,7 @@
       '$route': 'getPortfolioProject'
     },
     components: {
-      PortfolioTag,
+      Tag,
       PortfolioImage
     },
     computed: {

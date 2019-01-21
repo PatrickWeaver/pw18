@@ -37,6 +37,8 @@
         var api_data = await(api.getData('/v1/blobs/' + this.slug))
         if (api_data.blob) {
           this.body = api_data.blob.body.html
+          console.log(api_data)
+          document.title += ' | ' + api_data.blob.title
         } else {
           this.$router.push({ name: '404' })
         }

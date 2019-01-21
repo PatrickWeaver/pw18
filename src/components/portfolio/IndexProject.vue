@@ -21,11 +21,7 @@
 
   /* Components */
   import ObjectAdmin from '../ObjectAdmin.vue'
-  import PortfolioImage from './PortfolioImage.vue'
-  import PortfolioTag from './PortfolioTag.vue'
-  import ProjectHeader from './PortfolioProjectHeader.vue'
-  import UrlWithLabel from '../UrlWithLabel.vue'
-  import YearDateRange from '../YearDateRange.vue'
+  import ProjectHeader from './ProjectHeader.vue'
 
   export default {
     computed: {
@@ -40,11 +36,7 @@
     ],
     components: {
       ObjectAdmin,
-      PortfolioImage,
-      PortfolioTag,
-      ProjectHeader,
-      UrlWithLabel,
-      YearDateRange
+      ProjectHeader
     },
 
     methods: {

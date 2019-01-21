@@ -1,6 +1,8 @@
 import * as settings from '../../settings'
 import * as axios from 'axios'
 
+const version = 'v1'
+
 async function getIndexPageList(apiCategory, apiObject, apiListName, apiTotalName, perPage, currentPage) {
   var apiData = await(getIndex(apiCategory, apiObject))
   const fullList = apiData[apiListName]
@@ -9,7 +11,7 @@ async function getIndexPageList(apiCategory, apiObject, apiListName, apiTotalNam
 }
 
 function paginateIndex(list, total, perPage, currentPage) {
-  var pages = Math.floor(total/perPage) + 1
+  var pages = Math.ceil(total/perPage)
   var pageStart = (currentPage - 1) * perPage
   var pageEnd = pageStart + perPage
   return {
@@ -18,21 +20,24 @@ function paginateIndex(list, total, perPage, currentPage) {
   }
 }
 
-async function getData(path, queries={}, admin=false,) {
-  var apiKey = 'false'
-  if (admin) {
-    apiKey = localStorage.getItem('pw18-api-key')
+// sets up delete request for API
+async function deleteObject(section, object, slug) {
+  var path = '/' + version + '/' + section + '/'
+  if (object) {
+    path += object + '/'
   }
-  var qs = '?api_key=' + apiKey
-  for (var i in queries) {
-    qs += '&' + i + '=' + queries[i]
+  path += slug + '/delete/';
+  var response = await(sendData({}, path))
+  if (response.success) {
+    return true;
+  } else {
+    console.log("ERROR:", response.error);
+    return false;
   }
-  var response = await(axios.get(settings.API_URL + path + qs))
-  return response.data
 }
 
 async function getIndex(section, object = false, admin = false) {
-    var path = '/v1/' + section + '/'
+    var path = '/' + version + '/' + section + '/'
     if (object) {
       path += object + '/'
     }
@@ -44,7 +49,7 @@ async function getIndex(section, object = false, admin = false) {
 }
 
 async function getTags(admin = false, status = null) {
-  var path = '/v1/portfolio/tags/'
+  var path = '/' + version + '/portfolio/tags/'
   var qs = {
     quantity: 'all'
   }
@@ -55,13 +60,22 @@ async function getTags(admin = false, status = null) {
   return api_data.tags_list
 }
 
+// Sounds outgoing API request
 async function sendData(data, path) {
   var apiKey = localStorage.getItem('pw18-api-key')
   var body = Object.assign({api_key: apiKey}, data);
-  var response = await(axios.post(settings.API_URL + path, body))
+  try {
+    var response = await axios.post(settings.API_URL + path, body)
+  } catch(err) {
+    return {
+      error: err
+    }
+  }
   return response.data
 }
 
+
+// Sends outgoing file request to API (upload)
 async function sendFile(file, path) {
   var formData = new FormData();
   formData.append('api_key', '');
@@ -76,7 +90,22 @@ async function sendFile(file, path) {
   return response.data
 }
 
+// Sends incomming API request
+async function getData(path, queries={}, admin=false,) {
+  var apiKey = 'false'
+  if (admin) {
+    apiKey = localStorage.getItem('pw18-api-key')
+  }
+  var qs = '?api_key=' + apiKey
+  for (var i in queries) {
+    qs += '&' + i + '=' + queries[i]
+  }
+  var response = await(axios.get(settings.API_URL + path + qs))
+  return response.data
+}
+
 export default {
+  deleteObject: deleteObject,
   getIndexList: getIndexPageList,
   paginateIndex: paginateIndex,
   getData: getData,

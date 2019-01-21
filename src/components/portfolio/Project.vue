@@ -9,7 +9,7 @@
       @filter-by="filterBy"
       :project="project"
       :cover="cover"
-    ></project-header>
+    />
     
     <ul
       class="link-list"
@@ -44,7 +44,7 @@
           v-bind:image="image"
           :active-image-uuid="activeImageUuid"
           :project-name="project.name"
-        ></portfolio-image>
+        />
       </li>
     </ul>
     <object-admin
@@ -66,11 +66,9 @@
 
   /* Components */
   import ObjectAdmin from '../ObjectAdmin.vue'
-  import ProjectHeader from './PortfolioProjectHeader.vue'
-  import PortfolioImage from './PortfolioImage.vue'
-  import PortfolioTag from './PortfolioTag.vue'
+  import ProjectHeader from './ProjectHeader.vue'
+  import PortfolioImage from './Image.vue'
   import UrlWithLabel from '../UrlWithLabel.vue'
-  import YearDateRange from '../YearDateRange.vue'
 
   export default {
     data() {
@@ -120,9 +118,7 @@
       ObjectAdmin,
       ProjectHeader,
       PortfolioImage,
-      PortfolioTag,
-      UrlWithLabel,
-      YearDateRange
+      UrlWithLabel
     }
   }
 
