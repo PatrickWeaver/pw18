@@ -18,14 +18,19 @@
                      @input="postDate = $event.target.valueAsDate" />
       <label>Draft:</label>
       <input type="checkbox" v-model="draft" />
-      <button @click.prevent="$router.push({ path: '/' })">Cancel</button>
-      <button @click.prevent="submitNewPost">Submit</button>
+      <edit-form-buttons
+        :edit="activePostSlug"
+        :submit="submitNewPost"
+      />
     </form>
 
   </div>
 </template>
 
 <script>
+  
+  /* Components */
+  import EditFormButtons from '../EditFormButtons.vue'
 
   /* Helpers */
   import api from '../../helpers/api'
@@ -60,6 +65,7 @@
       '$route': 'getBlogPost'
     },
     components: {
+      EditFormButtons
     },
     computed: {
       autoSlug() {

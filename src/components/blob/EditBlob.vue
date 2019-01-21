@@ -13,14 +13,19 @@
       <textarea v-model="body"></textarea>
       <label>Hidden from Index:</label>
       <input type="checkbox" v-model="isHidden" />
-      <button @click.prevent="$router.push({ path: '/' })">Cancel</button>
-      <button @click.prevent="submitNewBlob">Submit</button>
+      <edit-form-buttons
+        :edit="activeBlobSlug"
+        :submit="submitNewBlob"
+      />
     </form>
 
   </div>
 </template>
 
 <script>
+  
+  /* Components */
+  import EditFormButtons from '../EditFormButtons.vue'
 
   /* Helpers */
   import api from '../../helpers/api'
@@ -46,6 +51,7 @@
     created() {
       if (this.activeBlobSlug) {
         this.getBlob()
+        this.submitButtonText = 'Save'
       }
     },
     watch: {
@@ -53,6 +59,7 @@
       '$route': 'getBlob'
     },
     components: {
+      EditFormButtons
     },
     computed: {
       autoSlug() {

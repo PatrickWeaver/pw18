@@ -41,8 +41,10 @@
       <input type="text" v-model="sourceUrl" />
       <label>Hide Project:</label>
       <input type="checkbox" v-model="isHidden" />
-      <button @click.prevent="$router.push({ path: '/' })">Cancel</button>
-      <button @click.prevent="submitNewProject">Submit</button>
+      <edit-form-buttons
+        :edit="activeProjectSlug"
+        :submit="submitNewProject"
+      />
     </form>
 
     <div v-if="activeProjectSlug">
@@ -125,6 +127,7 @@
   import Tag from './Tag.vue'
   import PortfolioImage from './Image.vue'
   import NewImage from '../NewImage.vue'
+  import EditFormButtons from '../EditFormButtons.vue'
 
 
   export default {
@@ -165,7 +168,8 @@
     components: {
       Tag,
       PortfolioImage,
-      NewImage
+      NewImage,
+      EditFormButtons
     },
     computed: {
       autoSlug() {
