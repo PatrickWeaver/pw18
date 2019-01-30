@@ -31,7 +31,8 @@ const routes = [
     component: Page,
     props: {
       blobSlug: 'about',
-      title: 'About'
+      title: 'About',
+      backup: 'Hi, I\'m Patrick Weaver, an artist, educator, writer, programmer, musician, and designer based in New York City, and sometimes other places. Looks like the API that powers this website is down at the moment so some information may be missing.'
     }
   },
   {
@@ -102,7 +103,8 @@ const routes = [
     component: Page,
     props: {
       blobSlug: 'now',
-      title: 'Now'
+      title: 'Now',
+      backup: 'Oops! The API is down, looks like what I should be working on is fixing it!'
     }
   },
   {

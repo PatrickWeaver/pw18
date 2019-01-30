@@ -56,7 +56,7 @@ label, input, textarea {
 /* - - - Portfolio - - - */
 /* - - - - - - - - - - */
 
-.portfolio-project, .blog-post, .blog-post-preview, #about-text {
+.portfolio-project, .blog-post, .blog-post-preview, .page-blob {
   background-color: #fbfbfb;
   margin: 10px 0;
   padding: 10px 15px;

@@ -3,8 +3,16 @@
   <div>
     <h2 v-if="title" class="page-title">{{ title }}</h2>
     
+    <div
+      v-if="apiTimeout"
+      class="page-blob"
+    >
+      <p>{{ backup }}</p>
+    </div>
+    
     <blob
-      id="about-text"
+      v-else
+      class="page-blob"
       :slug="slug"
       :admin="admin"
     />
@@ -22,7 +30,9 @@
 
   export default {
     data() {
-      return {}
+      return {
+        apiTimeout: true
+      }
     },
     computed: {
       slug: function() {
@@ -37,7 +47,8 @@
     props: [
       'admin',
       'title',
-      'blobSlug'
+      'blobSlug',
+      'backup'
     ]
 
   }
