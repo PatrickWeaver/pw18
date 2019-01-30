@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="loaded">
     <!-- Only show title on blob view, not custom page -->
     <h3 v-if="showTitle">
       {{ title }}
@@ -30,6 +30,7 @@
   export default {
     data() {
       return {
+        loaded: false,
         title: '',
         body: ''
       }
@@ -44,7 +45,10 @@
     props: [
       'admin',
       'slug',
-      'showTitle'
+      'showTitle',
+      'apiStatus',
+      'blobPage',
+      'setPageTitle'
     ],
     watch: {
       // call again the method if the route changes
@@ -59,7 +63,15 @@
         if (api_data.blob) {
           this.body = api_data.blob.body.html
           this.title = api_data.blob.title
-          document.title += ' | ' + api_data.blob.title
+          
+          // If blob is in a Page component
+          if (this.blobPage) {
+            this.$emit('set-page-title', api_data.blob.title)
+          }
+          this.loaded = true
+          if (this.apiStatus) {
+            this.apiStatus(true)
+          }
         } else {
           this.$router.push({ name: '404' })
         }

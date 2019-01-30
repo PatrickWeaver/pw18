@@ -4,7 +4,7 @@
     <h2 v-if="title" class="page-title">{{ title }}</h2>
     
     <div
-      v-if="apiTimeout"
+      v-if="apiTimeout && !apiLoaded"
       class="page-blob"
     >
       <p>{{ backup }}</p>
@@ -15,6 +15,9 @@
       class="page-blob"
       :slug="slug"
       :admin="admin"
+      :api-status="apiStatus"
+      :blob-page="true"
+      @set-page-title="setPageTitle"
     />
 
   </div>
@@ -31,8 +34,14 @@
   export default {
     data() {
       return {
-        apiTimeout: true
+        apiTimeout: false,
+        apiLoaded: false
       }
+    },
+    created() {
+      setTimeout(() => {
+        this.apiTimeout = !this.apiLoaded
+      }, 5000)
     },
     computed: {
       slug: function() {
@@ -40,6 +49,13 @@
       }
     },
     methods: {
+      apiStatus(success) {
+        this.apiLoaded = success
+      },
+      setPageTitle(title) {
+        console.log("SETTING TITLE", title)
+        document.title += ' | ' + title
+      }
     },
     components: {
       Blob
