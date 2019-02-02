@@ -52,6 +52,11 @@
       Tag,
       Pagination
     },
+    created() {
+      if (this.currentPage > this.pages) {
+        this.$router.push({ name: '404'});
+      }
+    },
     props: [
       'pages',
       'filter',

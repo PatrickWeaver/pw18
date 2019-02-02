@@ -43,7 +43,7 @@
     },
     methods: {
       async getIndex() {
-        var currentPageListData = await api.getIndexList('blobs', false, 'blobs_list', 'total_blobs', this.perPage, this.currentPage);
+        var currentPageListData = await api.getIndexList('blobs', false, 'blobs_list', 'total_blobs', this.perPage, this.currentPage, this.admin);
         this.pageList = currentPageListData.pageList
         this.pages = currentPageListData.pages
       }

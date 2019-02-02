@@ -3,8 +3,12 @@ import * as axios from 'axios'
 
 const version = 'v1'
 
-async function getIndexPageList(apiCategory, apiObject, apiListName, apiTotalName, perPage, currentPage) {
-  var apiData = await(getIndex(apiCategory, apiObject))
+function key() {
+  return localStorage.getItem('pw18-api-key')
+}
+
+async function getIndexPageList(apiCategory, apiObject, apiListName, apiTotalName, perPage, currentPage, admin) {
+  var apiData = await(getIndex(apiCategory, apiObject, admin))
   const fullList = apiData[apiListName]
   const total = apiData[apiTotalName]
   return paginateIndex(fullList, total, perPage, currentPage);
@@ -45,7 +49,7 @@ async function getIndex(section, object = false, admin = false) {
     var qs = {
       quantity: 'all'
     }
-    var apiData = await(getData(path, qs))
+    var apiData = await(getData(path, qs, admin))
     return apiData
 }
 
@@ -63,7 +67,7 @@ async function getTags(admin = false, status = null) {
 
 // Sounds outgoing API request
 async function sendData(data, path) {
-  var apiKey = localStorage.getItem('pw18-api-key')
+  var apiKey = key()
   var body = Object.assign({api_key: apiKey}, data);
   console.log("PATH:", path);
   console.log("DATA:", data);
@@ -94,10 +98,10 @@ async function sendFile(file, path) {
 }
 
 // Sends incomming API request
-async function getData(path, queries={}, admin=false,) {
+async function getData(path, queries={}, admin=false) {
   var apiKey = 'false'
   if (admin) {
-    apiKey = localStorage.getItem('pw18-api-key')
+    apiKey = key()
   }
   var qs = '?api_key=' + apiKey
   for (var i in queries) {

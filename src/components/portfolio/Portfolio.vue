@@ -99,7 +99,8 @@
       async getPortfolioIndex() {
         if (!this.activeProjectSlug) {
           if (this.list.length === 0) {
-            var apiData = await(api.getIndex('portfolio', 'projects'))
+            var apiData = await(api.getIndex('portfolio', 'projects', this.admin))
+            console.log('API DATA:', apiData)
             this.list = apiData.projects_list
           }
 

@@ -4,10 +4,14 @@
     <h3 v-if="showTitle">
       {{ title }}
     </h3>
+    <h4 v-if="hidden">
+      Hidden
+    </h4>
     <div
       class="blob"
       v-html="body"
     />
+    <p v-if="redirect"><strong>Redirect:</strong> <a :href="redirect">{{ redirect }}</a></p>
     <object-admin
       v-if="admin"
       @delete="() => deleteBlob(this.slug)"
@@ -32,7 +36,9 @@
       return {
         loaded: false,
         title: '',
-        body: ''
+        body: '',
+        hidden: false,
+        redirect: ''
       }
     },
     beforeCreate() {
@@ -59,14 +65,26 @@
     },
     methods: {
       async getBlob() {
-        var api_data = await(api.getData('/v1/blobs/' + this.slug))
+        var api_data = await(api.getData('/v1/blobs/' + this.slug, {}, this.admin))
         if (api_data.blob) {
-          this.body = api_data.blob.body.html
-          this.title = api_data.blob.title
+          var blob = api_data.blob
+          if (this.blobPage && blob.redirect) {
+            if (blob.redirect.substring(0, 4) === 'http') {
+              window.location.replace(blob.redirect)
+            } else {
+              this.$router.push({ name: 'custom-page', params: { blobSlug: blob.redirect } })
+            }
+          } else {
+            this.body = blob.body.html
+            this.title = blob.title
+            this.hidden = blob.hidden
+          }
+
+          this.redirect = blob.redirect
           
           // If blob is in a Page component
           if (this.blobPage) {
-            this.$emit('set-page-title', api_data.blob.title)
+            this.$emit('set-page-title', blob.title)
           }
           this.loaded = true
           if (this.apiStatus) {

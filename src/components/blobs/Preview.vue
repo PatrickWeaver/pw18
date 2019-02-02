@@ -4,7 +4,7 @@
     <ul>
       <li><a :href="'/blobs/' + blob.slug"><em>/{{ blob.slug }}</em></a></li>
       <li>{{ blob.created_date }}</li>
-      <li>Hidden: {{ blob.hidden }}</li>
+      <li>Hidden: {{ blob.is_hidden }}</li>
     </ul>
     <object-admin
       v-if="admin"

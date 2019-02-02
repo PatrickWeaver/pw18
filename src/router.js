@@ -115,7 +115,10 @@ const routes = [
   {
     name: 'portfolio-new',
     path: '/portfolio/new',
-    component: PortfolioEditProject
+    component: PortfolioEditProject,
+    props: (route) =>({
+      new: true,
+    })
   },
   {
     name: 'portfolio-page',

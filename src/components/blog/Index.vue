@@ -60,8 +60,11 @@
         currentPage: 1
       }
     },
-    created() {
-      this.getIndex();
+    async created() {
+      await this.getIndex();
+      if (this.currentPage > this.pages) {
+        this.$router.push({ name: '404'});
+      }
     },
     watch: {
       pageNumber: 'getIndex'
@@ -76,7 +79,7 @@
       async getIndex() {
         this.setLoadingMessage('Loading Blog Posts');
         this.currentPage = this.pageNumber ? this.pageNumber : this.currentPage
-        var currentPageListData = await api.getIndexList('blog', 'posts', 'posts_list', 'total_posts', this.perPage, this.currentPage)
+        var currentPageListData = await api.getIndexList('blog', 'posts', 'posts_list', 'total_posts', this.perPage, this.currentPage, this.admin)
         this.pageList = currentPageListData.pageList
         this.pages = currentPageListData.pages
         this.$emit('index-load')

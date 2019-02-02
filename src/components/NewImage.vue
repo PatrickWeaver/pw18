@@ -24,6 +24,7 @@
 
 <script>
   
+  import api from '../helpers/api'
   import Upload from './Upload.vue'
   
 export default {
@@ -39,24 +40,29 @@ export default {
   components: {
     Upload
   },
+  props: [
+    'apiObject'
+  ],
   methods: {
     async addImage(url) {
       var path = '/v1/portfolio/images/new/'
       var body = {
         url: url,
-        project_id: this.projectId,
+        // Order and cover should maybe be in apiObject? But it's also something that coudl get reused.
         order: this.newImageOrder,
+        cover: this.newImageCover,
         alt_text: this.newImageAltText,
-        caption: this.newImageCaption,
-        cover: this.newImageCover
+        caption: this.newImageCaption
       }
+      body = Object.assign(body, this.apiObject)
       var response = await(api.sendData(body, path))
       if (response.success) {
-        this.getPortfolioProject()
+        this.$emit('status', true)
         this.newImageUrl = ''
         this.newImageAltText = ''
-        this.newImgaeCaption = ''
+        this.newImageCaption = ''
       } else {
+        this.$emit('status', false)
         alert("Error: " + response.error)
       }
     }

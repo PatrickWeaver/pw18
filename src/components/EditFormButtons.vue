@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click.prevent="$router.push({ path: '/' })">Cancel</button>
+    <button @click.prevent="$router.go(-1)">Cancel</button>
     <button @click.prevent="submit">
       <span v-if="edit">
         Save

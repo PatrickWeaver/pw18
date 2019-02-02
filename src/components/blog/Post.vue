@@ -11,6 +11,13 @@
         {{ post.title }}
       </a>
     </h3>
+    <h4 v-if="post.draft">
+      Draft  
+    </h4>
+    <cover-image
+      :url="post.cover_image_url"
+      :alt="post.cover_image_alt_text"
+    />
     <h5 class="post-date"><readable-date :date="post.post_date"></readable-date></h5>
     <div v-if="post.summary" v-html="post.summary.html" class="blog-post-summary text"></div>
     <div v-if="post.body" v-html="post.body.html" class="blog-post-body text"></div>
@@ -31,6 +38,7 @@
   /* Components */
   import ObjectAdmin from '../ObjectAdmin.vue'
   import ReadableDate from '../ReadableDate.vue'
+  import CoverImage from './CoverImage.vue'
   
   export default {
     data() {
@@ -54,7 +62,7 @@
     },
     methods: {
       async getBlogPost() {
-        var api_data = await(api.getData('/v1/blog/posts/' + this.slug))
+        var api_data = await(api.getData('/v1/blog/posts/' + this.slug, {}, this.admin))
         this.post = api_data.post
       },
       activatePost (event) {
@@ -71,7 +79,8 @@
     },
     components: {
       ObjectAdmin,
-      ReadableDate
+      ReadableDate,
+      CoverImage
     }
   }  
 

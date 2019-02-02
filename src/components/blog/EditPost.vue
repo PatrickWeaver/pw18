@@ -16,6 +16,10 @@
       <label>Post Date:</label>
       <input type="date" :value="postDate && postDate.toISOString().split('T')[0]"
                      @input="postDate = $event.target.valueAsDate" />
+      <label>Cover Image URL:</label>
+      <input type="text" v-model="coverImageUrl" />
+      <label>Cover Image Alt Text:</label>
+      <input type="text" v-model="coverImageAltText" />
       <label>Draft:</label>
       <input type="checkbox" v-model="draft" />
       <edit-form-buttons
@@ -35,6 +39,7 @@
   /* Helpers */
   import api from '../../helpers/api'
   import {updateSlug} from '../../helpers/general'
+  import {resetFields} from '../../helpers/general'
 
   /* NPM */
   import * as slug from 'slug'
@@ -49,20 +54,23 @@
         summary: '',
         body: '',
         postDate: new Date(),
+        coverImageUrl: '',
+        coverImageAltText: '',
         draft: false
       }
     },
     beforeCreate() {
       this.updateSlug = updateSlug.bind(this);
+      this.resetFields = resetFields.bind(this);
     },
     created() {
       if (this.activePostSlug) {
         this.getBlogPost()
       }
     },
-    watch: {
-      // call again the method if the route changes
-      '$route': 'getBlogPost'
+    beforeRouteLeave(to, from, next) {
+      this.resetFields()
+      next()
     },
     components: {
       EditFormButtons
@@ -86,6 +94,8 @@
         this.summary = post.summary.markdown
         this.body = post.body.markdown
         this.postDate = post.post_date ? new Date(post.post_date) : null
+        this.coverImageUrl = post.cover_image_url
+        this.coverImageAltText = post.cover_image_alt_text
         this.draft = post.draft
       },
       async submitNewPost() {

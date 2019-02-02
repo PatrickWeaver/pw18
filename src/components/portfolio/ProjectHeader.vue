@@ -55,6 +55,10 @@
     >
       {{ project.short_description }}  
     </p>
+    
+    <h4 v-if="project.is_hidden" class="project-hidden">
+      Hidden
+    </h4>
   </div>
 </template>
 

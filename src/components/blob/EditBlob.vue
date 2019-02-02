@@ -13,6 +13,8 @@
       <textarea v-model="body"></textarea>
       <label>Hidden from Index:</label>
       <input type="checkbox" v-model="isHidden" />
+      <label>Redirect:</label>
+      <input type="text" v-model="redirect" />
       <edit-form-buttons
         :edit="activeBlobSlug"
         :submit="submitNewBlob"
@@ -30,6 +32,7 @@
   /* Helpers */
   import api from '../../helpers/api'
   import {updateSlug} from '../../helpers/general'
+  import {resetFields} from '../../helpers/general'
 
   /* NPM */
   import * as slug from 'slug'
@@ -42,11 +45,13 @@
         slug: '',
         autofillSlug: true,
         body: '',
-        isHidden: false
+        isHidden: false,
+        redirect: ''
       }
     },
     beforeCreate() {
       this.updateSlug = updateSlug.bind(this);
+      this.resetFields = resetFields.bind(this);
     },
     created() {
       if (this.activeBlobSlug) {
@@ -54,9 +59,9 @@
         this.submitButtonText = 'Save'
       }
     },
-    watch: {
-      // call again the method if the route changes
-      '$route': 'getBlob'
+    beforeRouteLeave(to, from, next) {
+      this.resetFields()
+      next()
     },
     components: {
       EditFormButtons
@@ -79,6 +84,7 @@
         this.slug = blob.slug
         this.body = blob.body.markdown
         this.isHidden = blob.is_hidden
+        this.redirect = blob.redirect
       },
       async submitNewBlob() {
         var path = '/v1/blobs/new/'

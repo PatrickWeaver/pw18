@@ -81,9 +81,12 @@
     </div>
 
     <div v-if="activeProjectSlug">
+      
       <hr>
+      
       <new-image
-        :project-id="projectId"
+        :api-object="apiObject"
+        @status="newImageStatus"
       />
 
     </div>
@@ -118,6 +121,7 @@
   import api from '../../helpers/api'
   import findPortfolioProjectCover from '../../helpers/findPortfolioProjectCover'
   import {updateSlug} from '../../helpers/general'
+  import {resetFields} from '../../helpers/general'
 
   /* NPM */
   import * as slug from 'slug'
@@ -154,6 +158,7 @@
     },
     beforeCreate() {
       this.updateSlug = updateSlug.bind(this);
+      this.resetFields = resetFields.bind(this);
     },
     created() {
       if (this.activeProjectSlug) {
@@ -161,9 +166,9 @@
       }
       this.getAndSortTags()
     },
-    watch: {
-      // call again the method if the route changes
-      '$route': 'getPortfolioProject'
+    beforeRouteLeave(to, from, next) {
+      this.resetFields()
+      next()
     },
     components: {
       Tag,
@@ -177,12 +182,23 @@
       },
       cover: function() {
         return findPortfolioProjectCover(this.images)
+      },
+      apiObject() {
+        return {project_id: this.projectId}
       }
     },
     methods: {
       checkForAutofillSlug() {
         if (this.slug === slug(this.name)) {
           this.autofillSlug = true
+        }
+      },
+      newImageStatus(status) {
+        if (status) {
+          console.log("Success!")
+          this.getPortfolioProject()
+        } else {
+          console.log("FAILED");
         }
       },
       async getPortfolioProject() {
