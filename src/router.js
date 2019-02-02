@@ -164,6 +164,11 @@ const routes = [
     component: Logout
   },
   {
+    name: '404',
+    path: '/404',
+    component: Error404
+  },
+  {
     name: 'custom-page',
     path: '/:blobSlug',
     component: Page,
@@ -173,10 +178,11 @@ const routes = [
     })
   },
   {
-    name: '404',
-    path: '/404',
-    component: Error404
+    name: '404-redirect',
+    path: '*',
+    redirect: '/404'
   }
+
 ]
 
 export default new VueRouter({
