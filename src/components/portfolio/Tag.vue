@@ -2,8 +2,8 @@
 
   <div class="tag-container">
     <a
-      @click.prevent="filterBy"
-      :href="'/portfolio?filter=' + tag.slug"
+      @click.prevent="filter ? filterBy : false"
+      :href="filter ? '/portfolio?filter=' + tag.slug : false"
       :style="'background-color: ' + color"
       class="tag"
     >
@@ -24,7 +24,8 @@
       }
     },
     props: [
-      'tag'
+      'tag',
+      'filter'
     ],
     components: {
     },

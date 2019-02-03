@@ -7,7 +7,7 @@ function key() {
   return localStorage.getItem('pw18-api-key')
 }
 
-async function getIndexPageList(apiCategory, apiObject, apiListName, apiTotalName, perPage, currentPage, admin) {
+async function getIndexList(apiCategory, apiObject, apiListName, apiTotalName, perPage, currentPage, admin) {
   var apiData = await(getIndex(apiCategory, apiObject, admin))
   const fullList = apiData[apiListName]
   const total = apiData[apiTotalName]
@@ -113,7 +113,7 @@ async function getData(path, queries={}, admin=false) {
 
 export default {
   deleteObject: deleteObject,
-  getIndexList: getIndexPageList,
+  getIndexList: getIndexList,
   paginateIndex: paginateIndex,
   getData: getData,
   getIndex: getIndex,

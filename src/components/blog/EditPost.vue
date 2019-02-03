@@ -40,9 +40,9 @@
   import api from '../../helpers/api'
   import {updateSlug} from '../../helpers/general'
   import {resetFields} from '../../helpers/general'
+  import {slug} from '../../helpers/general'
 
   /* NPM */
-  import * as slug from 'slug'
   import * as snake from 'snakecase-keys'
 
   export default {

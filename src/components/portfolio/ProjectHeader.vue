@@ -26,6 +26,7 @@
       class="status-tag"
       @filter-by="filterBy"
       :tag="project.status"
+      :filter="true"
     />
 
     <h4 class="project-date-range">

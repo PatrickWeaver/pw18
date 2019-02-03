@@ -1,23 +1,21 @@
 <template>
   <div>
     <h2>
-      Edit/New Blob
+      Edit/New Tag
     </h2>
 
     <form>
-      <label>Title:</label>
-      <input type="text" v-model="title" @change="updateSlug" />
+      <label>Name:</label>
+      <input type="text" v-model="name" @change="updateSlug" />
       <label>Slug:</label>
       <input type="text" v-model="slug" @focus="autofillSlug = false" @blur="checkForAutofillSlug"/>
-      <label>Body:</label>
-      <textarea v-model="body"></textarea>
-      <label>Hidden from Index:</label>
-      <input type="checkbox" v-model="isHidden" />
-      <label>Redirect:</label>
-      <input type="text" v-model="redirect" />
+      <label>Status:</label>
+      <input type="checkbox" v-model="status" />
+      <label>Color:</label>
+      <input type="text" v-model="color" />
       <edit-form-buttons
-        :edit="activeBlobSlug"
-        :submit="submitNewBlob"
+        :edit="activeTagSlug"
+        :submit="submitNewTag"
       />
     </form>
 
@@ -41,12 +39,11 @@
   export default {
     data() {
       return {
-        title: '',
+        name: '',
         slug: '',
         autofillSlug: true,
-        body: '',
-        isHidden: false,
-        redirect: ''
+        status: false,
+        color: ''
       }
     },
     beforeCreate() {
@@ -54,8 +51,8 @@
       this.resetFields = resetFields.bind(this);
     },
     created() {
-      if (this.activeBlobSlug) {
-        this.getBlob()
+      if (this.activeTagSlug) {
+        this.getTag()
         this.submitButtonText = 'Save'
       }
     },
@@ -68,40 +65,39 @@
     },
     computed: {
       autoSlug() {
-        return slug(this.title)
+        return slug(this.name)
       }
     },
     methods: {
       checkForAutofillSlug() {
-        if (this.slug === slug(this.title)) {
+        if (this.slug === slug(this.name)) {
           this.autofillSlug = true
         }
       },
-      async getBlob() {
-        var api_data = await(api.getData('/v1/blobs/' + this.activeBlobSlug))
-        var blob = api_data.blob
-        this.title = blob.title
-        this.slug = blob.slug
-        this.body = blob.body.markdown
-        this.isHidden = blob.is_hidden
-        this.redirect = blob.redirect
+      async getTag() {
+        var api_data = await(api.getData('/v1/portfolio/tags/' + this.activeTagSlug))
+        var tag = api_data.tag
+        this.name = tag.name
+        this.slug = tag.slug
+        this.status = tag.status
+        this.color = tag.color
       },
-      async submitNewBlob() {
-        var path = '/v1/blobs/new/'
-        if (this.activeBlobSlug) {
-          path = '/v1/blobs/' + this.activeBlobSlug + '/edit/'
+      async submitNewTag() {
+        var path = '/v1/portfolio/tags/new/'
+        if (this.activeTagSlug) {
+          path = '/v1/portfolio/tags/' + this.activeTagSlug + '/edit/'
         }
         var response = await(api.sendData(snake(this.$data), path))
         if (response.success) {
           console.log(response)
-          this.$router.push({ path: '/blobs/' + response.slug })
+          this.$router.push({ path: '/tags/' })
         } else {
           alert("Error: " + response.error)
         }
       }
     },
     props: [
-      'activeBlobSlug'
+      'activeTagSlug'
     ],
     watch: {
       autoSlug() {

@@ -17,6 +17,8 @@ import Page from './components/Page.vue'
 import Portfolio from './components/portfolio/Portfolio.vue'
 import PortfolioProject from './components/portfolio/Project.vue'
 import PortfolioEditProject from './components/portfolio/EditProject.vue'
+import Tags from './components/portfolio/Tags.vue'
+import PortfolioEditTag from './components/portfolio/EditTag.vue'
 
 import Upload from './components/Upload.vue'
 
@@ -108,6 +110,25 @@ const routes = [
     }
   },
   {
+    name: 'tags',
+    path: '/tags',
+    component: Tags
+  },
+  {
+    name: 'portfolio-tag-new',
+    path: '/tags/new',
+    component: PortfolioEditTag,
+    props: (route) =>({
+      new: true,
+    })
+  },
+  {
+    name: 'portfolio-edit-tag',
+    path: '/tags/:activeTagSlug/edit',
+    component: PortfolioEditTag,
+    props: true
+  },
+  {
     name: 'portfolio',
     path: '/portfolio',
     component: Portfolio
@@ -148,6 +169,7 @@ const routes = [
     component: Portfolio,
     props: true
   },
+
   {
     name: 'upload',
     path: '/upload',

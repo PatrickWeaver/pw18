@@ -1,4 +1,7 @@
-import * as slug from 'slug'
+import * as slugNpm from 'slug'
+slugNpm.defaults.modes['pretty'].lower = true;
+
+export const slug = slugNpm
 
 export function updateSlug() {
   if (this.autofillSlug) {
@@ -18,5 +21,6 @@ export function resetFields () {
 }
 
 export default {
-  updateSlug: updateSlug
+  updateSlug: updateSlug,
+  slug: slug
 }
