@@ -56,6 +56,7 @@
     created() {
       if (this.activeBlobSlug) {
         this.getBlob()
+        this.autofillSlug = false
         this.submitButtonText = 'Save'
       } else {
         this.$emit('set-page-title','New Blob')
@@ -75,12 +76,12 @@
     },
     methods: {
       checkForAutofillSlug() {
-        if (this.slug === slug(this.title)) {
+        if (this.slug === slug(this.title) && !this.activeBlobSlug) {
           this.autofillSlug = true
         }
       },
       async getBlob() {
-        var api_data = await(api.getData('/v1/blobs/' + this.activeBlobSlug))
+        var api_data = await(api.getData('/v1/blobs/' + this.activeBlobSlug, null, this.admin))
         var blob = api_data.blob
         this.title = blob.title
         this.slug = blob.slug

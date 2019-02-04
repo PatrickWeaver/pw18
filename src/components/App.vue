@@ -95,7 +95,6 @@
         this.pageList = this.list.slice(pageStart, pageEnd)
       },
       setPageTitle(title) {
-        console.log("SETTING TITLE", title)
         document.title = title ? basePageTitle + ' | ' + title : basePageTitle
       }
     }
@@ -123,5 +122,9 @@
     background-color: #fff;
     padding: 5px;
     text-align: center;
+  }
+  
+  img {
+    border-radius: 5px;
   }
 </style>

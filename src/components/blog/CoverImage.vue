@@ -28,7 +28,6 @@ export default {
     max-width: 400px;
     float: right;
     margin: 0 10px 10px;
-    border-radius: 10px;
   }
   
   @media (max-width: 768px) {

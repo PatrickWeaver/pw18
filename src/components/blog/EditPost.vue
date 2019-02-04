@@ -66,6 +66,7 @@
     created() {
       if (this.activePostSlug) {
         this.getBlogPost()
+        this.autofillSlug = false
       } else {
         this.$emit('set-page-title','New Post')
       }
@@ -84,12 +85,12 @@
     },
     methods: {
       checkForAutofillSlug() {
-        if (this.slug === slug(this.title)) {
+        if (this.slug === slug(this.title) && !this.activePostSlug) {
           this.autofillSlug = true
         }
       },
       async getBlogPost() {
-        var api_data = await(api.getData('/v1/blog/posts/' + this.activePostSlug))
+        var api_data = await(api.getData('/v1/blog/posts/' + this.activePostSlug, null, this.admin))
         var post = api_data.post
         this.title = post.title
         this.slug = post.slug

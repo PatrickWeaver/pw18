@@ -73,12 +73,12 @@
     },
     methods: {
       checkForAutofillSlug() {
-        if (this.slug === slug(this.name)) {
+        if (this.slug === slug(this.name) && !this.activeTagSlug) {
           this.autofillSlug = true
         }
       },
       async getTag() {
-        var api_data = await(api.getData('/v1/portfolio/tags/' + this.activeTagSlug))
+        var api_data = await(api.getData('/v1/portfolio/tags/' + this.activeTagSlug, null, this.admin))
         var tag = api_data.tag
         this.name = tag.name
         this.slug = tag.slug

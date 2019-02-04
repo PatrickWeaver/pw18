@@ -5,7 +5,7 @@
     </h2>
 
     <form>
-      <image
+      <portfolio-image
         v-if="cover"
         :image="cover"
         :cover="true"
@@ -163,6 +163,7 @@
     created() {
       if (this.activeProjectSlug) {
         this.getPortfolioProject()
+        this.autofillSlug = false
       } else {
         this.$emit('set-page-title','New Project')
       }
@@ -191,7 +192,7 @@
     },
     methods: {
       checkForAutofillSlug() {
-        if (this.slug === slug(this.name)) {
+        if (this.slug === slug(this.name) && !this.activeProjectSlug) {
           this.autofillSlug = true
         }
       },
@@ -204,8 +205,9 @@
         }
       },
       async getPortfolioProject() {
-        var api_data = await(api.getData('/v1/portfolio/projects/' + this.activeProjectSlug))
+        var api_data = await(api.getData('/v1/portfolio/projects/' + this.activeProjectSlug, null, this.admin))
         var project = api_data.project
+        console.log("PROJECT:", api_data)
         this.name = project.name
         this.projectId = project.id
         this.slug = project.slug
