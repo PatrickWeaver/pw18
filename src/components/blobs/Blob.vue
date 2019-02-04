@@ -87,6 +87,7 @@
             this.$emit('set-page-title', blob.title)
           }
           this.loaded = true
+          this.$emit('set-page-title', this.title)
           if (this.apiStatus) {
             this.apiStatus(true)
           }

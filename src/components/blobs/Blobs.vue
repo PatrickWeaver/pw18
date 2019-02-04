@@ -32,6 +32,7 @@
     },
     created() {
       this.getIndex()
+      this.$emit('set-page-title', 'Blobs')
     },
     props: [
       'admin'

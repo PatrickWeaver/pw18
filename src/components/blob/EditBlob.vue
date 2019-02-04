@@ -57,6 +57,8 @@
       if (this.activeBlobSlug) {
         this.getBlob()
         this.submitButtonText = 'Save'
+      } else {
+        this.$emit('set-page-title','New Blob')
       }
     },
     beforeRouteLeave(to, from, next) {
@@ -85,6 +87,7 @@
         this.body = blob.body.markdown
         this.isHidden = blob.is_hidden
         this.redirect = blob.redirect
+        this.$emit('set-page-title', 'Edit: ' + blob.title)
       },
       async submitNewBlob() {
         var path = '/v1/blobs/new/'

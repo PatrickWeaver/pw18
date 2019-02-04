@@ -17,7 +17,7 @@
       :admin="admin"
       :api-status="apiStatus"
       :blob-page="true"
-      @set-page-title="setPageTitle"
+      @set-page-title="passTitleUp"
     />
 
   </div>
@@ -29,6 +29,8 @@
   /* Components */
   import Blob from './blobs/Blob.vue'
   
+  import {passTitleUp} from '../helpers/general'
+  
   const customPageBlob = 'pw-18-';
 
   export default {
@@ -39,6 +41,7 @@
       }
     },
     created() {
+      this.passTitleUp = passTitleUp.bind(this)
       setTimeout(() => {
         this.apiTimeout = !this.apiLoaded
       }, 5000)
@@ -51,10 +54,6 @@
     methods: {
       apiStatus(success) {
         this.apiLoaded = success
-      },
-      setPageTitle(title) {
-        console.log("SETTING TITLE", title)
-        document.title += ' | ' + title
       }
     },
     components: {

@@ -20,6 +20,10 @@ export function resetFields () {
   Object.assign(this.$data, this.$options.data.call(this));
 }
 
+export function passTitleUp(title) {
+  this.$emit('set-page-title', title)
+}
+
 export default {
   updateSlug: updateSlug,
   slug: slug

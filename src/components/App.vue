@@ -16,6 +16,7 @@
       :admin="admin"
       @login="login"
       @logout="logout"
+      @set-page-title="setPageTitle"
     ></router-view>
   </div>
 
@@ -27,6 +28,8 @@
   import TopMenu from './TopMenu.vue'
   
   import api from '../helpers/api'
+  
+  const basePageTitle = 'Patrick Weaver'
   
   export default {
     data: function () {
@@ -69,6 +72,7 @@
         if (this.$router.currentRoute.path === '/') {
           this.$router.push({ path: '/about' })
         }
+        this.setPageTitle()
       },
       setListType(type) {
         console.log("Page List:", this.pageList);
@@ -89,6 +93,10 @@
         var pageStart = (currentPage - 1) * perPage
         var pageEnd = pageStart + perPage
         this.pageList = this.list.slice(pageStart, pageEnd)
+      },
+      setPageTitle(title) {
+        console.log("SETTING TITLE", title)
+        document.title = title ? basePageTitle + ' | ' + title : basePageTitle
       }
     }
   }

@@ -66,6 +66,8 @@
     created() {
       if (this.activePostSlug) {
         this.getBlogPost()
+      } else {
+        this.$emit('set-page-title','New Post')
       }
     },
     beforeRouteLeave(to, from, next) {
@@ -97,6 +99,7 @@
         this.coverImageUrl = post.cover_image_url
         this.coverImageAltText = post.cover_image_alt_text
         this.draft = post.draft
+        this.$emit('set-page-title', 'Edit: ' + post.title)
       },
       async submitNewPost() {
         var path = '/v1/blog/posts/new/'

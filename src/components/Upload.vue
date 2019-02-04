@@ -33,6 +33,9 @@
         inProgress: false
       }
     },
+    created() {
+      this.$emit('set-page-title', 'Upload')
+    },
     methods: {
       async uploadFile(event) {
         this.file = this.$refs.file.files[0];

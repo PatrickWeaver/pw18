@@ -43,6 +43,7 @@
     },
     created() {
       this.getIndex()
+      this.$emit('set-page-title', 'Tags')
     },
     props: [
       'admin'

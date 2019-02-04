@@ -56,6 +56,7 @@
       if (this.currentPage > this.pages) {
         this.$router.push({ name: '404'});
       }
+      this.$emit('set-page-title', 'Portfolio')
     },
     props: [
       'pages',

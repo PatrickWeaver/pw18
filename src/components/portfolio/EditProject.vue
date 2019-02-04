@@ -163,6 +163,8 @@
     created() {
       if (this.activeProjectSlug) {
         this.getPortfolioProject()
+      } else {
+        this.$emit('set-page-title','New Project')
       }
       this.getAndSortTags()
     },
@@ -203,21 +205,23 @@
       },
       async getPortfolioProject() {
         var api_data = await(api.getData('/v1/portfolio/projects/' + this.activeProjectSlug))
-        this.name = api_data.project.name
-        this.projectId = api_data.project.id
-        this.slug = api_data.project.slug
-        this.currentSlug = api_data.project.slug
-        this.shortDescription = api_data.project.short_description
-        this.description = api_data.project.description.markdown
-        this.startDate = api_data.project.start_date ? new Date(api_data.project.start_date) : null
-        this.endDate = api_data.project.end_date ? new Date(api_data.project.end_date) : null
-        this.statusId = api_data.project.status_id
-        this.projectUrl = api_data.project.project_url
-        this.sourceUrl = api_data.project.source_url
-        this.isHidden = api_data.project.is_hidden
-        this.tags = api_data.project.tags
-        this.images = api_data.project.images
-        this.newImageOrder = api_data.project.images.length
+        var project = api_data.project
+        this.name = project.name
+        this.projectId = project.id
+        this.slug = project.slug
+        this.currentSlug = project.slug
+        this.shortDescription = project.short_description
+        this.description = project.description.markdown
+        this.startDate = project.start_date ? new Date(project.start_date) : null
+        this.endDate = project.end_date ? new Date(project.end_date) : null
+        this.statusId = project.status_id
+        this.projectUrl = project.project_url
+        this.sourceUrl = project.source_url
+        this.isHidden = project.is_hidden
+        this.tags = project.tags
+        this.images = project.images
+        this.newImageOrder = project.images.length
+        this.$emit('set-page-title', 'Edit: ' + project.name)
       },
       async getAndSortTags() {
         var tags_list = await(api.getTags(this.admin))

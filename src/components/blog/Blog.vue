@@ -12,6 +12,7 @@
         @return-to-index="returnToIndex"
         @edit="editPost"
         @delete="deletePost"
+        @set-page-title="passTitleUp"
       />
     </div>
     
@@ -40,6 +41,7 @@
   /* Helpers */
   import api from '../../helpers/api'
   import {editObject} from '../../helpers/general'
+  import {passTitleUp} from '../../helpers/general'
 
   export default {
     data() {
@@ -50,9 +52,10 @@
     beforeCreate() {
       this.deletePost = api.deleteObject.bind(this, 'blog', 'posts');
       this.editPost = editObject.bind(this, 'blog');
+      this.passTitleUp = passTitleUp.bind(this)
     },
     created() {
-      document.title += ' | Blog'
+      this.setIndexTitle()
     },
     props: [
       'activePostSlug',
@@ -65,7 +68,15 @@
       },
       returnToIndex() {
          this.$router.push({ path: '/blog' })
+      },
+      setIndexTitle() {
+        if (!this.activePostSlug) {
+          this.$emit('set-page-title', 'Blog')
+        }
       }
+    },
+    watch: {
+      $route: 'setIndexTitle'
     },
     components: {
       Post,

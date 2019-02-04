@@ -12,6 +12,7 @@
         @filter-by="filterBy"
         @delete="findAndDeleteProject"
         @edit="editProject"
+        @set-page-title="passTitleUp"
       />
     </div>
     <div v-else-if="list.length > 0">
@@ -28,6 +29,7 @@
         :edit-project="editProject"
         :current-page="currentPage"
         @clear-filter="clearFilter"
+        @set-page-title="passTitleUp"
       />
     </div>
     <div v-else>
@@ -46,6 +48,7 @@
 
   /* Helpers */
   import api from '../../helpers/api'
+  import {passTitleUp} from '../../helpers/general'
 
   export default {
     data: () => {
@@ -64,6 +67,9 @@
       currentPage() {
         return this.pageNumber ? this.pageNumber : 1
       }
+    },
+    beforeCreate() {
+      this.passTitleUp = passTitleUp.bind(this)
     },
     created() {
       // fetch the data when the view is created and the data is

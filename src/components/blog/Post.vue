@@ -64,6 +64,7 @@
       async getBlogPost() {
         var api_data = await(api.getData('/v1/blog/posts/' + this.slug, {}, this.admin))
         this.post = api_data.post
+        this.$emit('set-page-title', this.post.title)
       },
       activatePost (event) {
         this.$emit('activate-post', this.post.slug)

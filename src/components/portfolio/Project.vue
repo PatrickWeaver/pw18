@@ -100,6 +100,7 @@
       async getPortfolioProject() {
         var api_data = await(api.getData('/v1/portfolio/projects/' + this.slug, {}, this.admin))
         this.project = api_data.project
+        this.$emit('set-page-title', this.project.name)
       },
       deleteProject() {
         this.$emit('delete', this.project)
