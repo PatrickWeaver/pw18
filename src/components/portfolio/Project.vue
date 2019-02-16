@@ -40,6 +40,9 @@
         v-for="(image) in project.images"
         :key="image.uuid"
       >
+        <p>
+          {{image.order}}  
+        </p>
         <portfolio-image
           v-bind:image="image"
           :active-image-uuid="activeImageUuid"

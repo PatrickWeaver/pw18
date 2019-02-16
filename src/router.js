@@ -19,6 +19,7 @@ import PortfolioProject from './components/portfolio/Project.vue'
 import PortfolioEditProject from './components/portfolio/EditProject.vue'
 import Tags from './components/portfolio/Tags.vue'
 import PortfolioEditTag from './components/portfolio/EditTag.vue'
+import PortfolioEditImage from './components/portfolio/EditImage.vue'
 
 import Upload from './components/Upload.vue'
 
@@ -155,6 +156,12 @@ const routes = [
     name: 'portfolio-edit-project',
     path: '/portfolio/:activeProjectSlug/edit',
     component: PortfolioEditProject,
+    props: true
+  },
+  {
+    name: 'portfolio-edit-project-image',
+    path: '/portfolio/:activeProjectSlug/:imageUuid/edit',
+    component: PortfolioEditImage,
     props: true
   },
   {

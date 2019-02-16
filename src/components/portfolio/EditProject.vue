@@ -107,7 +107,11 @@
             @click="makeOrRemoveCover(image.uuid, true)"
             v-if="!image.cover"
           >Make Cover</button>
-          <button @click="deleteImage(image.uuid, index, 'delete')">Delete</button>
+          <object-admin
+            v-if="admin"
+            @delete="deleteImage(image.uuid, index, 'delete')"
+            @edit="editImage('portfolio/' + slug, image.uuid)"
+          ></object-admin>
         </li>
       </ul> 
     </div>
@@ -123,6 +127,7 @@
   import {updateSlug} from '../../helpers/general'
   import {resetFields} from '../../helpers/general'
   import {slug} from '../../helpers/general'
+  import {editObject} from '../../helpers/general'
 
   /* NPM */
   import * as snake from 'snakecase-keys'
@@ -132,6 +137,7 @@
   import PortfolioImage from './Image.vue'
   import NewImage from '../NewImage.vue'
   import EditFormButtons from '../EditFormButtons.vue'
+  import ObjectAdmin from '../ObjectAdmin.vue'
 
 
   export default {
@@ -157,8 +163,9 @@
       }
     },
     beforeCreate() {
-      this.updateSlug = updateSlug.bind(this);
-      this.resetFields = resetFields.bind(this);
+      this.updateSlug = updateSlug.bind(this)
+      this.resetFields = resetFields.bind(this)
+      this.editImage = editObject.bind(this)
     },
     created() {
       if (this.activeProjectSlug) {
@@ -177,7 +184,8 @@
       Tag,
       PortfolioImage,
       NewImage,
-      EditFormButtons
+      EditFormButtons,
+      ObjectAdmin
     },
     computed: {
       autoSlug() {
