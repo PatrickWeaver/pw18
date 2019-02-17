@@ -245,6 +245,12 @@
         }
       },
       async submitNewProject() {
+        /* Explicit error message because this is a common mistake */
+        if (!this.statusId) {
+          alert("Cannot submit project without status")
+          return
+        }
+        
         var path = '/v1/portfolio/projects/new/'
         if (this.activeProjectSlug) {
           path = '/v1/portfolio/projects/' + this.activeProjectSlug + '/edit/'

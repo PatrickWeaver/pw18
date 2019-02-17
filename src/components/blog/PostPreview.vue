@@ -5,9 +5,7 @@
         {{ post.title }}
       </a>
     </h3>
-    <h4 v-if="post.draft">
-      Draft  
-    </h4>
+    <draft-label  v-if="post.draft" text="Draft" />
     <cover-image
       :url="post.cover_image_url"
       :alt="post.cover_image_alt_text"
@@ -30,6 +28,7 @@
   import ObjectAdmin from '../ObjectAdmin.vue'
   import ReadableDate from '../ReadableDate.vue'
   import CoverImage from './CoverImage.vue'
+  import DraftLabel from '../DraftLabel.vue'
   
   export default {
     props: [
@@ -51,7 +50,8 @@
     components: {
       ObjectAdmin,
       ReadableDate,
-      CoverImage
+      CoverImage,
+      DraftLabel
     },
     methods: {
       activatePost(event) {

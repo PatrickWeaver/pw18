@@ -11,9 +11,7 @@
         {{ post.title }}
       </a>
     </h3>
-    <h4 v-if="post.draft">
-      Draft  
-    </h4>
+    <draft-label  v-if="post.draft" text="Draft" />
     <cover-image
       :url="post.cover_image_url"
       :alt="post.cover_image_alt_text"
@@ -39,6 +37,7 @@
   import ObjectAdmin from '../ObjectAdmin.vue'
   import ReadableDate from '../ReadableDate.vue'
   import CoverImage from './CoverImage.vue'
+  import DraftLabel from '../DraftLabel.vue'
   
   export default {
     data() {
@@ -62,8 +61,11 @@
     },
     methods: {
       async getBlogPost() {
-        var api_data = await(api.getData('/v1/blog/posts/' + this.slug, {}, this.admin))
-        this.post = api_data.post
+        var path = '/v1/blog/posts/' + this.slug
+        console.log('pathh:', path)
+        var apiData = await(api.getData(path, {}, this.admin))
+        console.log('apiData:', apiData)
+        this.post = apiData.post
         this.$emit('set-page-title', this.post.title)
       },
       activatePost (event) {
@@ -81,7 +83,8 @@
     components: {
       ObjectAdmin,
       ReadableDate,
-      CoverImage
+      CoverImage,
+      DraftLabel
     }
   }  
 
@@ -89,6 +92,10 @@
 
 
 <style>
+  .blog-post {
+    overflow: auto;
+  }
+  
   .blog-post-summary {
     background-color: white;
     margin-bottom: 2em;

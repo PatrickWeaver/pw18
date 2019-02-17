@@ -107,7 +107,8 @@ async function getData(path, queries={}, admin=false) {
   for (var i in queries) {
     qs += '&' + i + '=' + queries[i]
   }
-  var response = await(axios.get(settings.API_URL + path + qs))
+  var path = settings.API_URL + path + qs
+  var response = await(axios.get(path))
   return response.data
 }
 

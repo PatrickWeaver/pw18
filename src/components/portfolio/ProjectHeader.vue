@@ -56,10 +56,7 @@
     >
       {{ project.short_description }}  
     </p>
-    
-    <h4 v-if="project.is_hidden" class="project-hidden">
-      Hidden
-    </h4>
+    <draft-label  v-if="project.is_hidden" text="Hidden" />
   </div>
 </template>
 
@@ -73,6 +70,7 @@
   import Tag from './Tag.vue'
   import UrlWithLabel from '../UrlWithLabel.vue'
   import YearDateRange from '../YearDateRange.vue'
+  import DraftLabel from '../DraftLabel.vue'
 
   export default {
     data() {
@@ -87,7 +85,8 @@
       PortfolioImage,
       Tag,
       UrlWithLabel,
-      YearDateRange
+      YearDateRange,
+      DraftLabel
     },
     methods: {
       activateProject (event) {

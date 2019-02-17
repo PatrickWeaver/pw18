@@ -90,8 +90,9 @@
         }
       },
       async getBlogPost() {
-        var api_data = await(api.getData('/v1/blog/posts/' + this.activePostSlug, null, this.admin))
-        var post = api_data.post
+        var path = '/v1/blog/posts/' + this.activePostSlug
+        var apiData = await(api.getData(path, null, this.admin))
+        var post = apiData.post
         this.title = post.title
         this.slug = post.slug
         this.summary = post.summary.markdown
@@ -117,7 +118,8 @@
       }
     },
     props: [
-      'activePostSlug'
+      'activePostSlug',
+      'admin'
     ],
     watch: {
       autoSlug() {
