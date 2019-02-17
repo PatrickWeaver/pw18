@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       newImageUrl: null,
-      newImageOrder: 0,
+      newImageOrder: 1,
       newImageAltText: null,
       newImageCaption: null,
       newImageCover: false
