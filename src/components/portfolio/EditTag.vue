@@ -12,7 +12,7 @@
       <label>Status:</label>
       <input type="checkbox" v-model="status" />
       <label>Color:</label>
-      <input type="text" v-model="color" :disabled="!status" />
+      <input type="text" v-model="color" :disabled="!status" :class="{'disabled-input': !status}" />
       <edit-form-buttons
         :edit="activeTagSlug"
         :submit="submitNewTag"
@@ -119,3 +119,11 @@
   }
 
 </script>
+
+<style>
+
+  .disabled-input {
+    cursor: not-allowed;
+  }
+
+</style>
