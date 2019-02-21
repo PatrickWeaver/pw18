@@ -12,7 +12,18 @@
       <label>Status:</label>
       <input type="checkbox" v-model="status" />
       <label>Color:</label>
-      <input type="text" v-model="color" :disabled="!status" :class="{'disabled-input': !status}" />
+      <input
+        type="text"
+        v-model="color"
+        :disabled="!status"
+        :class="{'disabled-input': !status}"
+        @click="showColorPicker = !showColorPicker"
+      />
+      <color-picker
+        v-if="showColorPicker"
+        color="#FF3333"
+        @new-color="updateColor"
+      />
       <edit-form-buttons
         :edit="activeTagSlug"
         :submit="submitNewTag"
@@ -26,6 +37,7 @@
   
   /* Components */
   import EditFormButtons from '../EditFormButtons.vue'
+  import ColorPicker from '../ColorPicker.vue'
 
   /* Helpers */
   import api from '../../helpers/api'
@@ -44,6 +56,7 @@
         autofillSlug: true,
         status: false,
         color: '',
+        showColorPicker: false,
         colorMem: '#8F8F8F',
       }
     },
@@ -64,7 +77,8 @@
       next()
     },
     components: {
-      EditFormButtons
+      EditFormButtons,
+      ColorPicker
     },
     computed: {
       autoSlug() {
@@ -98,6 +112,9 @@
         } else {
           alert("Error: " + response.error)
         }
+      },
+      updateColor(color) {
+        this.color = color
       }
     },
     props: [
