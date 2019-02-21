@@ -47,6 +47,7 @@
         <tag
           @filter-by="filterBy"
           :tag="tag"
+          :filter="true"
         />
       </li>
     </ul>
@@ -95,7 +96,6 @@
       filterBy (tagSlug) {
         this.$emit('filter-by', tagSlug)
       }
-
     }
   }
 
@@ -151,7 +151,7 @@
     grid-column-end: span 1;
     grid-row-start: 3;
     grid-row-end: 4;
-    margin: .5em 5px;
+    margin: .5em 0;
     color: #333;
   }
 
@@ -195,7 +195,6 @@
     .project-date-range {
       grid-row-start: 4;
       grid-row-end: 5;
-      margin: .5em 5px;
       font-weight: normal;
     }
 

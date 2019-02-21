@@ -2,7 +2,7 @@
 
   <div class="tag-container">
     <a
-      @click.prevent="filter ? filterBy : false"
+      @click.prevent="filterBy"
       :href="filter ? '/portfolio?filter=' + tag.slug : false"
       :style="'background-color: ' + color"
       class="tag"
@@ -31,7 +31,11 @@
     },
     methods: {
       filterBy() {
-        this.$emit('filter-by', this.tag.slug)
+        if (this.filter) {
+          this.$emit('filter-by', this.tag.slug)
+        } else {
+          
+        }
       }
     }
   }
@@ -50,6 +54,6 @@
     display: inline-block;
     text-decoration: none;
     color: #333;
-    margin: 5px;
+    margin: 5px 10px 5px 0;
   }
 </style>

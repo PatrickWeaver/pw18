@@ -98,7 +98,7 @@
         const anchor = this.$router.currentRoute.hash;
         this.$nextTick(() => {
           if (anchor && document.querySelector(anchor)) {
-            location.href = anchor;
+            location.href = anchor
           }
         });
       },
