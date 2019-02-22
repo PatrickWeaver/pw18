@@ -9,7 +9,7 @@
       @filter-by="filterBy"
       :project="project"
       :cover="cover"
-    ></project-header>
+    />
     
     <ul
       class="link-list"
@@ -40,11 +40,14 @@
         v-for="(image) in project.images"
         :key="image.uuid"
       >
+        <p>
+          {{image.order}}  
+        </p>
         <portfolio-image
           v-bind:image="image"
           :active-image-uuid="activeImageUuid"
           :project-name="project.name"
-        ></portfolio-image>
+        />
       </li>
     </ul>
     <object-admin
@@ -61,16 +64,14 @@
 <script>
 
   /* Helpers */
-  import api from '../helpers/api'
-  import findPortfolioProjectCover from '../helpers/findPortfolioProjectCover'
+  import api from '../../helpers/api'
+  import findPortfolioProjectCover from '../../helpers/findPortfolioProjectCover'
 
   /* Components */
-  import ObjectAdmin from './ObjectAdmin.vue'
-  import ProjectHeader from './PortfolioProjectHeader.vue'
-  import PortfolioImage from './PortfolioImage.vue'
-  import PortfolioTag from './PortfolioTag.vue'
-  import UrlWithLabel from './UrlWithLabel.vue'
-  import YearDateRange from './YearDateRange.vue'
+  import ObjectAdmin from '../ObjectAdmin.vue'
+  import ProjectHeader from './ProjectHeader.vue'
+  import PortfolioImage from './Image.vue'
+  import UrlWithLabel from '../UrlWithLabel.vue'
 
   export default {
     data() {
@@ -100,8 +101,13 @@
     },
     methods: {
       async getPortfolioProject() {
+<<<<<<< HEAD:src/components/portfolio/Project.vue
+        var api_data = await(api.getData('/v1/portfolio/projects/' + this.slug, {}, this.admin))
+=======
         var api_data = await(api.getData('/v1/portfolio/projects/' + this.slug))
+>>>>>>> master:src/components/PortfolioProject.vue
         this.project = api_data.project
+        this.$emit('set-page-title', this.project.name)
       },
       deleteProject() {
         this.$emit('delete', this.project)
@@ -120,9 +126,7 @@
       ObjectAdmin,
       ProjectHeader,
       PortfolioImage,
-      PortfolioTag,
-      UrlWithLabel,
-      YearDateRange
+      UrlWithLabel
     }
   }
 

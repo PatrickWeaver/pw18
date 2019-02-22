@@ -1,3 +1,5 @@
+/* settings.js in .gitignore */
+
 module.exports = {
   ENV: '',
   API_URL: ''

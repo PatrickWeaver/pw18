@@ -30,6 +30,7 @@
   </div>
   <div v-else>
     <!-- Image gallery -->
+    <span v-if="showOrder">*{{image.order}}</span>
     <a
       :href="this.$router.currentRoute.path + '/' + image.uuid"
       @click.prevent="loadImage"
@@ -43,11 +44,9 @@
     <p class="gallery-image-caption">{{ image.caption }}</p>
   </div>
   
-
 </template>
 
 <script>
-
   
   export default {
     data() {
@@ -74,7 +73,8 @@
       'image',
       'cover',
       'activeImageUuid',
-      'projectName'
+      'projectName',
+      'showOrder'
     ],
     components: {
     },

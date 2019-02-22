@@ -5,13 +5,11 @@
         {{ post.title }}
       </a>
     </h3>
-    <div class="cover-image-container">
-      <img 
-        class="cover-image"
-        :src="post.cover_image_url"
-        :alt="post.cover_image_alt_text"
-      />
-    </div>
+    <draft-label  v-if="post.draft" text="Draft" />
+    <cover-image
+      :url="post.cover_image_url"
+      :alt="post.cover_image_alt_text"
+    />
     <h5 class="post-date"><readable-date :date="post.post_date"></readable-date></h5>
     <div v-html="postPreview"></div>
     <p class="read-more">
@@ -27,8 +25,10 @@
 
 <script>
   
-  import ObjectAdmin from './ObjectAdmin.vue'
-  import ReadableDate from './ReadableDate.vue'
+  import ObjectAdmin from '../ObjectAdmin.vue'
+  import ReadableDate from '../ReadableDate.vue'
+  import CoverImage from './CoverImage.vue'
+  import DraftLabel from '../DraftLabel.vue'
   
   export default {
     props: [
@@ -37,8 +37,9 @@
       'admin'
     ],
     computed: {
+      
       postPreview() {
-        if (this.post.summary != '') {
+        if (this.post.summary && this.post.summary != '') {
           return this.post.summary.html
         } else {
           return '<p>' + this.post.post_preview + '</p>'
@@ -48,7 +49,9 @@
     },
     components: {
       ObjectAdmin,
-      ReadableDate
+      ReadableDate,
+      CoverImage,
+      DraftLabel
     },
     methods: {
       activatePost(event) {

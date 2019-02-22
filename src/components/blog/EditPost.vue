@@ -16,21 +16,33 @@
       <label>Post Date:</label>
       <input type="date" :value="postDate && postDate.toISOString().split('T')[0]"
                      @input="postDate = $event.target.valueAsDate" />
+      <label>Cover Image URL:</label>
+      <input type="text" v-model="coverImageUrl" />
+      <label>Cover Image Alt Text:</label>
+      <input type="text" v-model="coverImageAltText" />
       <label>Draft:</label>
       <input type="checkbox" v-model="draft" />
-      <button @click.prevent="submitNewPost">Submit</button>
+      <edit-form-buttons
+        :edit="currentSlug"
+        :submit="submitNewPost"
+      />
     </form>
 
   </div>
 </template>
 
 <script>
+  
+  /* Components */
+  import EditFormButtons from '../EditFormButtons.vue'
 
   /* Helpers */
-  import api from '../helpers/api'
+  import api from '../../helpers/api'
+  import {updateSlug} from '../../helpers/general'
+  import {resetFields} from '../../helpers/general'
+  import {slug} from '../../helpers/general'
 
   /* NPM */
-  import * as slug from 'slug'
   import * as snake from 'snakecase-keys'
 
   export default {
@@ -42,19 +54,29 @@
         summary: '',
         body: '',
         postDate: new Date(),
+        coverImageUrl: '',
+        coverImageAltText: '',
         draft: false
       }
     },
+    beforeCreate() {
+      this.updateSlug = updateSlug.bind(this);
+      this.resetFields = resetFields.bind(this);
+    },
     created() {
-      if (this.activePostSlug) {
+      if (this.currentSlug) {
         this.getBlogPost()
+        this.autofillSlug = false
+      } else {
+        this.$emit('set-page-title','New Post')
       }
     },
-    watch: {
-      // call again the method if the route changes
-      '$route': 'getBlogPost'
+    beforeRouteLeave(to, from, next) {
+      this.resetFields()
+      next()
     },
     components: {
+      EditFormButtons
     },
     computed: {
       autoSlug() {
@@ -62,30 +84,29 @@
       }
     },
     methods: {
-      updateSlug() {
-        if (this.autofillSlug) {
-          this.slug = slug(this.title)
-        }
-      },
       checkForAutofillSlug() {
-        if (this.slug === slug(this.title)) {
+        if (this.slug === slug(this.title) && !this.currentSlug) {
           this.autofillSlug = true
         }
       },
       async getBlogPost() {
-        var api_data = await(api.getData('/v1/blog/posts/' + this.activePostSlug))
-        var post = api_data.post
+        var path = '/v1/blog/posts/' + this.currentSlug
+        var apiData = await(api.getData(path, null, this.admin))
+        var post = apiData.post
         this.title = post.title
         this.slug = post.slug
         this.summary = post.summary.markdown
         this.body = post.body.markdown
         this.postDate = post.post_date ? new Date(post.post_date) : null
+        this.coverImageUrl = post.cover_image_url
+        this.coverImageAltText = post.cover_image_alt_text
         this.draft = post.draft
+        this.$emit('set-page-title', 'Edit: ' + post.title)
       },
       async submitNewPost() {
         var path = '/v1/blog/posts/new/'
-        if (this.activePostSlug) {
-          path = '/v1/blog/posts/' + this.activePostSlug + '/edit/'
+        if (this.currentSlug) {
+          path = '/v1/blog/posts/' + this.currentSlug + '/edit/'
         }
         var response = await(api.sendData(snake(this.$data), path))
         if (response.success) {
@@ -97,7 +118,8 @@
       }
     },
     props: [
-      'activePostSlug'
+      'currentSlug',
+      'admin'
     ],
     watch: {
       autoSlug() {

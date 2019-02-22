@@ -29,7 +29,7 @@
     ],
     computed: {
       readableDate() {
-        console.log(this.date)
+        //console.log(this.date)
         var d = new Date(this.date)
         var year = d.getFullYear()
         var month = months[d.getMonth()]

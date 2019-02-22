@@ -2,7 +2,9 @@
   "restart": {
     "include": [
       ".vue$",
-      ".js$"
+      ".js$",
+      ".json",
+      ".env"
     ]
   },
   "throttle": 500

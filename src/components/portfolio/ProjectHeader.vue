@@ -19,14 +19,15 @@
         v-if="cover"
         :image="cover"
         :cover="true"
-      ></portfolio-image>
+      />
     </a>
 
-    <portfolio-tag
+    <tag
       class="status-tag"
       @filter-by="filterBy"
       :tag="project.status"
-    ></portfolio-tag>
+      :filter="true"
+    />
 
     <h4 class="project-date-range">
       <year-date-range
@@ -43,10 +44,15 @@
         v-for="(tag) in project.tags"
         :key="tag.slug"
       >
+<<<<<<< HEAD:src/components/portfolio/ProjectHeader.vue
+        <tag
+=======
         <portfolio-tag
+>>>>>>> master:src/components/PortfolioProjectHeader.vue
           @filter-by="filterBy"
           :tag="tag"
-        ></portfolio-tag>
+          :filter="true"
+        />
       </li>
     </ul>
     <p
@@ -55,19 +61,24 @@
     >
       {{ project.short_description }}  
     </p>
+<<<<<<< HEAD:src/components/portfolio/ProjectHeader.vue
+    <draft-label  v-if="project.is_hidden" text="Hidden" />
+=======
+>>>>>>> master:src/components/PortfolioProjectHeader.vue
   </div>
 </template>
 
 <script>
 
   /* Helpers */
-  import api from '../helpers/api'
+  import api from '../../helpers/api'
 
   /* Components */
-  import PortfolioImage from './PortfolioImage.vue'
-  import PortfolioTag from './PortfolioTag.vue'
-  import UrlWithLabel from './UrlWithLabel.vue'
-  import YearDateRange from './YearDateRange.vue'
+  import PortfolioImage from './Image.vue'
+  import Tag from './Tag.vue'
+  import UrlWithLabel from '../UrlWithLabel.vue'
+  import YearDateRange from '../YearDateRange.vue'
+  import DraftLabel from '../DraftLabel.vue'
 
   export default {
     data() {
@@ -80,9 +91,10 @@
     ],
     components: {
       PortfolioImage,
-      PortfolioTag,
+      Tag,
       UrlWithLabel,
-      YearDateRange
+      YearDateRange,
+      DraftLabel
     },
     methods: {
       activateProject (event) {
@@ -91,7 +103,6 @@
       filterBy (tagSlug) {
         this.$emit('filter-by', tagSlug)
       }
-
     }
   }
 
@@ -147,7 +158,7 @@
     grid-column-end: span 1;
     grid-row-start: 3;
     grid-row-end: 4;
-    margin: .5em 5px;
+    margin: .5em 0;
     color: #333;
   }
 
@@ -191,7 +202,6 @@
     .project-date-range {
       grid-row-start: 4;
       grid-row-end: 5;
-      margin: .5em 5px;
       font-weight: normal;
     }
 
