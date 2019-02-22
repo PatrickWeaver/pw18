@@ -24,7 +24,7 @@
       />
       <edit-form-buttons
         :edit="imageUuid"
-        :submit="imageUuid ? submitUpdatedImage : () => addImage(url)"
+        :submit="sendImage"
       />
     </form>
     
@@ -81,27 +81,29 @@ export default {
     'admin'
   ],
   methods: {
-    async addImage(url) {
-      console.log("* * * * * * * ADDING IMAGE!!!")
+    async sendImage() {
       var path = '/v1/portfolio/images/new/'
-      var body = {
-        url: url,
-        // Order and cover should maybe be in apiObject? But it's also something that coudl get reused.
-        order: this.order,
-        cover: this.cover,
-        alt_text: this.altText,
-        caption: this.caption
+      if (this.imageUuid) {
+        path = '/v1/portfolio/images/' + this.imageUuid + '/edit/'
       }
-      body = Object.assign(body, this.apiObject)
+      var body = snake(this.$data);
+      if (this.apiObject) {
+        body = Object.assign(body, this.apiObject)
+      }
       var response = await(api.sendData(body, path))
       if (response.success) {
-        this.$emit('status', true)
-        this.url = ''
-        this.altText = ''
-        this.caption = ''
+        if (this.imageUuid) {
+          // Editing existing
+          this.$router.push({ path: '/portfolio/' + this.activeProjectSlug })
+        } else {
+          // New image
+          this.$emit('status', true)
+          this.resetFields()
+        }
       } else {
         this.$emit('status', false)
-        alert("Error: " + response.error)
+        console.log("!Error:", response.error)
+        //alert("Error: " + response.error)
       }
     },
     async getImage() {
@@ -124,20 +126,6 @@ export default {
       this.url = image.url
       this.cover = image.cover
 
-    },
-    async submitUpdatedImage() {
-      var path = '/v1/portfolio/images/new/'
-      if (this.imageUuid) {
-        path = '/v1/portfolio/images/' + this.imageUuid + '/edit/'
-      }
-      console.log('PATHH:', path)
-      var response = await(api.sendData(snake(this.$data), path))
-      if (response.success) {
-        console.log(response)
-        this.$router.push({ path: '/portfolio/' + this.activeProjectSlug })
-      } else {
-        alert("Error: " + response.error)
-      }
     }
   }
   
