@@ -11,8 +11,8 @@
       >
         <span class="project-name-header">
           {{ projectName }}
-        </span><!--
-     --><a
+        </span>
+        <a
           :href="projectPath"
           class="close-link"
           @click.prevent="closeActiveImage"
@@ -122,6 +122,7 @@
 
 
 <style>
+
 
   .active-image-container {
     position: fixed;
