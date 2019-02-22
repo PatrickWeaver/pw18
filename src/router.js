@@ -19,7 +19,7 @@ import PortfolioProject from './components/portfolio/Project.vue'
 import PortfolioEditProject from './components/portfolio/EditProject.vue'
 import Tags from './components/portfolio/Tags.vue'
 import PortfolioEditTag from './components/portfolio/EditTag.vue'
-import PortfolioEditImage from './components/portfolio/EditImage.vue'
+import PortfolioEditImage from './components/EditImage.vue'
 
 import Upload from './components/Upload.vue'
 

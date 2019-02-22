@@ -93,7 +93,7 @@
 
     <div v-if="images.length > 0">
       <hr/>
-      <ul class="image-list">
+      <ol class="image-list">
         <li
           v-for="(image, index) in images"
           :key="image.uuid"
@@ -102,6 +102,7 @@
             v-bind:image="image"
             :active-image-uuid="false"
             :project-name="name"
+            show-order="true"
           />
           <button
             @click="makeOrRemoveCover(image.uuid, true)"
@@ -113,7 +114,7 @@
             @edit="editImage('portfolio/' + slug, image.uuid)"
           ></object-admin>
         </li>
-      </ul> 
+      </ol> 
     </div>
 
   </div>
@@ -135,7 +136,7 @@
   /* Components */
   import Tag from './Tag.vue'
   import PortfolioImage from './Image.vue'
-  import NewImage from '../NewImage.vue'
+  import NewImage from '../EditImage.vue'
   import EditFormButtons from '../EditFormButtons.vue'
   import ObjectAdmin from '../ObjectAdmin.vue'
 
