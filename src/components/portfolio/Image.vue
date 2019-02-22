@@ -123,6 +123,7 @@
 
 <style>
 
+
   .active-image-container {
     position: fixed;
     background-color: #fdfdfd;

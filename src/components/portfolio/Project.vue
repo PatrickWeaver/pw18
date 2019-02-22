@@ -101,7 +101,11 @@
     },
     methods: {
       async getPortfolioProject() {
+<<<<<<< HEAD:src/components/portfolio/Project.vue
         var api_data = await(api.getData('/v1/portfolio/projects/' + this.slug, {}, this.admin))
+=======
+        var api_data = await(api.getData('/v1/portfolio/projects/' + this.slug))
+>>>>>>> master:src/components/PortfolioProject.vue
         this.project = api_data.project
         this.$emit('set-page-title', this.project.name)
       },

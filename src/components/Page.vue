@@ -3,6 +3,7 @@
   <div>
     <h2 v-if="title" class="page-title">{{ title }}</h2>
     
+<<<<<<< HEAD
     <div
       v-if="apiTimeout && !apiLoaded"
       class="page-blob"
@@ -19,6 +20,10 @@
       :blob-page="true"
       @set-page-title="passTitleUp"
     />
+=======
+    <blob id="about-text" :slug="slug">
+    </blob>
+>>>>>>> master
 
   </div>
 
@@ -27,6 +32,7 @@
 <script>
 
   /* Components */
+<<<<<<< HEAD
   import Blob from './blobs/Blob.vue'
   
   import {passTitleUp} from '../helpers/general'
@@ -55,15 +61,34 @@
       apiStatus(success) {
         this.apiLoaded = success
       }
+=======
+  import Blob from './Blob.vue'
+
+  export default {
+    data() {
+      return {}
+    },
+    computed: {
+      slug: function() {
+        return 'pw-18-' + this.blobSlug
+      }
+    },
+    methods: {
+>>>>>>> master
     },
     components: {
       Blob
     },
     props: [
+<<<<<<< HEAD
       'admin',
       'title',
       'blobSlug',
       'backup'
+=======
+      'title',
+      'blobSlug'
+>>>>>>> master
     ]
 
   }

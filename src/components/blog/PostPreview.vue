@@ -78,4 +78,23 @@
     margin: -.5em 0 .5em;
   }
 
+  .cover-image {
+    max-width: 400px;
+    float: right;
+    margin: 0 10px 10px;
+    border-radius: 10px;
+  }
+
+  @media (max-width: 768px) {
+    .cover-image-container {
+      text-align: center;
+    }
+    .cover-image {
+      float: none;
+      margin: 0 auto 10px;
+      width: 100%;
+    }
+
+  }
+
 </style>
