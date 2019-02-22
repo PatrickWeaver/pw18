@@ -10,9 +10,15 @@
     <li v-if="admin"><router-link to="/tags">Tags</router-link></li>
     <li v-if="admin"><router-link to="/tags/new">New Tag</router-link></li>
     <li><router-link to="/blog">Blog</router-link></li>
+<<<<<<< HEAD
     <li v-if="admin"><router-link to="/blog/new">New Blog Post</router-link></li>
     <li><router-link to="/now">Now</router-link></li>
     <li v-if="admin"><router-link to="/logout">Log Out</router-link></li>
+=======
+    <li v-if="admin"><router-link  to="/blog/new">New Blog Post</router-link></li>
+    <li><router-link to="/now">Now</router-link></li>
+    <li v-if="admin"><router-link  to="/logout">Log Out</router-link></li>
+>>>>>>> master
   </ul>
 
 </template>
