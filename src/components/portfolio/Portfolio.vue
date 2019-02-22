@@ -94,6 +94,7 @@
         setTimeout(() => this.status = loadingMessage, 1 * 1000)
         setTimeout(() => this.status = errorMessage, 10 * 1000)
       },
+      
       scrollToAnchor() {
         const anchor = this.$router.currentRoute.hash;
         this.$nextTick(() => {
@@ -102,6 +103,7 @@
           }
         });
       },
+      
       async getPortfolioIndex() {
         if (!this.activeProjectSlug) {
           if (this.list.length === 0) {
@@ -143,18 +145,22 @@
         }
         this.scrollToAnchor()
       },
+      
       activateProject(slug) {
         this.$router.push({ path: '/portfolio/' + slug })
       },
+      
       clearFilter() {
         this.filteredList = this.list
         this.filter = null
         this.filterTag = null
         this.$router.push({ path: '/portfolio'})
       },
+      
       findAndDeleteProject(project) {
         this.deleteProject(project.slug, this.list.indexOf(project))
       },
+      
       async deleteProject(slug, index) {
         var response = await(api.sendData({}, '/v1/portfolio/projects/' + slug + '/delete/'))
         if (response.success) {
@@ -164,12 +170,15 @@
           alert("Error: " + response.error)
         }
       },
+      
       editProject(slug) {
         this.$router.push({ path: '/portfolio/' + slug + '/edit' })
       },
+      
       filterBy(tagSlug) {
         this.$router.push({ path: '/portfolio?filter=' + tagSlug })
       },
+      
       goToPage(pageNumber, filterQs) {
         this.$router.push({ path: '/portfolio/page/' + pageNumber + '/' + filterQs })
       }

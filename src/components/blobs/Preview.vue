@@ -8,7 +8,7 @@
     </ul>
     <object-admin
       v-if="admin"
-      @delete="() => deleteBlob(blob.slug)"
+      @delete="deleteAndRemove"
       @edit="() => editBlob(blob.slug)"
     />
   </div>
@@ -22,18 +22,27 @@
   
   export default {
     beforeCreate() {
-      this.deleteBlob = api.deleteObject.bind(this, 'blobs', null);
-      this.editBlob = editObject.bind(this, 'blobs');
+      var response = this.deleteBlob = api.deleteObject.bind(this, 'blobs', null);
+      if (response) {
+        this.editBlob = editObject.bind(this, 'blobs');
+      }
     },
     props: [
       'admin',
-      'blob'
+      'blob',
+      'index'
     ],
     computed: {},
     components: {
       ObjectAdmin
     },
-    methods: {}
+    methods: {
+      deleteAndRemove() {
+        this.deleteBlob(this.blob.slug)
+        this.$emit('delete', this.blob.slug, this.index)
+      }
+    
+    }
   }  
 
 </script>
