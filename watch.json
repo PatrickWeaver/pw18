@@ -1,5 +1,15 @@
 {
+  "install": {
+    "include": [
+      "^package\\.json$",
+      "^\\.env$"
+    ]
+  },
   "restart": {
+    "exclude": [
+      "^public/",
+      "^dist/"
+    ],
     "include": [
       ".vue$",
       ".js$",
