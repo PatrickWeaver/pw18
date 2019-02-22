@@ -72,7 +72,6 @@
         if (this.$router.currentRoute.path === '/') {
           this.$router.push({ path: '/about' })
         }
-<<<<<<< HEAD
         this.setPageTitle()
       },
       setListType(type) {
@@ -97,8 +96,6 @@
       },
       setPageTitle(title) {
         document.title = title ? basePageTitle + ' | ' + title : basePageTitle
-=======
->>>>>>> master
       }
     }
   }
@@ -106,7 +103,6 @@
 </script>
 
 <style>
-<<<<<<< HEAD
   
   * {
     box-sizing: border-box;
@@ -156,8 +152,6 @@
     padding-left: 40px;
     line-height: 150%;
   }
-=======
->>>>>>> master
 
   #site-title {
     text-decoration: none;
