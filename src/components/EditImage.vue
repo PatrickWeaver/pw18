@@ -76,7 +76,7 @@ export default {
   },
   props: [
     'apiObject',
-    'activeProjectSlug',
+    'projectSlug',
     'imageUuid',
     'admin'
   ],
@@ -94,7 +94,7 @@ export default {
       if (response.success) {
         if (this.imageUuid) {
           // Editing existing
-          this.$router.push({ path: '/portfolio/' + this.activeProjectSlug })
+          this.$router.push({ path: '/portfolio/' + this.projectSlug })
         } else {
           // New image
           this.$emit('status', true)
@@ -107,7 +107,7 @@ export default {
       }
     },
     async getImage() {
-      var api_data = await(api.getData('/v1/portfolio/projects/' + this.activeProjectSlug, null, this.admin))
+      var api_data = await(api.getData('/v1/portfolio/projects/' + this.projectSlug, null, this.admin))
       var project = api_data.project
       var image;
       for (var i in project.images) {
@@ -117,7 +117,7 @@ export default {
         }
       }
       if (!image) {
-        this.$router.push({ path: '/portfolio/' + this.activeProjectSlug })
+        this.$router.push({ path: '/portfolio/' + this.projectSlug })
       }
 
       this.caption = image.caption

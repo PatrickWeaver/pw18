@@ -42,12 +42,12 @@
       <label>Hide Project:</label>
       <input type="checkbox" v-model="isHidden" />
       <edit-form-buttons
-        :edit="activeProjectSlug"
+        :edit="currentSlug"
         :submit="submitNewProject"
       />
     </form>
 
-    <div v-if="activeProjectSlug">
+    <div v-if="currentSlug">
       <hr>
 
       <select id="tag-selector" name="new-tags" v-model="newTag">
@@ -80,7 +80,7 @@
       </ul>
     </div>
 
-    <div v-if="activeProjectSlug">
+    <div v-if="currentSlug">
       
       <hr>
       
@@ -169,7 +169,7 @@
       this.editImage = editObject.bind(this)
     },
     created() {
-      if (this.activeProjectSlug) {
+      if (this.currentSlug) {
         this.getPortfolioProject()
         this.autofillSlug = false
       } else {
@@ -201,7 +201,7 @@
     },
     methods: {
       checkForAutofillSlug() {
-        if (this.slug === slug(this.name) && !this.activeProjectSlug) {
+        if (this.slug === slug(this.name) && !this.currentSlug) {
           this.autofillSlug = true
         }
       },
@@ -214,7 +214,7 @@
         }
       },
       async getPortfolioProject() {
-        var api_data = await(api.getData('/v1/portfolio/projects/' + this.activeProjectSlug, null, this.admin))
+        var api_data = await(api.getData('/v1/portfolio/projects/' + this.currentSlug, null, this.admin))
         var project = api_data.project
         console.log("PROJECT:", api_data)
         this.name = project.name
@@ -253,8 +253,8 @@
         }
         
         var path = '/v1/portfolio/projects/new/'
-        if (this.activeProjectSlug) {
-          path = '/v1/portfolio/projects/' + this.activeProjectSlug + '/edit/'
+        if (this.currentSlug) {
+          path = '/v1/portfolio/projects/' + this.currentSlug + '/edit/'
         }
         var response = await(api.sendData(snake(this.$data), path))
         if (response.success) {
@@ -306,7 +306,7 @@
       }
     },
     props: [
-      'activeProjectSlug',
+      'currentSlug',
       'admin'
     ],
     watch: {

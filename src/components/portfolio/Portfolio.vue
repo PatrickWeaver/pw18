@@ -2,11 +2,12 @@
 
   <div>
     <h2 class="page-title">Portfolio</h2>
-    <div v-if="activeProjectSlug">
+    <!-- if viewing single project -->
+    <div v-if="slug">
       <project
         :admin="admin"
         id="active-project"
-        :slug="activeProjectSlug"
+        :slug="slug"
         :index-loaded="list.length === 0 ? false : true"
         :active-image-uuid="activeImageUuid"
         @filter-by="filterBy"
@@ -77,7 +78,7 @@
       this.onReload()
     },
     props: [
-      'activeProjectSlug',
+      'slug',
       'activeImageUuid',
       'admin',
       'pageNumber'
@@ -105,7 +106,7 @@
       },
       
       async getPortfolioIndex() {
-        if (!this.activeProjectSlug) {
+        if (!this.slug) {
           if (this.list.length === 0) {
             var apiData = await(api.getIndex('portfolio', 'projects', this.admin))
             console.log('API DATA:', apiData)

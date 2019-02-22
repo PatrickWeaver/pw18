@@ -2,12 +2,11 @@
 
   <div>
     <h2 class="page-title">Blog</h2>
-    
-    <!-- if single blog post-->
-    <div v-if="activePostSlug">
+    <!-- if viewing single blog post -->
+    <div v-if="slug">
       <post
         :index-loaded="indexLoaded"
-        :slug="activePostSlug"
+        :slug="slug"
         :admin="admin"
         @return-to-index="returnToIndex"
         @edit="editPost"
@@ -58,7 +57,7 @@
       this.setIndexTitle()
     },
     props: [
-      'activePostSlug',
+      'slug',
       'admin',
       'pageNumber'
     ],
@@ -70,7 +69,7 @@
          this.$router.push({ path: '/blog' })
       },
       setIndexTitle() {
-        if (!this.activePostSlug) {
+        if (!this.slug) {
           this.$emit('set-page-title', 'Blog')
         }
       }

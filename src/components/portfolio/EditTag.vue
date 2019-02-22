@@ -25,7 +25,7 @@
         @new-color="updateColor"
       />
       <edit-form-buttons
-        :edit="activeTagSlug"
+        :edit="currentSlug"
         :submit="submitNewTag"
       />
     </form>
@@ -65,7 +65,7 @@
       this.resetFields = resetFields.bind(this);
     },
     created() {
-      if (this.activeTagSlug) {
+      if (this.currentSlug) {
         this.getTag()
         this.submitButtonText = 'Save'
       } else {
@@ -87,12 +87,12 @@
     },
     methods: {
       checkForAutofillSlug() {
-        if (this.slug === slug(this.name) && !this.activeTagSlug) {
+        if (this.slug === slug(this.name) && !this.currentSlug) {
           this.autofillSlug = true
         }
       },
       async getTag() {
-        var api_data = await(api.getData('/v1/portfolio/tags/' + this.activeTagSlug, null, this.admin))
+        var api_data = await(api.getData('/v1/portfolio/tags/' + this.currentSlug, null, this.admin))
         var tag = api_data.tag
         this.name = tag.name
         this.slug = tag.slug
@@ -102,8 +102,8 @@
       },
       async submitNewTag() {
         var path = '/v1/portfolio/tags/new/'
-        if (this.activeTagSlug) {
-          path = '/v1/portfolio/tags/' + this.activeTagSlug + '/edit/'
+        if (this.currentSlug) {
+          path = '/v1/portfolio/tags/' + this.currentSlug + '/edit/'
         }
         var response = await(api.sendData(snake(this.$data), path))
         if (response.success) {
@@ -118,7 +118,7 @@
       }
     },
     props: [
-      'activeTagSlug'
+      'currentSlug'
     ],
     watch: {
       autoSlug() {

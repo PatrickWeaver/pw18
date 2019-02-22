@@ -85,13 +85,13 @@ const routes = [
   },
   {
     name: 'blog-edit-post',
-    path: '/blog/:activePostSlug/edit',
+    path: '/blog/:currentSlug/edit',
     component: BlogEditPost,
     props: true
   },
   {
     name: 'blog-post',
-    path: '/blog/:activePostSlug',
+    path: '/blog/:slug',
     component: Blog,
     props: true
   },
@@ -125,7 +125,7 @@ const routes = [
   },
   {
     name: 'portfolio-edit-tag',
-    path: '/tags/:activeTagSlug/edit',
+    path: '/tags/:currentSlug/edit',
     component: PortfolioEditTag,
     props: true
   },
@@ -154,25 +154,25 @@ const routes = [
   },
   {
     name: 'portfolio-edit-project',
-    path: '/portfolio/:activeProjectSlug/edit',
+    path: '/portfolio/:currentSlug/edit',
     component: PortfolioEditProject,
     props: true
   },
   {
     name: 'portfolio-edit-project-image',
-    path: '/portfolio/:activeProjectSlug/:imageUuid/edit',
+    path: '/portfolio/:projectSlug/:imageUuid/edit',
     component: PortfolioEditImage,
     props: true
   },
   {
     name: 'portfolio-project-image',
-    path: '/portfolio/:activeProjectSlug/:activeImageUuid',
+    path: '/portfolio/:slug/:activeImageUuid',
     component: Portfolio,
     props: true
   },
   {
     name: 'portfolio-project',
-    path: '/portfolio/:activeProjectSlug',
+    path: '/portfolio/:slug',
     component: Portfolio,
     props: true
   },

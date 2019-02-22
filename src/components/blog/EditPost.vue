@@ -23,7 +23,7 @@
       <label>Draft:</label>
       <input type="checkbox" v-model="draft" />
       <edit-form-buttons
-        :edit="activePostSlug"
+        :edit="currentSlug"
         :submit="submitNewPost"
       />
     </form>
@@ -64,7 +64,7 @@
       this.resetFields = resetFields.bind(this);
     },
     created() {
-      if (this.activePostSlug) {
+      if (this.currentSlug) {
         this.getBlogPost()
         this.autofillSlug = false
       } else {
@@ -85,12 +85,12 @@
     },
     methods: {
       checkForAutofillSlug() {
-        if (this.slug === slug(this.title) && !this.activePostSlug) {
+        if (this.slug === slug(this.title) && !this.currentSlug) {
           this.autofillSlug = true
         }
       },
       async getBlogPost() {
-        var path = '/v1/blog/posts/' + this.activePostSlug
+        var path = '/v1/blog/posts/' + this.currentSlug
         var apiData = await(api.getData(path, null, this.admin))
         var post = apiData.post
         this.title = post.title
@@ -105,8 +105,8 @@
       },
       async submitNewPost() {
         var path = '/v1/blog/posts/new/'
-        if (this.activePostSlug) {
-          path = '/v1/blog/posts/' + this.activePostSlug + '/edit/'
+        if (this.currentSlug) {
+          path = '/v1/blog/posts/' + this.currentSlug + '/edit/'
         }
         var response = await(api.sendData(snake(this.$data), path))
         if (response.success) {
@@ -118,7 +118,7 @@
       }
     },
     props: [
-      'activePostSlug',
+      'currentSlug',
       'admin'
     ],
     watch: {
