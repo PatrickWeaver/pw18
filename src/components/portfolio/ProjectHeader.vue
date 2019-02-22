@@ -44,11 +44,7 @@
         v-for="(tag) in project.tags"
         :key="tag.slug"
       >
-<<<<<<< HEAD:src/components/portfolio/ProjectHeader.vue
         <tag
-=======
-        <portfolio-tag
->>>>>>> master:src/components/PortfolioProjectHeader.vue
           @filter-by="filterBy"
           :tag="tag"
           :filter="true"
@@ -61,10 +57,7 @@
     >
       {{ project.short_description }}  
     </p>
-<<<<<<< HEAD:src/components/portfolio/ProjectHeader.vue
     <draft-label  v-if="project.is_hidden" text="Hidden" />
-=======
->>>>>>> master:src/components/PortfolioProjectHeader.vue
   </div>
 </template>
 

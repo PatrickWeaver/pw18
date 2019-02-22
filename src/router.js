@@ -1,25 +1,18 @@
 import VueRouter from 'vue-router'
 
 /* Pages */
-<<<<<<< HEAD
 import Blobs from './components/blobs/Blobs.vue'
 import Blob from './components/blobs/Blob.vue'
-import EditBlob from './components/blob/EditBlob.vue'
+import EditBlob from './components/blobs/EditBlob.vue'
 
 import Blog from './components/blog/Blog.vue'
 import BlogPost from './components/blog/Post.vue'
 import BlogEditPost from './components/blog/EditPost.vue'
 
-=======
-import Blog from './components/Blog.vue'
-import BlogPost from './components/BlogPost.vue'
-import BlogEditPost from './components/BlogEditPost.vue'
->>>>>>> master
 import Error404 from './components/Error404.vue'
 import Login from './components/Login.vue'
 import Logout from './components/Logout.vue'
 import Page from './components/Page.vue'
-<<<<<<< HEAD
 
 import Portfolio from './components/portfolio/Portfolio.vue'
 import PortfolioProject from './components/portfolio/Project.vue'
@@ -28,11 +21,6 @@ import Tags from './components/portfolio/Tags.vue'
 import PortfolioEditTag from './components/portfolio/EditTag.vue'
 import PortfolioEditImage from './components/EditImage.vue'
 
-=======
-import Portfolio from './components/Portfolio.vue'
-import PortfolioProject from './components/PortfolioProject.vue'
-import PortfolioEditProject from './components/PortfolioEditProject.vue'
->>>>>>> master
 import Upload from './components/Upload.vue'
 
 const routes = [
@@ -46,7 +34,6 @@ const routes = [
     component: Page,
     props: {
       blobSlug: 'about',
-<<<<<<< HEAD
       title: 'About',
       backup: 'Hi, I\'m Patrick Weaver, an artist, educator, writer, programmer, musician, and designer based in New York City, and sometimes other places. Looks like the API that powers this website is down at the moment so some information may be missing.'
     }
@@ -75,10 +62,6 @@ const routes = [
     name: 'blobs',
     path: '/blobs',
     component: Blobs
-=======
-      title: 'About'
-    }
->>>>>>> master
   },
   {
     name: 'blog',
@@ -108,11 +91,7 @@ const routes = [
   },
   {
     name: 'blog-post',
-<<<<<<< HEAD
     path: '/blog/:slug',
-=======
-    path: '/blog/:activePostSlug',
->>>>>>> master
     component: Blog,
     props: true
   },
@@ -127,7 +106,6 @@ const routes = [
     component: Page,
     props: {
       blobSlug: 'now',
-<<<<<<< HEAD
       title: 'Now',
       backup: 'Oops! The API is down, looks like what I should be working on is fixing it!'
     }
@@ -152,12 +130,6 @@ const routes = [
     props: true
   },
   {
-=======
-      title: 'Now'
-    }
-  },
-  {
->>>>>>> master
     name: 'portfolio',
     path: '/portfolio',
     component: Portfolio
@@ -182,7 +154,6 @@ const routes = [
   },
   {
     name: 'portfolio-edit-project',
-<<<<<<< HEAD
     path: '/portfolio/:currentSlug/edit',
     component: PortfolioEditProject,
     props: true
@@ -191,10 +162,6 @@ const routes = [
     name: 'portfolio-edit-project-image',
     path: '/portfolio/:projectSlug/:imageUuid/edit',
     component: PortfolioEditImage,
-=======
-    path: '/portfolio/:activeProjectSlug/edit',
-    component: PortfolioEditProject,
->>>>>>> master
     props: true
   },
   {
@@ -205,11 +172,7 @@ const routes = [
   },
   {
     name: 'portfolio-project',
-<<<<<<< HEAD
     path: '/portfolio/:slug',
-=======
-    path: '/portfolio/:activeProjectSlug',
->>>>>>> master
     component: Portfolio,
     props: true
   },
@@ -230,14 +193,11 @@ const routes = [
     component: Logout
   },
   {
-<<<<<<< HEAD
     name: '404',
     path: '/404',
     component: Error404
   },
   {
-=======
->>>>>>> master
     name: 'custom-page',
     path: '/:blobSlug',
     component: Page,
@@ -247,15 +207,9 @@ const routes = [
     })
   },
   {
-<<<<<<< HEAD
     name: '404-redirect',
     path: '*',
     redirect: '/404'
-=======
-    name: '404',
-    path: '/404',
-    component: Error404
->>>>>>> master
   }
 
 ]
