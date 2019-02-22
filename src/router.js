@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 /* Pages */
 import Blobs from './components/blobs/Blobs.vue'
 import Blob from './components/blobs/Blob.vue'
-import EditBlob from './components/blob/EditBlob.vue'
+import EditBlob from './components/blobs/EditBlob.vue'
 
 import Blog from './components/blog/Blog.vue'
 import BlogPost from './components/blog/Post.vue'
