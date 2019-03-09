@@ -68,9 +68,9 @@
         var api_data = await(api.getData('/v1/blobs/' + this.slug, {}, this.admin))
         if (api_data.blob) {
           var blob = api_data.blob
-          if (this.blobPage && blob.redirect) {
-            if (blob.redirect.substring(0, 4) === 'http') {
-              window.location.replace(blob.redirect)
+          if (this.blobPage && blob.redirect && blob.redirect.plaintext) {
+            if (blob.redirect.plaintext.substring(0, 4) === 'http') {
+              window.location.replace(blob.redirect.plaintext)
             } else {
               this.$router.push({ name: 'custom-page', params: { blobSlug: blob.redirect } })
             }
