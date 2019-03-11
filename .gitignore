@@ -46,4 +46,5 @@ typings/
 # Settings for Webpack in different environments:
 settings.js
 /public/dist/
+/ssr/
 .DS_Store

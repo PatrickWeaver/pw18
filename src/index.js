@@ -8,7 +8,7 @@ import router from './router'
 
 Vue.use(VueRouter)
 
-const vm = new Vue({
+export default new Vue({
   el: '#vm',
   router,
   components: {

@@ -17,5 +17,5 @@
       ".env"
     ]
   },
-  "throttle": 500
+  "throttle": 400
 }

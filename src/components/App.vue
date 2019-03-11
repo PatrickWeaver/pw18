@@ -6,7 +6,7 @@
     </h6>
     <a
       id="site-title"
-      href="'/'"
+      href="/"
       @click.prevent="index"
     >
       <h1>Patrick Weaver</h1>
