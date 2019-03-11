@@ -12,7 +12,6 @@ export function updateSlug() {
 
 export function editObject(section, slug) {
   const path = '/' + section + '/' + slug + '/edit'
-  console.log("EDIT PATH:", path);
   this.$router.push({ path: path })
 }
 
